@@ -9,7 +9,8 @@ from classes import Passageiro, Trem
 pygame.init()
 cs = 16 #cell_size
 cn = 40 #cell_number
-screen = pygame.display.set_mode((cn*cs,cn*cs))
+screen = pygame.display.set_mode((cn*cs,cn*cs)) # Tela do jogo
+pygame.display.set_caption("Metrô") # Adiciona um nome à janela
 clock = pygame.time.Clock()
 
 passageiro = Passageiro(cn, cs, screen) # Cria um objeto da classe Passageiro
@@ -30,14 +31,14 @@ while True:
             # Identifica quando o evento periódico que foi criado fora do loop ocorre, chamando então a função mover_trem()
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
-                trem.sentido = (0,-1)
+                trem.sentido = Vector2(0,-1)
             if event.key == pygame.K_DOWN:
-                trem.sentido = (0,1)
+                trem.sentido = Vector2(0,1)
             if event.key == pygame.K_RIGHT:
-                trem.sentido = (1,0)
+                trem.sentido = Vector2(1,0)
             if event.key == pygame.K_LEFT:
-                trem.sentido = (-1,0)
-            # Identifica quando o usuário pressiona uma das setas do teclado e ajuta a direção do movimento do trem de acordo
+                trem.sentido = Vector2(-1,0)
+            # Identifica quando o usuário pressiona uma das setas do teclado e ajusta a direção do movimento do trem de acordo
     
     screen.fill((100,100,200)) # Preenche a tela com cor
     passageiro.desenhar_passageiro() # Desenha o passageiro
