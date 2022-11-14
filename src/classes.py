@@ -19,7 +19,7 @@ class Passageiro:
         # O passageiro é renderizado como um bloco colorido
         
 class Trem:
-    def __init__(self, cn, cs, screen):
+    def __init__(self, cn=1, cs=1, screen=None):
         self.corpo = [Vector2(5,2), Vector2(4,2), Vector2(3,2)]
         self.sentido = Vector2(1,0)
         # O trem começa com três blocos numa posição definida, que compõem seu corpo, e com um sentido de movimanto também já definido
@@ -40,3 +40,4 @@ class Trem:
         self.corpo = corpo_copia[:]
         # QUando o trem se move, o último vagão é eliminado e adiciona-se um vagão à frente dos outros(no começo da lista), que é uma cópia do primeiro vagão 
         # mais uma vez o sentido no qual o trem se move
+        
