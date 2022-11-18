@@ -14,7 +14,7 @@ class Passageiro:
 
     def desenhar_passageiro(self):
         passageiro_rect = pygame.Rect(int(self.x*self.cs), int(self.y*self.cs), self.cs, self.cs)
-        self.pessoa = pygame.transform.scale(self.pessoa, (16,16))
+        self.pessoa = pygame.transform.scale(self.pessoa, (self.cs, self.cs))
         self.screen.blit(self.pessoa, passageiro_rect)
         # O passageiro é renderizado como um bloco colorido
 
@@ -35,11 +35,11 @@ class Trem:
         self.novo_vagao = False
         # O objeto recebe o tamanho da tela emk relação às células, o tamanho das células no jogo e a superfície onde ele será desenhado
         self.metro_frente_d = pygame.image.load('metro_imagens/metro_direita.png').convert_alpha()
-        self.metro_frente_d = pygame.transform.scale(self.metro_frente_d, (16,16))
+        self.metro_frente_d = pygame.transform.scale(self.metro_frente_d, (cs,cs))
         self.metro_tras_d = pygame.image.load('metro_imagens/metro_esquerda.png').convert_alpha()
-        self.metro_tras_d = pygame.transform.scale(self.metro_tras_d, (16,16))
+        self.metro_tras_d = pygame.transform.scale(self.metro_tras_d, (cs,cs))
         self.metro_meio_d = pygame.image.load('metro_imagens/metro_meio_direita_esquerda.png').convert_alpha()
-        self.metro_meio_d = pygame.transform.scale(self.metro_meio_d, (16,16))
+        self.metro_meio_d = pygame.transform.scale(self.metro_meio_d, (cs,cs))
         
         self.metro_frente_c = pygame.transform.rotate(self.metro_frente_d, 90)
         self.metro_tras_c = pygame.transform.rotate(self.metro_tras_d, 90)
@@ -108,6 +108,19 @@ class Trem:
 
     def relacao_tras(self):
         relacao = self.corpo[-1] - self.corpo[-2]
+        """if relacao == Vector2(0,1) and self.tras == self.metro_frente_d or relacao == Vector2(0,1) and self.tras == self.metro_frente_c:
+            self.tras = self.metro_frente_c
+        elif relacao == Vector2(0,1):
+            self.tras = self.metro_tras_c
+        elif relacao == Vector2(0,-1) and self.tras == self.metro_frente_d or relacao == Vector2(0,-1) and self.tras == self.metro_tras_b:
+            self.tras = self.metro_tras_b
+        elif relacao == Vector2(0,-1):
+            self.tras = self.metro_tras_c
+        elif relacao == Vector2(1, 0):
+            self.tras = self.metro_tras_e
+        elif relacao == Vector2(-1, 0):
+            self.tras = self.metro_tras_d"""
+        #####
         if relacao == Vector2(0,1):
             self.tras = self.metro_tras_c
         elif relacao == Vector2(0,-1):
