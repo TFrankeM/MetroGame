@@ -134,7 +134,7 @@ class Trem:
         
 
 class Partida:
-    def __init__(self, cn, cs, screen):
+    def __init__(self, cn, cs, screen, fonte):
         self.trem = Trem(cn, cs, screen) # Cria um objeto da classe Trem
         self.passageiro = Passageiro(cn, cs, screen) # Cria um objeto da classe Passageiro
         self.cn = cn
@@ -142,6 +142,9 @@ class Partida:
         self.screen = screen
         # O objeto recebe o tamanho da tela emk relação às células, o tamanho das células no jogo e a superfície onde ele será desenhado
         self.ativo = True
+        self.fonte = fonte
+        self.musica = pygame.mixer.Sound('sons/musica_fundo.mpeg')
+        self.musica.play()
 
 
     def atualizar(self):
@@ -153,6 +156,7 @@ class Partida:
     def desenhar_elementos(self):
         self.passageiro.desenhar_passageiro() # Desenha o passageiro
         self.trem.desenhar_trem() # Desenha o trem
+        self.desenhar_pontuacao()
 
     def checar_colisao(self):
         if self.passageiro.pos == self.trem.corpo[0]:
@@ -168,4 +172,12 @@ class Partida:
     
     def game_over(self):
         self.ativo = False
+        self.musica.stop()
+
+    def desenhar_pontuacao(self):
+        pontuacao = str(len(self.trem.corpo)-3)
+        pontuacao_superficie = self.fonte.render(pontuacao, True, (0,0,0))
+        pontuacao_rect = pontuacao_superficie.get_rect(center = (int(self.cs*self.cn - 60), int(40)))
+        self.screen.blit(pontuacao_superficie, pontuacao_rect)
+
 
