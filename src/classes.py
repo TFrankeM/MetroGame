@@ -19,8 +19,8 @@ class Passageiro:
         # O passageiro é renderizado como um bloco colorido
 
     def sortear(self, cn, cs, screen):
-        self.x = random.randint(0, cn-1)
-        self.y = random.randint(0, cn-1)
+        self.x = random.randint(1, cn-2)
+        self.y = random.randint(1, cn-2)
         self.pos = Vector2(self.x, self.y)
         
 class Trem:
@@ -141,11 +141,14 @@ class Partida:
         self.cs = cs
         self.screen = screen
         # O objeto recebe o tamanho da tela emk relação às células, o tamanho das células no jogo e a superfície onde ele será desenhado
+        self.ativo = True
 
 
     def atualizar(self):
-        self.trem.mover_trem()
-        self.checar_colisao()
+        if self.ativo == True:
+            self.trem.mover_trem()
+            self.checar_colisao()
+            self.checar_falha()
 
     def desenhar_elementos(self):
         self.passageiro.desenhar_passageiro() # Desenha o passageiro
@@ -155,8 +158,14 @@ class Partida:
         if self.passageiro.pos == self.trem.corpo[0]:
             self.passageiro.sortear(self.cn, self.cs, self.screen)
             self.trem.adicionar_vagao()
-
-
-
-
+    
+    def checar_falha(self):
+        if not 1 < self.trem.corpo[0].x < self.cn-2 or not 1 < self.trem.corpo[0].y < self.cn-2:
+            self.game_over()
+        for bloco in self.trem.corpo[1:]:
+            if bloco == self.trem.corpo[0]:
+                self.game_over()
+    
+    def game_over(self):
+        self.ativo = False
 
