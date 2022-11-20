@@ -9,8 +9,9 @@ class Passageiro:
         self.cn = cn
         self.cs = cs
         self.screen = screen
-        self.pessoa = pygame.image.load('metro_imagens/metro_direita.png').convert_alpha()
+        self.pessoa = pygame.image.load('src/metro_imagens/passageiro.png').convert_alpha()
         # O objeto recebe o tamanho da tela em relação às células, o tamanho das células no jogo e a superfície onde ele será desenhado
+        
 
     def desenhar_passageiro(self):
         passageiro_rect = pygame.Rect(int(self.x*self.cs), int(self.y*self.cs), self.cs, self.cs)
@@ -19,8 +20,8 @@ class Passageiro:
         # O passageiro é renderizado como um bloco colorido
 
     def sortear(self, cn, cs, screen):
-        self.x = random.randint(1, cn-2)
-        self.y = random.randint(1, cn-2)
+        self.x = random.randint(2, cn-3)
+        self.y = random.randint(2, cn-3)
         self.pos = Vector2(self.x, self.y)
         
 class Trem:
@@ -34,11 +35,11 @@ class Trem:
         self.screen = screen
         self.novo_vagao = False
         # O objeto recebe o tamanho da tela emk relação às células, o tamanho das células no jogo e a superfície onde ele será desenhado
-        self.metro_frente_d = pygame.image.load('metro_imagens/metro_direita.png').convert_alpha()
+        self.metro_frente_d = pygame.image.load('src/metro_imagens/metro_direita.png').convert_alpha()
         self.metro_frente_d = pygame.transform.scale(self.metro_frente_d, (cs,cs))
-        self.metro_tras_d = pygame.image.load('metro_imagens/metro_esquerda.png').convert_alpha()
+        self.metro_tras_d = pygame.image.load('src/metro_imagens/metro_esquerda.png').convert_alpha()
         self.metro_tras_d = pygame.transform.scale(self.metro_tras_d, (cs,cs))
-        self.metro_meio_d = pygame.image.load('metro_imagens/metro_meio_direita_esquerda.png').convert_alpha()
+        self.metro_meio_d = pygame.image.load('src/metro_imagens/metro_meio_direita_esquerda.png').convert_alpha()
         self.metro_meio_d = pygame.transform.scale(self.metro_meio_d, (cs,cs))
         
         self.metro_frente_c = pygame.transform.rotate(self.metro_frente_d, 90)
@@ -56,6 +57,12 @@ class Trem:
         self.frente = self.metro_frente_d
         self.tras = self.metro_tras_d
         self.meio = self.metro_meio_d
+        
+        self.conexao_db = pygame.image.load('src/metro_imagens/curva.png').convert_alpha()
+        self.conexao_db = pygame.transform.scale(self.conexao_db, (cs,cs))
+        self.conexao_cd = pygame.transform.rotate(self.conexao_db, 90)
+        self.conexao_ec = pygame.transform.rotate(self.conexao_db, 180)
+        self.conexao_be = pygame.transform.rotate(self.conexao_db, 270)
     
     def desenhar_trem(self):
         self.relacao_frente()
@@ -77,6 +84,35 @@ class Trem:
                     self.screen.blit(self.metro_meio_b, vagao_rect)
                 elif bloco_anterior.y==bloco_proximo.y:
                      self.screen.blit(self.metro_meio_d, vagao_rect)
+                else:
+                    if bloco_anterior.x == -1 and bloco_proximo.y == -1 or bloco_anterior.y == -1 and bloco_proximo.x == -1:
+                        self.screen.blit(self.conexao_ec, vagao_rect)
+                    elif bloco_anterior.x == -1 and bloco_proximo.y == 1 or bloco_anterior.y == 1 and bloco_proximo.x == -1:
+                        self.screen.blit(self.conexao_be, vagao_rect)
+                    elif bloco_anterior.x == 1 and bloco_proximo.y == -1 or bloco_anterior.y == -1 and bloco_proximo.x == 1:
+                        self.screen.blit(self.conexao_cd, vagao_rect)
+                    elif bloco_anterior.x == 1 and bloco_proximo.y == 1 or bloco_anterior.y == 1 and bloco_proximo.x == 1:
+                        self.screen.blit(self.conexao_db, vagao_rect)
+                """elif bloco_anterior.x<bloco_proximo.x and bloco_anterior.y<bloco_proximo.y:
+                    if self.sentido == Vector2(0, 1):
+                        self.screen.blit(self.conexao_be, vagao_rect)
+                    elif self.sentido == Vector2(1, 0):
+                        self.screen.blit(self.conexao_cd, vagao_rect)
+                elif bloco_anterior.x<bloco_proximo.x and bloco_anterior.y>bloco_proximo.y:
+                    if self.sentido == Vector2(1, 0):
+                        self.screen.blit(self.conexao_db, vagao_rect)
+                    elif self.sentido == Vector2(0, -1):
+                        self.screen.blit(self.conexao_ec, vagao_rect)
+                elif bloco_anterior.x>bloco_proximo.x and bloco_anterior.y<bloco_proximo.y:
+                    if self.sentido == Vector2(-1, 0):
+                        self.screen.blit(self.conexao_ec, vagao_rect)
+                    elif self.sentido == Vector2(0, 1):
+                        self.screen.blit(self.conexao_db, vagao_rect)
+                elif bloco_anterior.x>bloco_proximo.x and bloco_anterior.y>bloco_proximo.y:
+                    if self.sentido == Vector2(0, -1):
+                        self.screen.blit(self.conexao_cd, vagao_rect)
+                    elif self.sentido == Vector2(-1, 0):
+                        self.screen.blit(self.conexao_be, vagao_rect)"""
         # Cada vagão do trem é um bloco
     
     def mover_trem(self):
@@ -142,26 +178,33 @@ class Partida:
         self.screen = screen
         # O objeto recebe o tamanho da tela emk relação às células, o tamanho das células no jogo e a superfície onde ele será desenhado
         self.ativo = True
+        self.pausa = False
         self.fonte = fonte
-        self.musica = pygame.mixer.Sound('sons/musica_fundo.mpeg')
+        self.musica = pygame.mixer.Sound('src/sons/musica_fundo.mpeg')
         self.musica.play()
+        self.borda = pygame.image.load('src/metro_imagens/linha_amarela_vao.png').convert_alpha()
+        self.borda = pygame.transform.scale(self.borda, (cs,cs))
 
 
     def atualizar(self):
-        if self.ativo == True:
+        if self.ativo == True and self.pausa == False:
             self.trem.mover_trem()
             self.checar_colisao()
             self.checar_falha()
 
     def desenhar_elementos(self):
+        self.desenhar_borda()
         self.passageiro.desenhar_passageiro() # Desenha o passageiro
         self.trem.desenhar_trem() # Desenha o trem
         self.desenhar_pontuacao()
 
     def checar_colisao(self):
         if self.passageiro.pos == self.trem.corpo[0]:
-            self.passageiro.sortear(self.cn, self.cs, self.screen)
+            while self.passageiro.pos in self.trem.corpo:
+                self.passageiro.sortear(self.cn, self.cs, self.screen)
+                #
             self.trem.adicionar_vagao()
+            
     
     def checar_falha(self):
         if not 1 < self.trem.corpo[0].x < self.cn-2 or not 1 < self.trem.corpo[0].y < self.cn-2:
@@ -177,7 +220,19 @@ class Partida:
     def desenhar_pontuacao(self):
         pontuacao = str(len(self.trem.corpo)-3)
         pontuacao_superficie = self.fonte.render(pontuacao, True, (0,0,0))
-        pontuacao_rect = pontuacao_superficie.get_rect(center = (int(self.cs*self.cn - 60), int(40)))
+        pontuacao_rect = pontuacao_superficie.get_rect(center = (int(self.cs*self.cn - 60), int(20)))
         self.screen.blit(pontuacao_superficie, pontuacao_rect)
 
-
+    def desenhar_borda(self):
+        inicio = 1
+        while inicio < self.cn-1:
+            borda_rect = pygame.Rect(int(inicio*self.cs), int(1*self.cs), self.cs, self.cs)
+            self.screen.blit(self.borda, borda_rect)
+            borda_rect = pygame.Rect(int(inicio*self.cs), int((self.cn-2)*self.cs), self.cs, self.cs)
+            self.screen.blit(self.borda, borda_rect)
+            borda_rect = pygame.Rect(int(1*self.cs), int(inicio*self.cs), self.cs, self.cs)
+            self.screen.blit(self.borda, borda_rect)
+            borda_rect = pygame.Rect(int((self.cn-2)*self.cs), int(inicio*self.cs), self.cs, self.cs)
+            self.screen.blit(self.borda, borda_rect)
+            inicio+=1
+            
