@@ -5,6 +5,7 @@ from pygame.math import Vector2
 sys.path.insert(0, '.')
 from classes import Passageiro, Trem, Partida
 import time
+import operator
 
 
 #try:
@@ -14,7 +15,7 @@ cs = 32 #cell_size
 screen = pygame.display.set_mode((cn*cs,cn*cs)) # Tela do jogo
 pygame.display.set_caption("Metrô") # Adiciona um nome à janela
 clock = pygame.time.Clock()
-fonte = pygame.font.Font(None, 24)
+fonte = pygame.font.Font(None, 30)
 
 
 partida = Partida(cn, cs, screen, fonte)
@@ -33,6 +34,8 @@ while True:
             partida.atualizar()
             # Identifica quando o evento periódico que foi criado fora do loop ocorre, chamando então a função mover_trem()
         if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                partida.pausa = operator.not_(partida.pausa)
             if event.key == pygame.K_UP and partida.trem.corpo[1] != partida.trem.corpo[0]+Vector2(0,-1):
                 partida.trem.sentido = Vector2(0,-1)
             if event.key == pygame.K_DOWN and partida.trem.corpo[1] != partida.trem.corpo[0]+Vector2(0,1):
@@ -46,7 +49,7 @@ while True:
                 partida = Partida(cn, cs, screen, fonte)
         
     screen.fill((100,100,200)) # Preenche a tela com cor
-    menor = pygame.draw.rect(screen, (100,50,50), pygame.Rect(int(32), int(32), cs*(cn-2), cs*(cn-2)))
+    #menor = pygame.draw.rect(screen, (100,50,50), pygame.Rect(int(32), int(32), cs*(cn-2), cs*(cn-2)))
     partida.desenhar_elementos()
     pygame.display.flip() # Renderiza
     clock.tick(60) # Garante uma frequência de cerca de 60 frames por segundo
