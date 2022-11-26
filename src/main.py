@@ -31,6 +31,7 @@ while True:
             sys.exit()
             # Identifica quando o usuário clica no x na janela, fechando o programa
         if event.type == SCREEN_UPDATE:
+            pygame.time.set_timer(SCREEN_UPDATE, 150)
             partida.atualizar()
             # Identifica quando o evento periódico que foi criado fora do loop ocorre, chamando então a função mover_trem()
         if event.type == pygame.KEYDOWN:
@@ -46,6 +47,7 @@ while True:
                 partida.trem.sentido = Vector2(-1,0)
             # Identifica quando o usuário pressiona uma das setas do teclado e ajusta a direção do movimento do trem de acordo
             if partida.ativo == False:
+                pygame.time.set_timer(SCREEN_UPDATE, 200)
                 partida = Partida(cn, cs, screen, fonte)
         
     screen.fill((100,100,200)) # Preenche a tela com cor
