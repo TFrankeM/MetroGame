@@ -58,13 +58,13 @@ while menu.comecar == True:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 partida.pausa = operator.not_(partida.pausa)
-            if event.key == pygame.K_UP and partida.trem.corpo[1] != partida.trem.corpo[0]+Vector2(0,-1):
+            if event.key == pygame.K_UP and partida.trem.corpo[1] != partida.trem.corpo[0]+Vector2(0,-1) or event.key == pygame.K_w and partida.trem.corpo[1] != partida.trem.corpo[0]+Vector2(0,-1):
                 partida.trem.sentido = Vector2(0,-1)
-            if event.key == pygame.K_DOWN and partida.trem.corpo[1] != partida.trem.corpo[0]+Vector2(0,1):
+            if event.key == pygame.K_DOWN and partida.trem.corpo[1] != partida.trem.corpo[0]+Vector2(0,1) or event.key == pygame.K_s and partida.trem.corpo[1] != partida.trem.corpo[0]+Vector2(0,1):
                 partida.trem.sentido = Vector2(0,1)
-            if event.key == pygame.K_RIGHT and partida.trem.corpo[1] != partida.trem.corpo[0]+Vector2(1,0):
+            if event.key == pygame.K_RIGHT and partida.trem.corpo[1] != partida.trem.corpo[0]+Vector2(1,0) or event.key == pygame.K_d and partida.trem.corpo[1] != partida.trem.corpo[0]+Vector2(1,0):
                 partida.trem.sentido = Vector2(1,0)
-            if event.key == pygame.K_LEFT and partida.trem.corpo[1] != partida.trem.corpo[0]+Vector2(-1,0):
+            if event.key == pygame.K_LEFT and partida.trem.corpo[1] != partida.trem.corpo[0]+Vector2(-1,0) or event.key == pygame.K_a and partida.trem.corpo[1] != partida.trem.corpo[0]+Vector2(-1,0):
                 partida.trem.sentido = Vector2(-1,0)
             # Identifica quando o usuário pressiona uma das setas do teclado e ajusta a direção do movimento do trem de acordo
             if partida.ativo == False:
