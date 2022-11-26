@@ -4,7 +4,16 @@ from pygame.math import Vector2
 import time
 
 class Passageiro:
-    def __init__(self, cn, cs, screen):
+    """ Os objetos dessa classe são carregados na tela e interagem com objetos da classe Trem quando ambos ocupam as mesmas coordenadas.
+    """
+    def __init__(self, cn=1, cs=1, screen=None):
+        """ Construtor da classe
+
+        Args:
+            cn (int): Número de células da janela do programa. Defaults to 1.
+            cs (int): Tamanho das células. Defaults to 1.
+            screen (pygame.Surface): Janela do programa. Defaults to None.
+        """
         self.sortear(cn, cs, screen)
         # A posição é randomizada dentro dos limites da tela e guardada num vetor.
         self.cn = cn
@@ -13,25 +22,48 @@ class Passageiro:
         # O objeto recebe o tamanho da tela em relação às células, o tamanho das células no jogo e a superfície onde ele será desenhado
         
     def definir_imagens_passageiro(self):
+        """ Carrega a imagem correspondente aos objetos da classe
+        """
         self.pessoa = pygame.image.load('src/metro_imagens/passageiro.png').convert_alpha()
+        # Carrega a imagem que representa o objeto passageiro 
 
     def desenhar_passageiro(self):
+        """ Gera um retângulo para conter a imagem do objeto da classe e garrega essa imagem na tela
+        """
         passageiro_rect = pygame.Rect(int(self.x*self.cs), int(self.y*self.cs), self.cs, self.cs)
         self.pessoa = pygame.transform.scale(self.pessoa, (self.cs, self.cs))
         self.screen.blit(self.pessoa, passageiro_rect)
         # O passageiro é renderizado como um bloco colorido
 
     def sortear(self, cn, cs, screen):
+        """ Define a posição do objeto na tela do jogo
+
+        Args:
+            cn (int): Número de células da janela do programa
+            cs (int): Tamanho das células
+            screen (pygame.Surface): Janela do programa
+        """
         self.x = random.randint(2, cn-3)
         self.y = random.randint(2, cn-3)
         self.pos = Vector2(self.x, self.y)
+        # Sorteia uma posição para o passageiro dentro dos limites da tela
         
 class Trem:
+    """ Os objetos dessa classe se movem pela janela
+    """
     def __init__(self, cn=1, cs=1, screen=None):
+        """ Construtor da classe
+
+        Args:
+            cn (int, optional): Número de células da janela do programa. Defaults to 1.
+            cs (int, optional): Tamanho das células. Defaults to 1.
+            screen (pygame.Surface, optional): Janela do programa. Defaults to None.
+        """
         self.corpo = [Vector2(5,2), Vector2(4,2), Vector2(3,2)]
         self.sentido = Vector2(1,0)
         self.sentido_antes = Vector2(1,0)
         # O trem começa com três blocos numa posição definida, que compõem seu corpo, e com um sentido de movimanto também já definido
+        # A variável sentido_antes mantém o sentido anterior e serve para comparação na hora de desenhar os vagões
         self.cn = cn
         self.cs = cs
         self.screen = screen
@@ -40,6 +72,8 @@ class Trem:
         
     
     def definir_imagens_trem(self):
+        """Carrega as imagens correspondentes aos objetos da classe
+        """
         self.metro_frente_d = pygame.image.load('src/metro_imagens/metro_direita.png').convert_alpha()
         self.metro_frente_d = pygame.transform.scale(self.metro_frente_d, (self.cs,self.cs))
         self.metro_tras_d = pygame.image.load('src/metro_imagens/metro_esquerda.png').convert_alpha()
@@ -70,6 +104,8 @@ class Trem:
         self.conexao_be = pygame.transform.rotate(self.conexao_db, 270)
     
     def desenhar_trem(self):
+        """ Gera um retângulo para conter as imagens do objeto da classe e garrega essas imagens na tela, de acordo com a posição das células que o objeto ocupa
+        """
         self.relacao_frente()
         self.relacao_tras()
         for index, bloco in enumerate(self.corpo):
@@ -81,26 +117,15 @@ class Trem:
             elif index == len(self.corpo) -1:
                 self.screen.blit(self.tras, vagao_rect)
             else:
-                bloco_anterior = self.corpo[index+1]-bloco
-                bloco_proximo = self.corpo[index-1]-bloco
-                if bloco_anterior.x==bloco_proximo.x and bloco_anterior.y>bloco_proximo.y:
-                    self.screen.blit(self.metro_meio_c, vagao_rect)
-                elif bloco_anterior.x==bloco_proximo.x and bloco_anterior.y<bloco_proximo.y:
-                    self.screen.blit(self.metro_meio_b, vagao_rect)
-                elif bloco_anterior.y==bloco_proximo.y:
-                     self.screen.blit(self.metro_meio_d, vagao_rect)
-                else:
-                    if bloco_anterior.x == -1 and bloco_proximo.y == -1 or bloco_anterior.y == -1 and bloco_proximo.x == -1:
-                        self.screen.blit(self.conexao_ec, vagao_rect)
-                    elif bloco_anterior.x == -1 and bloco_proximo.y == 1 or bloco_anterior.y == 1 and bloco_proximo.x == -1:
-                        self.screen.blit(self.conexao_be, vagao_rect)
-                    elif bloco_anterior.x == 1 and bloco_proximo.y == -1 or bloco_anterior.y == -1 and bloco_proximo.x == 1:
-                        self.screen.blit(self.conexao_cd, vagao_rect)
-                    elif bloco_anterior.x == 1 and bloco_proximo.y == 1 or bloco_anterior.y == 1 and bloco_proximo.x == 1:
-                        self.screen.blit(self.conexao_db, vagao_rect)
+                self.relacao_meio(index, bloco)
+                self.screen.blit(self.meio, vagao_rect)
+                
         # Cada vagão do trem é um bloco
     
+    
     def mover_trem(self):
+        """ Modifica as células que compõem a imagem do objeto na tela
+        """
         if self.novo_vagao == True:
             corpo_copia = self.corpo[:]
             corpo_copia.insert(0,corpo_copia[0]+self.sentido)
@@ -114,9 +139,13 @@ class Trem:
         # mais uma vez o sentido no qual o trem se move
 
     def adicionar_vagao(self):
+        """ Torna True o valor da variável do objeto que descreve a necessidade de se adicionar células à sua imagem
+        """
         self.novo_vagao = True
 
     def relacao_frente(self):
+        """ Define que imagem deve ser carregada na primeira célula ocupada pelo objeto na tela, com base na próxima célula ocupada
+        """
         relacao = self.corpo[1] - self.corpo[0]
         if relacao == Vector2(0,1):
             self.frente = self.metro_frente_c
@@ -128,6 +157,8 @@ class Trem:
             self.frente = self.metro_frente_d
 
     def relacao_tras(self):
+        """ Define que imagem deve ser carregada na última célula ocupada pelo objeto na tela, com base na célula anterior ocupada
+        """
         relacao = self.corpo[-1] - self.corpo[-2]
         if relacao == Vector2(0,1):
             self.tras = self.metro_tras_c
@@ -137,6 +168,31 @@ class Trem:
             self.tras = self.metro_tras_e
         elif relacao == Vector2(-1, 0):
             self.tras = self.metro_tras_d
+
+    def relacao_meio(self, index, bloco):
+        """_summary_
+
+        Args:
+            index (_type_): _description_
+            bloco (_type_): _description_
+        """
+        bloco_anterior = self.corpo[index+1]-bloco
+        bloco_proximo = self.corpo[index-1]-bloco
+        if bloco_anterior.x==bloco_proximo.x and bloco_anterior.y>bloco_proximo.y:
+            self.meio = self.metro_meio_c
+        elif bloco_anterior.x==bloco_proximo.x and bloco_anterior.y<bloco_proximo.y:
+            self.meio = self.metro_meio_b
+        elif bloco_anterior.y==bloco_proximo.y:
+            self.meio = self.metro_meio_d
+        else:
+            if bloco_anterior.x == -1 and bloco_proximo.y == -1 or bloco_anterior.y == -1 and bloco_proximo.x == -1:
+                self.meio = self.conexao_ec
+            elif bloco_anterior.x == -1 and bloco_proximo.y == 1 or bloco_anterior.y == 1 and bloco_proximo.x == -1:
+                self.meio = self.conexao_be
+            elif bloco_anterior.x == 1 and bloco_proximo.y == -1 or bloco_anterior.y == -1 and bloco_proximo.x == 1:
+                self.meio = self.conexao_cd
+            elif bloco_anterior.x == 1 and bloco_proximo.y == 1 or bloco_anterior.y == 1 and bloco_proximo.x == 1:
+                self.meio = self.conexao_db
 
     
         
@@ -214,7 +270,7 @@ class Partida:
             borda_rect = pygame.Rect(int((self.cn-2)*self.cs), int(inicio*self.cs), self.cs, self.cs)
             self.screen.blit(self.borda, borda_rect)
             inicio+=1
-           
+            
 class Menu:
     def __init__(self, cn, cs, screen, fontes):
         self.cn = cn
