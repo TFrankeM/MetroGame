@@ -214,4 +214,32 @@ class Partida:
             borda_rect = pygame.Rect(int((self.cn-2)*self.cs), int(inicio*self.cs), self.cs, self.cs)
             self.screen.blit(self.borda, borda_rect)
             inicio+=1
-            
+           
+class Menu:
+    def __init__(self, cn, cs, screen, fontes):
+        self.cn = cn
+        self.cs = cs
+        self.screen = screen
+        self.fontes = fontes
+        self.comecar = False
+        
+    def desenhar_tela_inicial(self):
+        
+        fundo = pygame.image.load('src/metro_imagens/estação-de-metro-vazia-dos-desenhos-animados-ilustração-do-vetor-144632670.jpg').convert_alpha()
+        fundo_rect = pygame.Rect(0, 0, self.cs*self.cn, self.cs*self.cn)
+        fundo = pygame.transform.scale(fundo, (self.cs*self.cn, self.cs*self.cn))
+        self.screen.blit(fundo, fundo_rect)
+    
+    
+        titulo = "Metrô"
+        titulo_superficie = self.fontes[0].render(titulo, True, (250,100,0))
+        titulo_rect = titulo_superficie.get_rect(center = (int(self.cs*(self.cn/2)), 5*self.cs))
+        self.screen.blit(titulo_superficie, titulo_rect)
+    
+        instrucao = "Pressione a barra de espaço"
+        instrucao_superficie = self.fontes[1].render(instrucao, True, (0,80,200))
+        instrucao_rect = instrucao_superficie.get_rect(center = (int(self.cs*(self.cn/2)), 12*self.cs))
+        self.screen.blit(instrucao_superficie, instrucao_rect)
+        
+    def comecar_fase(self):
+        self.comecar = True
