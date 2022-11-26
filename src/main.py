@@ -3,12 +3,11 @@ import pygame
 import random
 from pygame.math import Vector2
 sys.path.insert(0, '.')
-from classes import Passageiro, Trem, Partida
+from classes import Passageiro, Trem, Partida, Menu
 import time
 import operator
 
 
-#try:
 pygame.init()
 cn = 25 #cell_number
 cs = 32 #cell_size
@@ -16,6 +15,27 @@ screen = pygame.display.set_mode((cn*cs,cn*cs)) # Tela do jogo
 pygame.display.set_caption("Metrô") # Adiciona um nome à janela
 clock = pygame.time.Clock()
 fonte = pygame.font.Font(None, 30)
+fonte_1 = pygame.font.Font(None, 120)
+fonte_2 = pygame.font.Font(None, 30)
+fontes = [fonte_1, fonte_2]
+
+menu = Menu(cn, cs, screen, fontes)
+
+
+
+while menu.comecar == False:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+            # Identifica quando o usuário clica no x na janela, fechando o programa
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                menu.comecar_fase()
+    
+    menu.desenhar_tela_inicial()
+    pygame.display.flip() # Renderiza
+    clock.tick(60) # Garante uma frequência de cerca de 60 frames por segundo
 
 
 partida = Partida(cn, cs, screen, fonte)
@@ -24,7 +44,7 @@ SCREEN_UPDATE = pygame.USEREVENT
 pygame.time.set_timer(SCREEN_UPDATE, 150)
 # Criamos um evento que ocorre a cada 150 milissegundos e que vai acionar o movimento do trem
 
-while True:
+while menu.comecar == True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -32,7 +52,8 @@ while True:
             # Identifica quando o usuário clica no x na janela, fechando o programa
         if event.type == SCREEN_UPDATE:
             pygame.time.set_timer(SCREEN_UPDATE, 150)
-            partida.atualizar()
+            if partida.ativo == True:
+                partida.atualizar()
             # Identifica quando o evento periódico que foi criado fora do loop ocorre, chamando então a função mover_trem()
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
@@ -51,11 +72,6 @@ while True:
                 partida = Partida(cn, cs, screen, fonte)
         
     screen.fill((100,100,200)) # Preenche a tela com cor
-    #menor = pygame.draw.rect(screen, (100,50,50), pygame.Rect(int(32), int(32), cs*(cn-2), cs*(cn-2)))
     partida.desenhar_elementos()
     pygame.display.flip() # Renderiza
     clock.tick(60) # Garante uma frequência de cerca de 60 frames por segundo
-"""except:
-    print("Deu ruim!")
-    pygame.quit()
-    sys.exit()"""
