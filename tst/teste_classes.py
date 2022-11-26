@@ -37,7 +37,7 @@ class TesteClasses(u.TestCase):
         trem.mover_trem()
         self.assertEqual(trem.corpo, [Vector2(6,2), Vector2(5,2), Vector2(4,2), Vector2(3,2)])
         print("O vagão novo foi adicionado")
-        self.assertEqual(trem.novo_vagao, False)
+        self.assertFalse(trem.novo_vagao)
         print("O tamanho do trem foi fixado")
 
 
