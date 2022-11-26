@@ -1,6 +1,7 @@
 import pygame
 import random
 from pygame.math import Vector2
+import time
 
 class Passageiro:
     def __init__(self, cn, cs, screen):
@@ -182,6 +183,7 @@ class Partida:
         self.fonte = fonte
         self.musica = pygame.mixer.Sound('src/sons/musica_fundo.mpeg')
         self.musica.play()
+        self.batida = pygame.mixer.Sound('src/sons/196734__paulmorek__crash-01.wav')
         self.borda = pygame.image.load('src/metro_imagens/linha_amarela_vao.png').convert_alpha()
         self.borda = pygame.transform.scale(self.borda, (cs,cs))
 
@@ -214,8 +216,12 @@ class Partida:
                 self.game_over()
     
     def game_over(self):
+        self.batida.play()
         self.ativo = False
         self.musica.stop()
+        time.sleep(1)
+        self.batida.stop()
+        
 
     def desenhar_pontuacao(self):
         pontuacao = str(len(self.trem.corpo)-3)
