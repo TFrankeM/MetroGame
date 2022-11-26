@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(0, "..\src")
+sys.path.insert(0, ".\src")
 import unittest as u
 import classes as c
 from pygame.math import Vector2
@@ -24,11 +24,18 @@ class TesteClasses(u.TestCase):
     def tearDown(self):
         print("Executando TearDownMethod")
     
-    def test_case_mover_trem(self):
-        print("Executando Caso de Teste: Mover trem")
+    def test_case_trem_mover_trem_false(self):
+        print("Executando Caso de Teste: Mover trem sem novo vagão")
         trem = c.Trem()
         trem.mover_trem()
         self.assertEqual(trem.corpo, [Vector2(6,2), Vector2(5,2), Vector2(4,2)])
+    
+    def test_case_trem_mover_trem_true(self):
+        print("Executando Caso de Teste: Mover trem com novo vagão")
+        trem = c.Trem
+        trem.novo_vagao = True
+        trem.mover_trem()
+        self.assertEqual(trem.corpo, [Vector2(6,2), Vector2(5,2), Vector2(4,2), Vector2(3,2)])
 
 
 
