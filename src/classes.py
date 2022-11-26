@@ -10,9 +10,10 @@ class Passageiro:
         self.cn = cn
         self.cs = cs
         self.screen = screen
-        self.pessoa = pygame.image.load('src/metro_imagens/passageiro.png').convert_alpha()
         # O objeto recebe o tamanho da tela em relação às células, o tamanho das células no jogo e a superfície onde ele será desenhado
         
+    def definir_imagens_passageiro(self):
+        self.pessoa = pygame.image.load('src/metro_imagens/passageiro.png').convert_alpha()
 
     def desenhar_passageiro(self):
         passageiro_rect = pygame.Rect(int(self.x*self.cs), int(self.y*self.cs), self.cs, self.cs)
@@ -38,7 +39,7 @@ class Trem:
         # O objeto recebe o tamanho da tela emk relação às células, o tamanho das células no jogo e a superfície onde ele será desenhado
         
     
-    def definir_imagens(self):
+    def definir_imagens_trem(self):
         self.metro_frente_d = pygame.image.load('src/metro_imagens/metro_direita.png').convert_alpha()
         self.metro_frente_d = pygame.transform.scale(self.metro_frente_d, (self.cs,self.cs))
         self.metro_tras_d = pygame.image.load('src/metro_imagens/metro_esquerda.png').convert_alpha()
@@ -143,8 +144,9 @@ class Trem:
 class Partida:
     def __init__(self, cn, cs, screen, fonte):
         self.trem = Trem(cn, cs, screen) # Cria um objeto da classe Trem
-        self.trem.definir_imagens()
+        self.trem.definir_imagens_trem()
         self.passageiro = Passageiro(cn, cs, screen) # Cria um objeto da classe Passageiro
+        self.passageiro.definir_imagens_passageiro()
         self.cn = cn
         self.cs = cs
         self.screen = screen
