@@ -32,10 +32,13 @@ class TesteClasses(u.TestCase):
     
     def test_case_trem_mover_trem_true(self):
         print("Executando Caso de Teste: Mover trem com novo vagão")
-        trem = c.Trem
+        trem = c.Trem()
         trem.novo_vagao = True
         trem.mover_trem()
         self.assertEqual(trem.corpo, [Vector2(6,2), Vector2(5,2), Vector2(4,2), Vector2(3,2)])
+        print("O vagão novo foi adicionado")
+        self.assertEqual(trem.novo_vagao, False)
+        print("O tamanho do trem foi fixado")
 
 
 
