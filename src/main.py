@@ -37,6 +37,7 @@ while True:
                     menu.comecar_fase()
                     partida.ativo = True
                     menu.musica.stop()
+                    partida.musica.stop()
                     partida.musica.play()
                     
         menu.desenhar_elementos()
