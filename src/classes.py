@@ -77,7 +77,7 @@ class Trem:
         self.metro_frente_d = pygame.transform.scale(self.metro_frente_d, (self.cs,self.cs))
         self.metro_tras_d = pygame.image.load('src/metro_imagens/metro_esquerda.png').convert_alpha()
         self.metro_tras_d = pygame.transform.scale(self.metro_tras_d, (self.cs,self.cs))
-        self.metro_meio_d = pygame.image.load('src/metro_imagens/metro_meio_direita_esquerda.png').convert_alpha()
+        self.metro_meio_d = pygame.image.load('src/metro_imagens/metro_meio.png').convert_alpha()
         self.metro_meio_d = pygame.transform.scale(self.metro_meio_d, (self.cs,self.cs))
         
         self.metro_frente_c = pygame.transform.rotate(self.metro_frente_d, 90)
@@ -208,8 +208,8 @@ class Partida:
         self.ativo = False
         self.pausa = False
         self.fonte = fonte
-        self.musica = pygame.mixer.Sound('src/sons/musica_fundo.mpeg')
-        self.batida = pygame.mixer.Sound('src/sons/196734__paulmorek__crash-01.wav')
+        self.musica = pygame.mixer.Sound('src/metro_sons/musica_fundo.mpeg')
+        self.batida = pygame.mixer.Sound('src/metro_sons/196734__paulmorek__crash-01.wav')
         self.borda = pygame.image.load('src/metro_imagens/linha_amarela_vao.png').convert_alpha()
         self.borda = pygame.transform.scale(self.borda, (cs,cs))
 
@@ -283,7 +283,7 @@ class Menu:
         
         
     def abertura(self):
-        self.musica = pygame.mixer.Sound('src/sons/chegada.mp3')
+        self.musica = pygame.mixer.Sound('src/metro_sons/chegada.mp3')
         self.musica.play()
     
     def desenhar_elementos(self):
