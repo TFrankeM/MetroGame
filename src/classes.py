@@ -279,7 +279,13 @@ class Menu:
         self.fontes = fontes
         self.comecar = False
         self.pausa = False
+        self.abertura()
         
+        
+    def abertura(self):
+        self.musica = pygame.mixer.Sound('src/sons/chegada.mp3')
+        self.musica.play()
+    
     def desenhar_elementos(self):
         if self.comecar == False:
             self.desenhar_tela_inicial()
