@@ -335,9 +335,10 @@ class Menu:
         pygame.draw.rect(self.screen, (200,200,50), menu_fim_rect)
         
         recordes = self.recorde.ler()
-        recordes_superficie = self.fontes[1].render(recordes, True, (0,0,0))
-        recordes_rect = recordes_superficie.get_rect(center = (int(self.cs*(self.cn/2)), 10*self.cn))
-        self.screen.blit(recordes_superficie, recordes_rect)
+        for i in range(5):
+            recordes_superficie = self.fontes[1].render(recordes[i], True, (0,0,0))
+            recordes_rect = recordes_superficie.get_rect(center = (int(self.cs*(self.cn/2)), (10+i)*self.cn))
+            self.screen.blit(recordes_superficie, recordes_rect)
     
     def registrar_recorde(self):
         self.recorde = Recorde()
@@ -382,7 +383,4 @@ class Recorde:
         
     def ler(self):
         self.arquivo.seek(0,0)
-        texto = ""
-        for line in self.arquivo.readlines():
-            texto+=line
-        return texto
+        return self.arquivo.readlines()
