@@ -203,6 +203,9 @@ class Partida:
         self.trem.definir_imagens_trem()
         self.passageiro = Passageiro(cn, cs, screen) # Cria um objeto da classe Passageiro
         self.passageiro.definir_imagens_passageiro()
+        self.parede = Parede(cn, cs, screen)
+        self.parede.definir_imagens_parede()
+        self.parede.adicionar_parede([Vector2(5,5), Vector2(5,6), Vector2(4,5)])
         self.cn = cn
         self.cs = cs
         self.screen = screen
@@ -226,6 +229,7 @@ class Partida:
     def desenhar_elementos(self):
         self.desenhar_borda()
         self.passageiro.desenhar_passageiro() # Desenha o passageiro
+        self.parede.desenhar_parede()
         self.trem.desenhar_trem() # Desenha o trem
         self.desenhar_pontuacao()
 
@@ -243,6 +247,8 @@ class Partida:
         for bloco in self.trem.corpo[1:]:
             if bloco == self.trem.corpo[0]:
                 self.game_over()
+        if self.trem.corpo[0] in self.parede.corpo:
+            self.game_over()
     
     def game_over(self):
         self.batida.play()
@@ -299,3 +305,23 @@ class Menu:
         
     def comecar_fase(self):
         self.comecar = True
+
+class Parede:
+    def __init__(self, cn, cs, screen):
+        self.cn = cn
+        self.cs = cs
+        self.screen = screen
+        self.corpo = []
+        
+    def definir_imagens_parede(self):
+        self.parede = pygame.image.load('src/metro_imagens/images.jfif').convert_alpha()
+    
+    def desenhar_parede(self):
+        for bloco in self.corpo:
+            parede_rect = pygame.Rect(int(bloco.x*self.cs), int(bloco.y*self.cs), self.cs, self.cs)
+            self.parede = pygame.transform.scale(self.parede, (self.cs, self.cs))
+            self.screen.blit(self.parede, parede_rect)
+    
+    def adicionar_parede(self, paredes_novas):
+        self.corpo = self.corpo + paredes_novas
+
