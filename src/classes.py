@@ -2,6 +2,7 @@ import pygame
 import random
 from pygame.math import Vector2
 import time
+from datetime import date
 
 class Passageiro:
     """ Os objetos dessa classe são carregados na tela e interagem com objetos da classe Trem quando ambos ocupam as mesmas coordenadas.
@@ -14,8 +15,6 @@ class Passageiro:
             cs (int): Tamanho das células. Defaults to 1.
             screen (pygame.Surface): Janela do programa. Defaults to None.
         """
-        self.sortear(cn, cs, screen)
-        # A posição é randomizada dentro dos limites da tela e guardada num vetor.
         self.cn = cn
         self.cs = cs
         self.screen = screen
@@ -35,7 +34,7 @@ class Passageiro:
         self.screen.blit(self.pessoa, passageiro_rect)
         # O passageiro é renderizado como um bloco colorido
 
-    def sortear(self, cn, cs, screen):
+    def sortear(self, cn):
         """ Define a posição do objeto na tela do jogo
 
         Args:
@@ -77,7 +76,7 @@ class Trem:
         self.metro_frente_d = pygame.transform.scale(self.metro_frente_d, (self.cs,self.cs))
         self.metro_tras_d = pygame.image.load('src/metro_imagens/metro_esquerda.png').convert_alpha()
         self.metro_tras_d = pygame.transform.scale(self.metro_tras_d, (self.cs,self.cs))
-        self.metro_meio_d = pygame.image.load('src/metro_imagens/metro_meio.png').convert_alpha()
+        self.metro_meio_d = pygame.image.load('src/metro_imagens/metro_meio_direita_esquerda.png').convert_alpha()
         self.metro_meio_d = pygame.transform.scale(self.metro_meio_d, (self.cs,self.cs))
         
         self.metro_frente_c = pygame.transform.rotate(self.metro_frente_d, 90)
@@ -110,7 +109,7 @@ class Trem:
         for index, bloco in enumerate(self.corpo):
             x_pos = int(bloco.x*self.cs)
             y_pos = int(bloco.y*self.cs)
-            vagao_rect = pygame.Rect(int(bloco.x*self.cs), int(bloco.y*self.cs), self.cs, self.cs)
+            vagao_rect = pygame.Rect(x_pos, y_pos, self.cs, self.cs)
             if index == 0:
                 self.screen.blit(self.frente, vagao_rect)
             elif index == len(self.corpo) -1:
@@ -197,10 +196,16 @@ class Partida:
     def __init__(self, cn, cs, screen, fonte):
         self.trem = Trem(cn, cs, screen) # Cria um objeto da classe Trem
         self.trem.definir_imagens_trem()
-        self.passageiro = Passageiro(cn, cs, screen) # Cria um objeto da classe Passageiro
-        self.passageiro.definir_imagens_passageiro()
+        
         self.parede = Parede(cn, cs, screen, 1)
         self.parede.definir_imagens_parede()
+        
+        self.passageiro = Passageiro(cn, cs, screen) # Cria um objeto da classe Passageiro
+        self.passageiro.definir_imagens_passageiro()
+        self.passageiro.sortear(cn)
+        while self.passageiro.pos in self.trem.corpo or self.passageiro.pos in self.parede.corpo:
+            self.passageiro.sortear(cn)
+        
         self.cn = cn
         self.cs = cs
         self.screen = screen
@@ -212,6 +217,7 @@ class Partida:
         self.batida = pygame.mixer.Sound('src/metro_sons/196734__paulmorek__crash-01.wav')
         self.borda = pygame.image.load('src/metro_imagens/linha_amarela_vao.png').convert_alpha()
         self.borda = pygame.transform.scale(self.borda, (cs,cs))
+        self.pontuacao = 0
 
 
     def atualizar(self):
@@ -230,7 +236,7 @@ class Partida:
     def checar_colisao(self):
         if self.passageiro.pos == self.trem.corpo[0]:
             while self.passageiro.pos in self.trem.corpo or self.passageiro.pos in self.parede.corpo:
-                self.passageiro.sortear(self.cn, self.cs, self.screen)
+                self.passageiro.sortear(self.cn)
                 #
             self.trem.adicionar_vagao()
             
@@ -250,11 +256,10 @@ class Partida:
         self.musica.stop()
         time.sleep(1)
         self.batida.stop()
-        
 
     def desenhar_pontuacao(self):
-        pontuacao = str(len(self.trem.corpo)-3)
-        pontuacao_superficie = self.fonte.render(pontuacao, True, (0,0,0))
+        self.pontuacao = str(len(self.trem.corpo)-3)
+        pontuacao_superficie = self.fonte.render(self.pontuacao, True, (0,0,0))
         pontuacao_rect = pontuacao_superficie.get_rect(center = (int(self.cs*self.cn - 60), int(20)))
         self.screen.blit(pontuacao_superficie, pontuacao_rect)
 
@@ -277,30 +282,27 @@ class Menu:
         self.cs = cs
         self.screen = screen
         self.fontes = fontes
-        self.comecar = False
+        self.jogo = "Início"
         self.pausa = False
         self.abertura()
-        
         
     def abertura(self):
         self.musica = pygame.mixer.Sound('src/metro_sons/chegada.mp3')
         self.musica.play()
     
     def desenhar_elementos(self):
-        if self.comecar == False:
+        if self.jogo == "Início":
             self.desenhar_tela_inicial()
-        elif self.comecar == True and self.pausa == True:
+        elif self.jogo == "Meio" and self.pausa == True:
             self.pausar_jogo()
+        elif self.jogo =="Fim":
+            self.fim_jogo()
             
-    
-    
     def desenhar_tela_inicial(self):
-        
         fundo = pygame.image.load('src/metro_imagens/estação-de-metro-vazia-dos-desenhos-animados-ilustração-do-vetor-144632670.jpg').convert_alpha()
         fundo_rect = pygame.Rect(0, 0, self.cs*self.cn, self.cs*self.cn)
         fundo = pygame.transform.scale(fundo, (self.cs*self.cn, self.cs*self.cn))
         self.screen.blit(fundo, fundo_rect)
-    
     
         titulo = "Metrô"
         titulo_superficie = self.fontes[0].render(titulo, True, (250,100,0))
@@ -313,7 +315,7 @@ class Menu:
         self.screen.blit(instrucao_superficie, instrucao_rect)
         
     def comecar_fase(self):
-        self.comecar = True
+        self.jogo = "Meio"
         
     def pausar_jogo(self):
         menu_pausa_rect = pygame.Rect(self.cs*5, self.cs*4, self.cs*15, self.cs*17)
@@ -327,8 +329,18 @@ class Menu:
         pausa_superficie = self.fontes[1].render(pausa_2, True, (250,100,0))
         pausa_rect = pausa_superficie.get_rect(center = (int(self.cs*(self.cn/2)), 6*self.cs))
         self.screen.blit(pausa_superficie, pausa_rect)
+    
+    def fim_jogo(self):
+        menu_fim_rect = pygame.Rect(self.cs*5, self.cs*4, self.cs*15, self.cs*17)
+        pygame.draw.rect(self.screen, (200,200,50), menu_fim_rect)
         
-
+        recordes = self.recorde.ler()
+        recordes_superficie = self.fontes[1].render(recordes, True, (0,0,0))
+        recordes_rect = recordes_superficie.get_rect(center = (int(self.cs*(self.cn/2)), 10*self.cn))
+        self.screen.blit(recordes_superficie, recordes_rect)
+    
+    def registrar_recorde(self):
+        self.recorde = Recorde()
 
 class Parede:
     def __init__(self, cn, cs, screen, fase):
@@ -361,3 +373,16 @@ class Parede:
             self.corpo += [Vector2(11,3), Vector2(13,3), Vector2(11,21), Vector2(13,21)]
             self.corpo += [Vector2(3,11), Vector2(3,13), Vector2(21,11), Vector2(21,13)]
 
+class Recorde:
+    def __init__(self):
+        self.arquivo = open("registros.txt", "a+")
+    
+    def escrever(self, pontuacao):
+        self.arquivo.write(f"Jogador|{date.today()}|{pontuacao}\n")
+        
+    def ler(self):
+        self.arquivo.seek(0,0)
+        texto = ""
+        for line in self.arquivo.readlines():
+            texto+=line
+        return texto
