@@ -204,12 +204,11 @@ class Partida:
         self.cn = cn
         self.cs = cs
         self.screen = screen
-        # O objeto recebe o tamanho da tela emk relação às células, o tamanho das células no jogo e a superfície onde ele será desenhado
-        self.ativo = True
+        # O objeto recebe o tamanho da tela em relação às células, o tamanho das células no jogo e a superfície onde ele será desenhado
+        self.ativo = False
         self.pausa = False
         self.fonte = fonte
         self.musica = pygame.mixer.Sound('src/sons/musica_fundo.mpeg')
-        self.musica.play()
         self.batida = pygame.mixer.Sound('src/sons/196734__paulmorek__crash-01.wav')
         self.borda = pygame.image.load('src/metro_imagens/linha_amarela_vao.png').convert_alpha()
         self.borda = pygame.transform.scale(self.borda, (cs,cs))
@@ -279,7 +278,16 @@ class Menu:
         self.screen = screen
         self.fontes = fontes
         self.comecar = False
+        self.pausa = False
         
+    def desenhar_elementos(self):
+        if self.comecar == False:
+            self.desenhar_tela_inicial()
+        elif self.comecar == True and self.pausa == True:
+            self.pausar_jogo()
+            
+    
+    
     def desenhar_tela_inicial(self):
         
         fundo = pygame.image.load('src/metro_imagens/estação-de-metro-vazia-dos-desenhos-animados-ilustração-do-vetor-144632670.jpg').convert_alpha()
@@ -300,6 +308,21 @@ class Menu:
         
     def comecar_fase(self):
         self.comecar = True
+        
+    def pausar_jogo(self):
+        menu_pausa_rect = pygame.Rect(self.cs*5, self.cs*4, self.cs*15, self.cs*17)
+        pygame.draw.rect(self.screen, (200,200,50), menu_pausa_rect)
+        
+        pausa_1 = "O trem fez uma parada"
+        pausa_2 = "Aguarde"
+        pausa_superficie = self.fontes[1].render(pausa_1, True, (250,100,0))
+        pausa_rect = pausa_superficie.get_rect(center = (int(self.cs*(self.cn/2)), 5*self.cs))
+        self.screen.blit(pausa_superficie, pausa_rect)
+        pausa_superficie = self.fontes[1].render(pausa_2, True, (250,100,0))
+        pausa_rect = pausa_superficie.get_rect(center = (int(self.cs*(self.cn/2)), 6*self.cs))
+        self.screen.blit(pausa_superficie, pausa_rect)
+        
+
 
 class Parede:
     def __init__(self, cn, cs, screen, fase):
