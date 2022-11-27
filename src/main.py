@@ -33,6 +33,7 @@ while menu.comecar == False:
             if event.key == pygame.K_SPACE:
                 menu.comecar_fase()
                 partida.ativo = True
+                menu.musica.stop()
                 partida.musica.play()
     
     menu.desenhar_elementos()
