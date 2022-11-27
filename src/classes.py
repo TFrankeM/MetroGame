@@ -46,7 +46,6 @@ class Passageiro:
         self.x = random.randint(2, cn-3)
         self.y = random.randint(2, cn-3)
         self.pos = Vector2(self.x, self.y)
-        # Sorteia uma posição para o passageiro dentro dos limites da tela
         
 class Trem:
     """ Os objetos dessa classe se movem pela janela
@@ -194,18 +193,14 @@ class Trem:
             elif bloco_anterior.x == 1 and bloco_proximo.y == 1 or bloco_anterior.y == 1 and bloco_proximo.x == 1:
                 self.meio = self.conexao_db
 
-    
-        
-
 class Partida:
     def __init__(self, cn, cs, screen, fonte):
         self.trem = Trem(cn, cs, screen) # Cria um objeto da classe Trem
         self.trem.definir_imagens_trem()
         self.passageiro = Passageiro(cn, cs, screen) # Cria um objeto da classe Passageiro
         self.passageiro.definir_imagens_passageiro()
-        self.parede = Parede(cn, cs, screen)
+        self.parede = Parede(cn, cs, screen, 1)
         self.parede.definir_imagens_parede()
-        self.parede.adicionar_parede([Vector2(5,5), Vector2(5,6), Vector2(4,5)])
         self.cn = cn
         self.cs = cs
         self.screen = screen
@@ -235,7 +230,7 @@ class Partida:
 
     def checar_colisao(self):
         if self.passageiro.pos == self.trem.corpo[0]:
-            while self.passageiro.pos in self.trem.corpo:
+            while self.passageiro.pos in self.trem.corpo or self.passageiro.pos in self.parede.corpo:
                 self.passageiro.sortear(self.cn, self.cs, self.screen)
                 #
             self.trem.adicionar_vagao()
@@ -307,11 +302,13 @@ class Menu:
         self.comecar = True
 
 class Parede:
-    def __init__(self, cn, cs, screen):
+    def __init__(self, cn, cs, screen, fase):
         self.cn = cn
         self.cs = cs
         self.screen = screen
         self.corpo = []
+        self.fase = fase
+        self.adicionar_parede()
         
     def definir_imagens_parede(self):
         self.parede = pygame.image.load('src/metro_imagens/images.jfif').convert_alpha()
@@ -322,6 +319,16 @@ class Parede:
             self.parede = pygame.transform.scale(self.parede, (self.cs, self.cs))
             self.screen.blit(self.parede, parede_rect)
     
-    def adicionar_parede(self, paredes_novas):
-        self.corpo = self.corpo + paredes_novas
+    def adicionar_parede(self):
+        if self.fase == 0:
+            pass
+        elif self.fase == 1:
+            self.corpo += [Vector2(5,5), Vector2(5,6), Vector2(4,5)]
+            self.corpo += [Vector2(19,5), Vector2(19,6), Vector2(20,5)]
+            self.corpo += [Vector2(5,19), Vector2(5,18), Vector2(4,19)]
+            self.corpo += [Vector2(19,19), Vector2(19,18), Vector2(20,19)]
+            self.corpo += [Vector2(7,8), Vector2(17,8), Vector2(7,16), Vector2(17,16)]
+            self.corpo += [Vector2(9,10), Vector2(15,10), Vector2(9,14), Vector2(15,14)]
+            self.corpo += [Vector2(11,3), Vector2(13,3), Vector2(11,21), Vector2(13,21)]
+            self.corpo += [Vector2(3,11), Vector2(3,13), Vector2(21,11), Vector2(21,13)]
 
