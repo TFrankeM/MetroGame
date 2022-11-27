@@ -20,7 +20,7 @@ fonte_2 = pygame.font.Font(None, 30)
 fontes = [fonte_1, fonte_2]
 
 menu = Menu(cn, cs, screen, fontes)
-
+partida = Partida(cn, cs, screen, fonte)
 
 
 while menu.comecar == False:
@@ -32,13 +32,15 @@ while menu.comecar == False:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 menu.comecar_fase()
+                partida.ativo = True
+                partida.musica.play()
     
-    menu.desenhar_tela_inicial()
+    menu.desenhar_elementos()
     pygame.display.flip() # Renderiza
     clock.tick(60) # Garante uma frequência de cerca de 60 frames por segundo
 
 
-partida = Partida(cn, cs, screen, fonte)
+
 
 SCREEN_UPDATE = pygame.USEREVENT 
 pygame.time.set_timer(SCREEN_UPDATE, 150)
@@ -56,8 +58,9 @@ while menu.comecar == True:
                 partida.atualizar()
             # Identifica quando o evento periódico que foi criado fora do loop ocorre, chamando então a função mover_trem()
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE:
+            if event.key == pygame.K_SPACE and partida.ativo == True:
                 partida.pausa = operator.not_(partida.pausa)
+                menu.pausa = partida.pausa
             if event.key == pygame.K_UP and partida.trem.corpo[1] != partida.trem.corpo[0]+Vector2(0,-1) or event.key == pygame.K_w and partida.trem.corpo[1] != partida.trem.corpo[0]+Vector2(0,-1):
                 partida.trem.sentido = Vector2(0,-1)
             if event.key == pygame.K_DOWN and partida.trem.corpo[1] != partida.trem.corpo[0]+Vector2(0,1) or event.key == pygame.K_s and partida.trem.corpo[1] != partida.trem.corpo[0]+Vector2(0,1):
@@ -70,8 +73,11 @@ while menu.comecar == True:
             if partida.ativo == False:
                 pygame.time.set_timer(SCREEN_UPDATE, 200)
                 partida = Partida(cn, cs, screen, fonte)
+                partida.ativo = True
+                partida.musica.play()
         
     screen.fill((100,100,200)) # Preenche a tela com cor
     partida.desenhar_elementos()
+    menu.desenhar_elementos()
     pygame.display.flip() # Renderiza
     clock.tick(60) # Garante uma frequência de cerca de 60 frames por segundo
