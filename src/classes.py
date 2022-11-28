@@ -77,48 +77,50 @@ class Trem:
     def definir_imagens_trem(self):
         """Carrega as imagens correspondentes aos objetos da classe
         """
-        self.metro_frente_d = pygame.image.load('src/metro_imagens/metro_direita.png').convert_alpha()
-        self.metro_frente_d = pygame.transform.scale(self.metro_frente_d, (self.cs,self.cs))
-        self.metro_tras_d = pygame.image.load('src/metro_imagens/metro_esquerda.png').convert_alpha()
-        self.metro_tras_d = pygame.transform.scale(self.metro_tras_d, (self.cs,self.cs))
-        self.metro_meio_d = pygame.image.load('src/metro_imagens/metro_meio_direita_esquerda.png').convert_alpha()
-        self.metro_meio_d = pygame.transform.scale(self.metro_meio_d, (self.cs,self.cs))
-        
-        self.metro_frente_c = pygame.transform.rotate(self.metro_frente_d, 90)
-        self.metro_tras_c = pygame.transform.rotate(self.metro_tras_d, 90)
-        self.metro_meio_c = pygame.transform.rotate(self.metro_meio_d, 90)
-        
-        self.metro_frente_e = self.metro_tras_d
-        self.metro_tras_e = self.metro_frente_d
-        self.metro_meio_e = self.metro_meio_d
-        
-        self.metro_frente_b = pygame.transform.rotate(self.metro_frente_d, 270)
-        self.metro_tras_b = pygame.transform.rotate(self.metro_tras_d, 270)
-        self.metro_meio_b = pygame.transform.rotate(self.metro_meio_d, 270)
+        self.frente_direita = pygame.image.load('src/metro_imagens/horizontal_frente.png').convert_alpha()
+        self.frente_direita = pygame.transform.scale(self.frente_direita, (self.cs,self.cs))
+        self.frente_esquerda = pygame.transform.flip(self.frente_direita, True, False)
+        self.frente_emcima = pygame.image.load('src/metro_imagens/vertical_emcima.png').convert_alpha()
+        self.frente_emcima = pygame.transform.scale(self.frente_emcima, (self.cs,self.cs))
+        self.frente_embaixo = pygame.image.load('src/metro_imagens/vertical_embaixo.png').convert_alpha()
+        self.frente_embaixo = pygame.transform.scale(self.frente_embaixo, (self.cs,self.cs))
 
-        self.frente = self.metro_frente_d
-        self.tras = self.metro_tras_d
-        self.meio = self.metro_meio_d
-        
-        self.conexao_db = pygame.image.load('src/metro_imagens/curva.png').convert_alpha()
-        self.conexao_db = pygame.transform.scale(self.conexao_db, (self.cs,self.cs))
-        self.conexao_cd = pygame.transform.rotate(self.conexao_db, 90)
-        self.conexao_ec = pygame.transform.rotate(self.conexao_db, 180)
-        self.conexao_be = pygame.transform.rotate(self.conexao_db, 270)
+        self.traseira_esquerda = pygame.image.load('src/metro_imagens/horizontal_traseira.png').convert_alpha()
+        self.traseira_esquerda = pygame.transform.scale(self.traseira_esquerda, (self.cs,self.cs))
+        self.traseira_direita = pygame.transform.flip(self.traseira_esquerda, True, False)
+        self.traseira_emcima = pygame.image.load('src/metro_imagens/vertical_emcima.png').convert_alpha()
+        self.traseira_emcima = pygame.transform.scale(self.traseira_emcima, (self.cs,self.cs))
+        self.traseira_embaixo = pygame.image.load('src/metro_imagens/vertical_embaixo.png').convert_alpha()
+        self.traseira_embaixo = pygame.transform.scale(self.traseira_embaixo, (self.cs,self.cs))
+
+        self.meio_horizontal = pygame.image.load('src/metro_imagens/horizontal_meio.png').convert_alpha()
+        self.meio_horizontal = pygame.transform.scale(self.meio_horizontal, (self.cs,self.cs))
+        self.meio_vertical = pygame.image.load('src/metro_imagens/vertical_meio.png').convert_alpha()
+        self.meio_vertical = pygame.transform.scale(self.meio_vertical, (self.cs,self.cs))
+
+        # dc = direita, em cima
+        # db = direita, em baixo
+        # ec = erquerda, em cima
+        # eb = esquerda, em baixo
+        self.conexao_dc = pygame.image.load('src/metro_imagens/curva.png').convert_alpha()
+        self.conexao_dc = pygame.transform.scale(self.conexao_dc, (self.cs,self.cs))
+        self.conexao_db = pygame.transform.rotate(self.conexao_dc, 270)
+        self.conexao_ec = pygame.transform.rotate(self.conexao_dc, 90)
+        self.conexao_eb = pygame.transform.rotate(self.conexao_dc, 180)
     
     def desenhar_trem(self):
         """ Gera um retângulo para conter as imagens do objeto da classe e garrega essas imagens na tela, de acordo com a posição das células que o objeto ocupa
         """
         self.relacao_frente()
-        self.relacao_tras()
+        self.relacao_traseira()
         for index, bloco in enumerate(self.corpo):
-            x_pos = int(bloco.x*self.cs)
-            y_pos = int(bloco.y*self.cs)
+            x_pos = int(bloco.x * self.cs)
+            y_pos = int(bloco.y * self.cs)
             vagao_rect = pygame.Rect(x_pos, y_pos, self.cs, self.cs)
             if index == 0:
                 self.screen.blit(self.frente, vagao_rect)
             elif index == len(self.corpo) -1:
-                self.screen.blit(self.tras, vagao_rect)
+                self.screen.blit(self.traseira, vagao_rect)
             else:
                 self.relacao_meio(index, bloco)
                 self.screen.blit(self.meio, vagao_rect)
@@ -131,12 +133,12 @@ class Trem:
         """
         if self.novo_vagao == True:
             corpo_copia = self.corpo[:]
-            corpo_copia.insert(0,corpo_copia[0]+self.sentido)
+            corpo_copia.insert(0,corpo_copia[0] + self.sentido)
             self.corpo = corpo_copia[:]
             self.novo_vagao = False
         else:
             corpo_copia = self.corpo[:-1]
-            corpo_copia.insert(0,corpo_copia[0]+self.sentido)
+            corpo_copia.insert(0,corpo_copia[0] + self.sentido)
             self.corpo = corpo_copia[:]
         # Quando o trem se move, o último vagão é eliminado e adiciona-se um vagão à frente dos outros(no começo da lista), que é uma cópia do primeiro vagão 
         # mais uma vez o sentido no qual o trem se move
@@ -151,26 +153,26 @@ class Trem:
         """
         relacao = self.corpo[1] - self.corpo[0]
         if relacao == Vector2(0,1):
-            self.frente = self.metro_frente_c
+            self.frente = self.frente_emcima
         elif relacao == Vector2(0,-1):
-            self.frente = self.metro_frente_b
+            self.frente = self.frente_embaixo
         elif relacao == Vector2(1, 0):
-            self.frente = self.metro_frente_e
+            self.frente = self.frente_esquerda
         elif relacao == Vector2(-1, 0):
-            self.frente = self.metro_frente_d
+            self.frente = self.frente_direita
 
-    def relacao_tras(self):
+    def relacao_traseira(self):
         """ Define que imagem deve ser carregada na última célula ocupada pelo objeto na tela, com base na célula anterior ocupada
         """
-        relacao = self.corpo[-1] - self.corpo[-2]
+        relacao = self.corpo[-2] - self.corpo[-1]
         if relacao == Vector2(0,1):
-            self.tras = self.metro_tras_c
+            self.traseira = self.traseira_emcima
         elif relacao == Vector2(0,-1):
-            self.tras = self.metro_tras_b
+            self.traseira = self.traseira_embaixo
         elif relacao == Vector2(1, 0):
-            self.tras = self.metro_tras_e
+            self.traseira = self.traseira_esquerda
         elif relacao == Vector2(-1, 0):
-            self.tras = self.metro_tras_d
+            self.traseira = self.traseira_direita
 
     def relacao_meio(self, index, bloco):
         """_summary_
@@ -179,21 +181,19 @@ class Trem:
             index (_type_): _description_
             bloco (_type_): _description_
         """
-        bloco_anterior = self.corpo[index+1]-bloco
-        bloco_proximo = self.corpo[index-1]-bloco
-        if bloco_anterior.x==bloco_proximo.x and bloco_anterior.y>bloco_proximo.y:
-            self.meio = self.metro_meio_c
-        elif bloco_anterior.x==bloco_proximo.x and bloco_anterior.y<bloco_proximo.y:
-            self.meio = self.metro_meio_b
-        elif bloco_anterior.y==bloco_proximo.y:
-            self.meio = self.metro_meio_d
+        bloco_anterior = self.corpo[index+1] - bloco
+        bloco_proximo = self.corpo[index-1] - bloco
+        if bloco_anterior.x == bloco_proximo.x:
+            self.meio = self.meio_vertical
+        elif bloco_anterior.y == bloco_proximo.y:
+            self.meio = self.meio_horizontal
         else:
             if bloco_anterior.x == -1 and bloco_proximo.y == -1 or bloco_anterior.y == -1 and bloco_proximo.x == -1:
                 self.meio = self.conexao_ec
             elif bloco_anterior.x == -1 and bloco_proximo.y == 1 or bloco_anterior.y == 1 and bloco_proximo.x == -1:
-                self.meio = self.conexao_be
+                self.meio = self.conexao_eb
             elif bloco_anterior.x == 1 and bloco_proximo.y == -1 or bloco_anterior.y == -1 and bloco_proximo.x == 1:
-                self.meio = self.conexao_cd
+                self.meio = self.conexao_dc
             elif bloco_anterior.x == 1 and bloco_proximo.y == 1 or bloco_anterior.y == 1 and bloco_proximo.x == 1:
                 self.meio = self.conexao_db
                 
@@ -222,7 +222,7 @@ class Partida:
         self.pausa = False
         self.fonte = fonte
         self.musica = pygame.mixer.Sound('src/metro_sons/musica_fundo.mpeg')
-        self.batida = pygame.mixer.Sound('src/metro_sons/196734__paulmorek__crash-01.wav')
+        self.batida = pygame.mixer.Sound('src/metro_sons/batida.wav')
         self.borda = pygame.image.load('src/metro_imagens/linha_amarela_vao.png').convert_alpha()
         self.borda = pygame.transform.scale(self.borda, (cs,cs))
         self.pontuacao = 0
@@ -316,7 +316,7 @@ class Menu:
             self.fim_jogo()
             
     def desenhar_tela_inicial(self):
-        fundo = pygame.image.load('src/metro_imagens/estação-de-metro-vazia-dos-desenhos-animados-ilustração-do-vetor-144632670.jpg').convert_alpha()
+        fundo = pygame.image.load('src/metro_imagens/estação_menu.jpg').convert_alpha()
         fundo_rect = pygame.Rect(0, 0, self.cs*self.cn, self.cs*self.cn)
         fundo = pygame.transform.scale(fundo, (self.cs*self.cn, self.cs*self.cn))
         self.screen.blit(fundo, fundo_rect)
@@ -413,7 +413,7 @@ class Parede:
             self.corpo += [Vector2(9,10), Vector2(15,10), Vector2(9,14), Vector2(15,14)]
             self.corpo += [Vector2(11,3), Vector2(13,3), Vector2(11,21), Vector2(13,21)]
             self.corpo += [Vector2(3,11), Vector2(3,13), Vector2(21,11), Vector2(21,13)]
-            
+    
     def __del__(self):
         pass
 
