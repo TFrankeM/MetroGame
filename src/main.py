@@ -32,13 +32,22 @@ while True:
                 pygame.quit()
                 sys.exit()
                 # Identifica quando o usuário clica no x na janela, fechando o programa
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if menu.nome_rect.collidepoint(event.pos):
+                    menu.selecionado = True
+                else:
+                    menu.selecionado = False
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
+                if event.key == pygame.K_RETURN or event.key == pygame.K_KP_ENTER:
                     menu.comecar_fase()
                     partida.ativo = True
                     menu.musica.stop()
                     partida.musica.stop()
                     partida.musica.play()
+                elif event.key == pygame.K_BACKSPACE and menu.selecionado == True:
+                    menu.nome = menu.nome[:-1]
+                elif len(menu.nome) < 22 and menu.selecionado == True:
+                    menu.nome += event.unicode
                     
         menu.desenhar_elementos()
         pygame.display.flip() # Renderiza
@@ -72,6 +81,7 @@ while True:
                     menu.jogo = "Fim"
                     menu.registrar_recorde()
                     menu.recorde.escrever(partida.pontuacao)
+                    partida.__del__()
                     
         screen.fill((100,100,200)) # Preenche a tela com cor
         partida.desenhar_elementos()
