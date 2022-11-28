@@ -3,6 +3,8 @@ import random
 from pygame.math import Vector2
 import time
 from datetime import date
+import re
+import pandas as pd
 
 class Passageiro:
     """ Os objetos dessa classe são carregados na tela e interagem com objetos da classe Trem quando ambos ocupam as mesmas coordenadas.
@@ -358,11 +360,17 @@ class Menu:
     def fim_jogo(self):
         menu_fim_rect = pygame.Rect(self.cs*5, self.cs*4, self.cs*15, self.cs*17)
         pygame.draw.rect(self.screen, (200,200,50), menu_fim_rect)
-        
-        recordes = self.recorde.ler()
-        for i in range(5):
-            recordes_superficie = self.fontes[1].render(recordes[i], True, (0,0,0))
-            recordes_rect = recordes_superficie.get_rect(center = (int(self.cs*(self.cn/2)), (10+i)*self.cn))
+
+        self.recorde.ler()
+        listas = self.recorde.df.values.tolist()
+        for i in range(min(5, len(listas))):
+            nome = listas[i][0]
+            nome_superficie = self.fontes[1].render(nome, True, "blue")
+            nome_rect = nome_superficie.get_rect(center = (int(self.cs*(self.cn/2-3)), (10+i)*self.cn))
+            self.screen.blit(nome_superficie, nome_rect)
+            linha = " | "+listas[i][1]+" | "+str(listas[i][2])
+            recordes_superficie = self.fontes[1].render(linha, True, (0,0,0))
+            recordes_rect = recordes_superficie.get_rect(center = (int(self.cs*(3+self.cn/2)), (10+i)*self.cn))
             self.screen.blit(recordes_superficie, recordes_rect)
     
     def registrar_recorde(self):
@@ -418,8 +426,21 @@ class Recorde:
         self.arquivo.write(f"{self.nome}|{date.today()}|{pontuacao}\n")
         
     def ler(self):
+        nomes=[]
+        datas=[]
+        pontos=[]
         self.arquivo.seek(0,0)
-        return self.arquivo.readlines()
+        for linha in self.arquivo.readlines():
+            nome, data, ponto = re.split("\|", linha)
+            ponto = re.sub("\n", "", ponto)
+            nomes.append(nome)
+            datas.append(data)
+            pontos.append(int(ponto))
+        dic = {"Jogador":nomes, "Data":datas, "Pontuação":pontos}
+        self.df = pd.DataFrame(dic)
+        self.df.sort_values(by="Data", axis = 0, ascending=False, inplace=True)
+        self.df.sort_values(by="Pontuação", axis = 0, ascending=False, inplace=True)
+        self.df.drop_duplicates(subset="Jogador", inplace=True)
     
     def __del__(self):
         #print(f"O recorde cumpriu sua função.")
