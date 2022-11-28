@@ -45,6 +45,9 @@ class Passageiro:
         self.x = random.randint(2, cn-3)
         self.y = random.randint(2, cn-3)
         self.pos = Vector2(self.x, self.y)
+    
+    def __del__(self):
+        pass
         
 class Trem:
     """ Os objetos dessa classe se movem pela janela
@@ -191,6 +194,9 @@ class Trem:
                 self.meio = self.conexao_cd
             elif bloco_anterior.x == 1 and bloco_proximo.y == 1 or bloco_anterior.y == 1 and bloco_proximo.x == 1:
                 self.meio = self.conexao_db
+                
+    def __del__(self):
+        pass
 
 class Partida:
     def __init__(self, cn, cs, screen, fonte):
@@ -276,6 +282,12 @@ class Partida:
             self.screen.blit(self.borda, borda_rect)
             inicio+=1
             
+    def __del__(self):
+        self.passageiro.__del__()
+        self.parede.__del__()
+        self.trem.__del__()
+        #print(f"A partida acabou.")
+            
 class Menu:
     def __init__(self, cn, cs, screen, fontes):
         self.cn = cn
@@ -285,6 +297,8 @@ class Menu:
         self.jogo = "Início"
         self.pausa = False
         self.abertura()
+        self.nome = "Jogador"
+        self.selecionado = True
         
     def abertura(self):
         self.musica = pygame.mixer.Sound('src/metro_sons/chegada.mp3')
@@ -293,6 +307,7 @@ class Menu:
     def desenhar_elementos(self):
         if self.jogo == "Início":
             self.desenhar_tela_inicial()
+            self.cadastrar()
         elif self.jogo == "Meio" and self.pausa == True:
             self.pausar_jogo()
         elif self.jogo =="Fim":
@@ -308,10 +323,20 @@ class Menu:
         titulo_superficie = self.fontes[0].render(titulo, True, (250,100,0))
         titulo_rect = titulo_superficie.get_rect(center = (int(self.cs*(self.cn/2)), 5*self.cs))
         self.screen.blit(titulo_superficie, titulo_rect)
-    
-        instrucao = "Pressione a barra de espaço"
+
+        instrucao = "Bem-vindo"
         instrucao_superficie = self.fontes[1].render(instrucao, True, (0,80,200))
-        instrucao_rect = instrucao_superficie.get_rect(center = (int(self.cs*(self.cn/2)), 12*self.cs))
+        instrucao_rect = instrucao_superficie.get_rect(center = (int(self.cs*(self.cn/2-6)), 13*self.cs))
+        self.screen.blit(instrucao_superficie, instrucao_rect)
+        
+        instrucao = ", o Maquinista."
+        instrucao_superficie = self.fontes[1].render(instrucao, True, (0,80,200))
+        instrucao_rect = instrucao_superficie.get_rect(center = (int(self.cs*(7+self.cn/2)), 13*self.cs))
+        self.screen.blit(instrucao_superficie, instrucao_rect)
+        
+        instrucao = "Pressione a barra de espaço e tenha um bom dia"
+        instrucao_superficie = self.fontes[1].render(instrucao, True, (0,80,200))
+        instrucao_rect = instrucao_superficie.get_rect(center = (int(self.cs*(self.cn/2)), 16*self.cs))
         self.screen.blit(instrucao_superficie, instrucao_rect)
         
     def comecar_fase(self):
@@ -341,7 +366,14 @@ class Menu:
             self.screen.blit(recordes_superficie, recordes_rect)
     
     def registrar_recorde(self):
-        self.recorde = Recorde()
+        self.recorde = Recorde(self.nome)
+    
+    def cadastrar(self):
+        nome_superficie = self.fontes[1].render(self.nome, True, "yellow")
+        self.nome_rect = nome_superficie.get_rect(center = (int(self.cs*(self.cn/2)), 13*self.cs))
+        self.screen.blit(nome_superficie, self.nome_rect)
+        if self.selecionado == True:
+            pygame.draw.rect(self.screen, (200,150,0), self.nome_rect, 2)
 
 class Parede:
     def __init__(self, cn, cs, screen, fase):
@@ -373,14 +405,23 @@ class Parede:
             self.corpo += [Vector2(9,10), Vector2(15,10), Vector2(9,14), Vector2(15,14)]
             self.corpo += [Vector2(11,3), Vector2(13,3), Vector2(11,21), Vector2(13,21)]
             self.corpo += [Vector2(3,11), Vector2(3,13), Vector2(21,11), Vector2(21,13)]
+            
+    def __del__(self):
+        pass
 
 class Recorde:
-    def __init__(self):
+    def __init__(self, nome):
         self.arquivo = open("registros.txt", "a+")
+        self.nome = nome
     
     def escrever(self, pontuacao):
-        self.arquivo.write(f"Jogador|{date.today()}|{pontuacao}\n")
+        self.arquivo.write(f"{self.nome}|{date.today()}|{pontuacao}\n")
         
     def ler(self):
         self.arquivo.seek(0,0)
         return self.arquivo.readlines()
+    
+    def __del__(self):
+        #print(f"O recorde cumpriu sua função.")
+        #print(f"O recorde foi registrado.")
+        pass
