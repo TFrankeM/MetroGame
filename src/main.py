@@ -46,7 +46,7 @@ while True:
                     partida.musica.play()
                 elif event.key == pygame.K_BACKSPACE and menu.selecionado == True:
                     menu.nome = menu.nome[:-1]
-                elif len(menu.nome) < 22 and menu.selecionado == True:
+                elif len(menu.nome) < 20 and menu.selecionado == True:
                     menu.nome += event.unicode
                     
         menu.desenhar_elementos()
