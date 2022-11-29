@@ -25,29 +25,50 @@ class Passageiro:
     def definir_imagens_passageiro(self):
         """ Carrega a imagem correspondente aos objetos da classe
         """
-        self.pessoa = pygame.image.load('src/metro_imagens/passageiro.png').convert_alpha()
-        # Carrega a imagem que representa o objeto passageiro 
+        # Carregando as imagens das pessoas/passageiros em uma lista
+        self.pessoas = [pygame.image.load('src/imagens/passageiros/p1.png').convert_alpha(),
+                        pygame.image.load('src/imagens/passageiros/p2.png').convert_alpha(),
+                        pygame.image.load('src/imagens/passageiros/p3.png').convert_alpha(),
+                        pygame.image.load('src/imagens/passageiros/p4.png').convert_alpha(),
+                        pygame.image.load('src/imagens/passageiros/p5.png').convert_alpha(),
+                        pygame.image.load('src/imagens/passageiros/p6.png').convert_alpha(),
+                        pygame.image.load('src/imagens/passageiros/p7.png').convert_alpha(),
+                        pygame.image.load('src/imagens/passageiros/p8.png').convert_alpha(),
+                        pygame.image.load('src/imagens/passageiros/p9.png').convert_alpha(),
+                        pygame.image.load('src/imagens/passageiros/p10.png').convert_alpha(),
+                        pygame.image.load('src/imagens/passageiros/p11.png').convert_alpha(),
+                        pygame.image.load('src/imagens/passageiros/p12.png').convert_alpha(),
+                        pygame.image.load('src/imagens/passageiros/p13.png').convert_alpha(),
+                        pygame.image.load('src/imagens/passageiros/p14.png').convert_alpha(),
+                        pygame.image.load('src/imagens/passageiros/p15.png').convert_alpha()]
+        # Sorteia o primeiro passageiro
+        self.pessoa = self.pessoas[random.randint(0,14)]
+
 
     def desenhar_passageiro(self):
         """ Gera um retângulo para conter a imagem do objeto da classe e garrega essa imagem na tela
         """
-        passageiro_rect = pygame.Rect(int(self.x*self.cs), int(self.y*self.cs), self.cs, self.cs)
+        passageiro_rect = pygame.Rect(int(self.x * self.cs), int(self.y * self.cs), self.cs, self.cs)
         self.pessoa = pygame.transform.scale(self.pessoa, (self.cs, self.cs))
         self.screen.blit(self.pessoa, passageiro_rect)
         # O passageiro é renderizado como um bloco colorido
 
     def sortear(self, cn):
-        """ Define a posição do objeto na tela do jogo
+        """ Define a posição do objeto na tela do jogo e a sua imagem
 
         Args:
             cn (int): Número de células da janela do programa
             cs (int): Tamanho das células
             screen (pygame.Surface): Janela do programa
         """
-        self.x = random.randint(2, cn-3)
-        self.y = random.randint(2, cn-3)
+        # Sorteia a posição do passageiro
+        self.x = random.randint(2, cn - 3)
+        self.y = random.randint(2, cn - 3)
         self.pos = Vector2(self.x, self.y)
     
+        # Sorteia a imagem do 2º passageiro em diante
+        self.pessoa = self.pessoas[random.randint(0,14)]
+
     def __del__(self):
         pass
         
@@ -77,33 +98,37 @@ class Trem:
     def definir_imagens_trem(self):
         """Carrega as imagens correspondentes aos objetos da classe
         """
-        self.frente_direita = pygame.image.load('src/metro_imagens/horizontal_frente.png').convert_alpha()
+        # Carregando as imagens da frente do trem
+        self.frente_direita = pygame.image.load('src/imagens/metro/horizontal_frente.png').convert_alpha()
         self.frente_direita = pygame.transform.scale(self.frente_direita, (self.cs,self.cs))
         self.frente_esquerda = pygame.transform.flip(self.frente_direita, True, False)
-        self.frente_emcima = pygame.image.load('src/metro_imagens/vertical_emcima.png').convert_alpha()
+        self.frente_emcima = pygame.image.load('src/imagens/metro/vertical_emcima.png').convert_alpha()
         self.frente_emcima = pygame.transform.scale(self.frente_emcima, (self.cs,self.cs))
-        self.frente_embaixo = pygame.image.load('src/metro_imagens/vertical_embaixo.png').convert_alpha()
+        self.frente_embaixo = pygame.image.load('src/imagens/metro/vertical_embaixo.png').convert_alpha()
         self.frente_embaixo = pygame.transform.scale(self.frente_embaixo, (self.cs,self.cs))
 
-        self.traseira_esquerda = pygame.image.load('src/metro_imagens/horizontal_traseira.png').convert_alpha()
+        # Carregando as imagens da traseira do trem
+        self.traseira_esquerda = pygame.image.load('src/imagens/metro/horizontal_traseira.png').convert_alpha()
         self.traseira_esquerda = pygame.transform.scale(self.traseira_esquerda, (self.cs,self.cs))
         self.traseira_direita = pygame.transform.flip(self.traseira_esquerda, True, False)
-        self.traseira_emcima = pygame.image.load('src/metro_imagens/vertical_emcima.png').convert_alpha()
+        self.traseira_emcima = pygame.image.load('src/imagens/metro/vertical_emcima.png').convert_alpha()
         self.traseira_emcima = pygame.transform.scale(self.traseira_emcima, (self.cs,self.cs))
-        self.traseira_embaixo = pygame.image.load('src/metro_imagens/vertical_embaixo.png').convert_alpha()
+        self.traseira_embaixo = pygame.image.load('src/imagens/metro/vertical_embaixo.png').convert_alpha()
         self.traseira_embaixo = pygame.transform.scale(self.traseira_embaixo, (self.cs,self.cs))
 
-        self.meio_horizontal = pygame.image.load('src/metro_imagens/horizontal_meio.png').convert_alpha()
+        # Carregando vagão do meio do trem
+        self.meio_horizontal = pygame.image.load('src/imagens/metro/horizontal_meio.png').convert_alpha()
         self.meio_horizontal = pygame.transform.scale(self.meio_horizontal, (self.cs,self.cs))
-        self.meio_vertical = pygame.image.load('src/metro_imagens/vertical_meio.png').convert_alpha()
+        self.meio_vertical = pygame.image.load('src/imagens/metro/vertical_meio.png').convert_alpha()
         self.meio_vertical = pygame.transform.scale(self.meio_vertical, (self.cs,self.cs))
 
+        # Carregando curvas/quinas
         # dc = direita, em cima
         # db = direita, em baixo
         # ec = erquerda, em cima
         # eb = esquerda, em baixo
-        self.conexao_dc = pygame.image.load('src/metro_imagens/curva.png').convert_alpha()
-        self.conexao_dc = pygame.transform.scale(self.conexao_dc, (self.cs,self.cs))
+        self.conexao_dc = pygame.image.load('src/imagens/metro/curva.png').convert_alpha()
+        self.conexao_dc = pygame.transform.scale(self.conexao_dc, (self.cs, self.cs))
         self.conexao_db = pygame.transform.rotate(self.conexao_dc, 270)
         self.conexao_ec = pygame.transform.rotate(self.conexao_dc, 90)
         self.conexao_eb = pygame.transform.rotate(self.conexao_dc, 180)
@@ -133,12 +158,12 @@ class Trem:
         """
         if self.novo_vagao == True:
             corpo_copia = self.corpo[:]
-            corpo_copia.insert(0,corpo_copia[0] + self.sentido)
+            corpo_copia.insert(0, corpo_copia[0] + self.sentido)
             self.corpo = corpo_copia[:]
             self.novo_vagao = False
         else:
             corpo_copia = self.corpo[:-1]
-            corpo_copia.insert(0,corpo_copia[0] + self.sentido)
+            corpo_copia.insert(0, corpo_copia[0] + self.sentido)
             self.corpo = corpo_copia[:]
         # Quando o trem se move, o último vagão é eliminado e adiciona-se um vagão à frente dos outros(no começo da lista), que é uma cópia do primeiro vagão 
         # mais uma vez o sentido no qual o trem se move
@@ -205,13 +230,15 @@ class Partida:
         self.trem = Trem(cn, cs, screen) # Cria um objeto da classe Trem
         self.trem.definir_imagens_trem()
         
-        self.parede = Parede(cn, cs, screen, 1)
-        self.parede.definir_imagens_parede()
+        self.obstaculo = Obstaculo(cn, cs, screen, 1)
+        self.obstaculo.definir_imagens_obstaculo()
 
         self.passageiro = Passageiro(cn, cs, screen) # Cria um objeto da classe Passageiro
         self.passageiro.definir_imagens_passageiro()
         self.passageiro.sortear(cn)
-        while self.passageiro.pos in self.trem.corpo or self.passageiro.pos in self.parede.corpo:
+
+        # Checar se o passageiro está sobre o trem ou algum obstáculo
+        while self.passageiro.pos in self.trem.corpo or self.passageiro.pos in self.obstaculo.posicoes_objetos:
             self.passageiro.sortear(cn)
         
         self.cn = cn
@@ -221,9 +248,9 @@ class Partida:
         self.ativo = False
         self.pausa = False
         self.fonte = fonte
-        self.musica = pygame.mixer.Sound('src/metro_sons/musica_fundo.mpeg')
-        self.batida = pygame.mixer.Sound('src/metro_sons/batida.wav')
-        self.borda = pygame.image.load('src/metro_imagens/muro2.jpg').convert_alpha()
+        self.musica = pygame.mixer.Sound('src/sons/musica_fundo.mpeg')
+        self.batida = pygame.mixer.Sound('src/sons/batida.wav')
+        self.borda = pygame.image.load('src/imagens/obstaculos/borda.jpg').convert_alpha()
         self.borda = pygame.transform.scale(self.borda, (cs,cs))
         self.pontuacao = 0
 
@@ -238,13 +265,13 @@ class Partida:
         self.fundo()
         self.desenhar_borda()
         self.passageiro.desenhar_passageiro() # Desenha o passageiro
-        self.parede.desenhar_parede()
+        self.obstaculo.desenhar_obstaculo()
         self.trem.desenhar_trem() # Desenha o trem
         self.desenhar_pontuacao()
 
     def checar_colisao(self):
         if self.passageiro.pos == self.trem.corpo[0]:
-            while self.passageiro.pos in self.trem.corpo or self.passageiro.pos in self.parede.corpo:
+            while self.passageiro.pos in self.trem.corpo or self.passageiro.pos in self.obstaculo.posicoes_objetos:
                 self.passageiro.sortear(self.cn)
                 #
             self.trem.adicionar_vagao()
@@ -256,7 +283,8 @@ class Partida:
         for bloco in self.trem.corpo[1:]:
             if bloco == self.trem.corpo[0]:
                 self.game_over()
-        if self.trem.corpo[0] in self.parede.corpo:
+                
+        if self.trem.corpo[0] in self.obstaculo.posicoes_objetos:
             self.game_over()
     
     def game_over(self):
@@ -267,9 +295,9 @@ class Partida:
         self.batida.stop()
 
     def desenhar_pontuacao(self):
-        self.pontuacao = str(len(self.trem.corpo)-3)
+        self.pontuacao = str(len(self.trem.corpo) - 3)
         pontuacao_superficie = self.fonte.render(self.pontuacao, True, (0,0,0))
-        pontuacao_rect = pontuacao_superficie.get_rect(center = (int(self.cs*self.cn - 60), int(20)))
+        pontuacao_rect = pontuacao_superficie.get_rect(center = (int(self.cs * self.cn - 60), int(20)))
         self.screen.blit(pontuacao_superficie, pontuacao_rect)
 
     def desenhar_borda(self):
@@ -291,6 +319,7 @@ class Partida:
     
     # Gera o fundo quadriculado
     def fundo(self):
+        
         self.screen.fill((175,205,70)) # Preenche a tela com cor
         cor_grama = (167, 209, 61)
         for linha in range(self.cn):
@@ -307,7 +336,7 @@ class Partida:
             
     def __del__(self):
         self.passageiro.__del__()
-        self.parede.__del__()
+        self.obstaculo.__del__()
         self.trem.__del__()
         #print(f"A partida acabou.")
 
@@ -324,7 +353,7 @@ class Menu:
         self.selecionado = True
         
     def abertura(self):
-        self.musica = pygame.mixer.Sound('src/metro_sons/chegada.mp3')
+        self.musica = pygame.mixer.Sound('src/sons/chegada.mp3')
         self.musica.play()
     
     def desenhar_elementos(self):
@@ -337,7 +366,7 @@ class Menu:
             self.fim_jogo()
             
     def desenhar_tela_inicial(self):
-        fundo = pygame.image.load('src/metro_imagens/estação_menu.jpg').convert_alpha()
+        fundo = pygame.image.load('src/imagens/estação_menu.jpg').convert_alpha()
         fundo_rect = pygame.Rect(0, 0, self.cs*self.cn, self.cs*self.cn)
         fundo = pygame.transform.scale(fundo, (self.cs*self.cn, self.cs*self.cn))
         self.screen.blit(fundo, fundo_rect)
@@ -404,71 +433,49 @@ class Menu:
         if self.selecionado == True:
             pygame.draw.rect(self.screen, (200,150,0), self.nome_rect, 2)
 
-class Parede:
+class Obstaculo:
     def __init__(self, cn, cs, screen, fase):
         self.cn = cn
         self.cs = cs
         self.screen = screen
-        self.corpo = []
+        self.corpo = {}
         self.fase = fase
-        self.adicionar_parede()
+        self.adicionar_obstaculo()
         
-    def definir_imagens_parede(self):
-        self.parede = pygame.image.load('src/metro_imagens/muro.jpg').convert_alpha()
+    def definir_imagens_obstaculo(self):
+        self.obstaculos = [pygame.image.load('src/imagens/obstaculos/b1.png').convert_alpha(),
+                          pygame.image.load('src/imagens/obstaculos/b2.png').convert_alpha(),
+                          pygame.image.load('src/imagens/obstaculos/b3.png').convert_alpha()]
     
-    def desenhar_parede(self):
-        for bloco in self.corpo:
-            parede_rect = pygame.Rect(int(bloco.x * self.cs), int(bloco.y * self.cs), self.cs, self.cs)
-            self.parede = pygame.transform.scale(self.parede, (self.cs, self.cs))
-            self.screen.blit(self.parede, parede_rect)
+    def desenhar_obstaculo(self):
+        for index, self.imagem in enumerate(self.obstaculos):
+            for bloco in self.corpo[int(index)]:
+                obstaculo_rect = pygame.Rect(int(bloco.x * self.cs), int(bloco.y * self.cs), self.cs, self.cs)
+                self.imagem = pygame.transform.scale(self.imagem, (self.cs, self.cs))
+                self.screen.blit(self.imagem, obstaculo_rect)
     
-    def adicionar_parede(self):
+    def adicionar_obstaculo(self):
+        # Obstáculos fase 0
         if self.fase == 0:
             pass
+        # Obstáculos fase 1
         elif self.fase == 1:
-            self.corpo += [Vector2(5,5), Vector2(5,6), Vector2(4,5)]
-            self.corpo += [Vector2(19,5), Vector2(19,6), Vector2(20,5)]
-            self.corpo += [Vector2(5,19), Vector2(5,18), Vector2(4,19)]
-            self.corpo += [Vector2(19,19), Vector2(19,18), Vector2(20,19)]
-            self.corpo += [Vector2(7,8), Vector2(17,8), Vector2(7,16), Vector2(17,16)]
-            self.corpo += [Vector2(9,10), Vector2(15,10), Vector2(9,14), Vector2(15,14)]
-            self.corpo += [Vector2(11,3), Vector2(13,3), Vector2(11,21), Vector2(13,21)]
-            self.corpo += [Vector2(3,11), Vector2(3,13), Vector2(21,11), Vector2(21,13)]
-    
-    def __del__(self):
-        pass
+            self.corpo[0] = [Vector2(5, 5), Vector2(5, 6), Vector2(4, 5), 
+                               Vector2(19, 5), Vector2(19, 6), Vector2(20, 5), 
+                               Vector2(19, 5), Vector2(19, 6), Vector2(20, 5),
+                               Vector2(5, 19), Vector2(5, 18), Vector2(4, 19),
+                               Vector2(19, 19), Vector2(19, 18), Vector2(20, 19)]
+            self.corpo[1] = [Vector2(7, 8), Vector2(17, 8), Vector2(7, 16), Vector2(17, 16),
+                               Vector2(9, 10), Vector2(15, 10), Vector2(9, 14), Vector2(15, 14)]
+            self.corpo[2] = [Vector2(11, 3), Vector2(13, 3), Vector2(11, 21), Vector2(13, 21),
+                               Vector2(3, 11), Vector2(3, 13), Vector2(21, 11), Vector2(21, 13)]
 
-class Predio:
-    def __init__(self, cn, cs, screen, fase):
-        self.cn = cn
-        self.cs = cs
-        self.screen = screen
-        self.corpo = []
-        self.fase = fase
-        self.adicionar_predio()
-        
-    def definir_imagens_predio(self):
-        self.predio = pygame.image.load('src/metro_imagens/predio.png').convert_alpha()
-    
-    def desenhar_predio(self):
-        for bloco in self.corpo:
-            predio_rect = pygame.Rect(int(bloco.x * self.cs), int(bloco.y * self.cs), self.cs, self.cs)
-            self.predio = pygame.transform.scale(self.predio, (self.cs, self.cs))
-            self.screen.blit(self.predio, predio_rect)
-    
-    def adicionar_predio(self):
-        if self.fase == 0:
-            pass
-        elif self.fase == 1:
-            self.corpo += [Vector2(5,5), Vector2(5,6), Vector2(4,5)]
-            self.corpo += [Vector2(19,5), Vector2(19,6), Vector2(20,5)]
-            self.corpo += [Vector2(5,19), Vector2(5,18), Vector2(4,19)]
-            self.corpo += [Vector2(19,19), Vector2(19,18), Vector2(20,19)]
-            self.corpo += [Vector2(7,8), Vector2(17,8), Vector2(7,16), Vector2(17,16)]
-            self.corpo += [Vector2(9,10), Vector2(15,10), Vector2(9,14), Vector2(15,14)]
-            self.corpo += [Vector2(11,3), Vector2(13,3), Vector2(11,21), Vector2(13,21)]
-            self.corpo += [Vector2(3,11), Vector2(3,13), Vector2(21,11), Vector2(21,13)]
-    
+        # Colocar a posição dos obtáculos em uma lista para futura checagem de colisão
+        self.posicoes_objetos = []
+        for posicoes in self.corpo.values():
+            for vetor in posicoes:
+                self.posicoes_objetos.append(vetor)
+
     def __del__(self):
         pass
 
