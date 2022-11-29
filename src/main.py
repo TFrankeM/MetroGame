@@ -9,9 +9,11 @@ import operator
 
 
 pygame.init()
-cn = 25 #cell_number
-cs = 32 #cell_size
-screen = pygame.display.set_mode((cn*cs,cn*cs)) # Tela do jogo
+
+cn = 25 # Quantidade de células no mapa
+cs = 32 # Tamanho das células
+
+screen = pygame.display.set_mode((cn * cs,cn * cs)) # Tamanho da tela do jogo
 pygame.display.set_caption("Metrô") # Adiciona um nome à janela
 clock = pygame.time.Clock()
 fonte = pygame.font.Font(None, 30)
@@ -82,8 +84,7 @@ while True:
                     menu.registrar_recorde()
                     menu.recorde.escrever(partida.pontuacao)
                     partida.__del__()
-                    
-        screen.fill((100,100,200)) # Preenche a tela com cor
+        
         partida.desenhar_elementos()
         menu.desenhar_elementos()
         pygame.display.flip() # Renderiza
@@ -99,7 +100,7 @@ while True:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     pass
-                
+
         screen.fill((100,100,200)) # Preenche a tela com cor
         partida.desenhar_elementos()
         menu.desenhar_elementos()

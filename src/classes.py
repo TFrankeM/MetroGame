@@ -207,7 +207,7 @@ class Partida:
         
         self.parede = Parede(cn, cs, screen, 1)
         self.parede.definir_imagens_parede()
-        
+
         self.passageiro = Passageiro(cn, cs, screen) # Cria um objeto da classe Passageiro
         self.passageiro.definir_imagens_passageiro()
         self.passageiro.sortear(cn)
@@ -223,7 +223,7 @@ class Partida:
         self.fonte = fonte
         self.musica = pygame.mixer.Sound('src/metro_sons/musica_fundo.mpeg')
         self.batida = pygame.mixer.Sound('src/metro_sons/batida.wav')
-        self.borda = pygame.image.load('src/metro_imagens/linha_amarela_vao.png').convert_alpha()
+        self.borda = pygame.image.load('src/metro_imagens/muro2.jpg').convert_alpha()
         self.borda = pygame.transform.scale(self.borda, (cs,cs))
         self.pontuacao = 0
 
@@ -235,6 +235,7 @@ class Partida:
             self.checar_falha()
 
     def desenhar_elementos(self):
+        self.fundo()
         self.desenhar_borda()
         self.passageiro.desenhar_passageiro() # Desenha o passageiro
         self.parede.desenhar_parede()
@@ -273,23 +274,43 @@ class Partida:
 
     def desenhar_borda(self):
         inicio = 1
-        while inicio < self.cn-1:
-            borda_rect = pygame.Rect(int(inicio*self.cs), int(1*self.cs), self.cs, self.cs)
+        while inicio < self.cn - 1:
+            # Borda superior
+            borda_rect = pygame.Rect(int(inicio * self.cs), int(1 * self.cs), self.cs, self.cs)
             self.screen.blit(self.borda, borda_rect)
-            borda_rect = pygame.Rect(int(inicio*self.cs), int((self.cn-2)*self.cs), self.cs, self.cs)
+            # Borda inferior
+            borda_rect = pygame.Rect(int(inicio * self.cs), int((self.cn - 2) * self.cs), self.cs, self.cs)
             self.screen.blit(self.borda, borda_rect)
-            borda_rect = pygame.Rect(int(1*self.cs), int(inicio*self.cs), self.cs, self.cs)
+            # Borda esquerda
+            borda_rect = pygame.Rect(int(1 * self.cs), int(inicio * self.cs), self.cs, self.cs)
             self.screen.blit(self.borda, borda_rect)
-            borda_rect = pygame.Rect(int((self.cn-2)*self.cs), int(inicio*self.cs), self.cs, self.cs)
+            # Borda direita
+            borda_rect = pygame.Rect(int((self.cn - 2) * self.cs), int(inicio * self.cs), self.cs, self.cs)
             self.screen.blit(self.borda, borda_rect)
-            inicio+=1
+            inicio += 1
+    
+    # Gera o fundo quadriculado
+    def fundo(self):
+        self.screen.fill((175,205,70)) # Preenche a tela com cor
+        cor_grama = (167, 209, 61)
+        for linha in range(self.cn):
+            if linha % 2 == 0:
+                for col in range(self.cn):
+                    if col % 2 == 0:
+                        grama_rect = pygame.Rect(col * self.cs, linha * self.cs, self.cs, self.cs)
+                        pygame.draw.rect(self.screen, cor_grama, grama_rect)
+            else:
+                for col in range(self.cn):
+                    if col % 2 != 0:
+                        grama_rect = pygame.Rect(col * self.cs, linha * self.cs, self.cs, self.cs)
+                        pygame.draw.rect(self.screen, cor_grama, grama_rect )
             
     def __del__(self):
         self.passageiro.__del__()
         self.parede.__del__()
         self.trem.__del__()
         #print(f"A partida acabou.")
-            
+
 class Menu:
     def __init__(self, cn, cs, screen, fontes):
         self.cn = cn
@@ -393,11 +414,11 @@ class Parede:
         self.adicionar_parede()
         
     def definir_imagens_parede(self):
-        self.parede = pygame.image.load('src/metro_imagens/images.jfif').convert_alpha()
+        self.parede = pygame.image.load('src/metro_imagens/muro.jpg').convert_alpha()
     
     def desenhar_parede(self):
         for bloco in self.corpo:
-            parede_rect = pygame.Rect(int(bloco.x*self.cs), int(bloco.y*self.cs), self.cs, self.cs)
+            parede_rect = pygame.Rect(int(bloco.x * self.cs), int(bloco.y * self.cs), self.cs, self.cs)
             self.parede = pygame.transform.scale(self.parede, (self.cs, self.cs))
             self.screen.blit(self.parede, parede_rect)
     
@@ -416,6 +437,41 @@ class Parede:
     
     def __del__(self):
         pass
+
+class Predio:
+    def __init__(self, cn, cs, screen, fase):
+        self.cn = cn
+        self.cs = cs
+        self.screen = screen
+        self.corpo = []
+        self.fase = fase
+        self.adicionar_predio()
+        
+    def definir_imagens_predio(self):
+        self.predio = pygame.image.load('src/metro_imagens/predio.png').convert_alpha()
+    
+    def desenhar_predio(self):
+        for bloco in self.corpo:
+            predio_rect = pygame.Rect(int(bloco.x * self.cs), int(bloco.y * self.cs), self.cs, self.cs)
+            self.predio = pygame.transform.scale(self.predio, (self.cs, self.cs))
+            self.screen.blit(self.predio, predio_rect)
+    
+    def adicionar_predio(self):
+        if self.fase == 0:
+            pass
+        elif self.fase == 1:
+            self.corpo += [Vector2(5,5), Vector2(5,6), Vector2(4,5)]
+            self.corpo += [Vector2(19,5), Vector2(19,6), Vector2(20,5)]
+            self.corpo += [Vector2(5,19), Vector2(5,18), Vector2(4,19)]
+            self.corpo += [Vector2(19,19), Vector2(19,18), Vector2(20,19)]
+            self.corpo += [Vector2(7,8), Vector2(17,8), Vector2(7,16), Vector2(17,16)]
+            self.corpo += [Vector2(9,10), Vector2(15,10), Vector2(9,14), Vector2(15,14)]
+            self.corpo += [Vector2(11,3), Vector2(13,3), Vector2(11,21), Vector2(13,21)]
+            self.corpo += [Vector2(3,11), Vector2(3,13), Vector2(21,11), Vector2(21,13)]
+    
+    def __del__(self):
+        pass
+
 
 class Recorde:
     def __init__(self, nome):
