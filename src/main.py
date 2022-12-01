@@ -28,7 +28,7 @@ pygame.time.set_timer(SCREEN_UPDATE, 150)
 # Criamos um evento que ocorre a cada 150 milissegundos e que vai acionar o movimento do trem
 
 while True:
-    if menu.jogo == "Início":
+    if menu.jogo == "Menu":
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
