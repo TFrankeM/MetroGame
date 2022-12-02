@@ -1,10 +1,15 @@
-import pygame
+import pygame, sys
 import random
 from pygame.math import Vector2
 import time
 from datetime import date
 import re
 import pandas as pd
+import operator
+
+pygame.init()
+
+
 
 
 class Passageiro:
@@ -346,8 +351,14 @@ class Obstaculo:
         if self.fase == 3:
             pass
         # Obstáculos fase 4.
-        if self.fase == 4:
-            pass
+        elif self.fase == 4:
+            self.corpo[0] = [Vector2(5, 5), Vector2(5, 6), Vector2(4, 5), 
+                             Vector2(19, 5), Vector2(19, 6), Vector2(20, 5), 
+                             Vector2(19, 5), Vector2(19, 6), Vector2(20, 5),
+                             Vector2(5, 19), Vector2(5, 18), Vector2(4, 19),
+                             Vector2(19, 19), Vector2(19, 18), Vector2(20, 19)]
+            self.corpo[1] = []
+            self.corpo[2] = []
         # Obstáculos fase 5.
         if self.fase == 5:
             pass
@@ -384,11 +395,81 @@ class Obstaculo:
 
 
 
+class Botao():
+	""" Classe responsável por criar os botões do menu principal e dos submenus.
+	"""
+	def __init__(self, imagem, pos, texto_cont, fonte, cor_base, cor_com_mause):
+		""" Construtor da classe.
+
+        Args:
+            self: palavra-chave que acessa os atributos e métodos da classe Botao.
+            imagem: a imagem de fundo do botão.
+            pos: a posição do botão (x, y).
+            texto_cont: o texto que ficara sobre o botão.
+			fonte: estilo da escrita.
+			cor_base: cor padrão da escrita.
+			cor_com_mause: cor da escrita quando o mouse está sobre o botão.
+        """
+		# Objetos recebem os argumentos da classe.
+		self.imagem = imagem
+		self.x_pos = pos[0]
+		self.y_pos = pos[1]
+		self.fonte = fonte
+		self.cor_base, self.cor_com_mause = cor_base, cor_com_mause
+		self.texto_cont = texto_cont
+		self.texto = self.fonte.render(self.texto_cont, True, self.cor_base)
+		# Se não há imagem de fundo, self.imagem recebe o texto.
+		if self.imagem is None:
+			self.imagem = self.texto
+		# Cria o objeto rect, para adição da imagem de fundo do botão.
+		self.rect = self.imagem.get_rect(center = (self.x_pos, self.y_pos))
+		# Cria o objeto rect, para adição do texto do botão.
+		self.texto_rect = self.texto.get_rect(center = (self.x_pos, self.y_pos))
+
+	def atualizar(self, screen):
+		""" Responsável por colocar a imagem e o texto do botão na tela.
+
+		Args:
+            self: palavra-chave que acessa os atributos e métodos da classe Botao.
+			screen (pygame.Surface): Janela do programa.
+		"""
+		if self.imagem is not None:
+			# Adição do retângulo da imagem.
+			screen.blit(self.imagem, self.rect)
+		# Adição do retângulo do texto.
+		screen.blit(self.texto, self.texto_rect)
+
+	def checar_clique(self, posicao):
+		""" Ao ser acionado, checa se a posição do mouse está dentro do objeto rect do botão.
+		
+		:return True: se a posição do mouse está dentro do objeto rect do botão.
+		:return False: se a posição do mouse não está dentro do objeto rect do botão.
+
+		Args:
+            self: palavra-chave que acessa os atributos e métodos da classe Botao.
+			position: posição do mouse (x, y).
+		"""
+		if posicao[0] in range(self.rect.left, self.rect.right) and posicao[1] in range(self.rect.top, self.rect.bottom):
+			return True
+		return False
+
+	def mudar_cor(self, posicao):
+		"""	Altera a cor da letra se o mouse estiver sobre o botão.
+		"""
+		# Se o mouse está sobre o botão, a cor da escrita é alterada. 
+		if posicao[0] in range(self.rect.left, self.rect.right) and posicao[1] in range(self.rect.top, self.rect.bottom):
+			self.texto = self.fonte.render(self.texto_cont, True, self.cor_com_mause)
+		# Se o mouse não está sobre o botão, a cor da escrita é mantida. 
+		else:
+			self.texto = self.fonte.render(self.texto_cont, True, self.cor_base)
+
+
+
 class Partida:
     """ Os acontecimentos do jogo se desenvolvem nos objetos dessa classe, responsáveis por acionar as 
     classes Trem, Obstaculo e Passageiro.
     """
-    def __init__(self, cn, cs, screen, fonte):
+    def __init__(self, cn, cs, screen, fonte, fase):
         """ Construtor da classe.
 
         Args:
@@ -398,13 +479,25 @@ class Partida:
             screen (pygame.Surface, optional): Janela do programa. Defaults to None.
             fonte: estilo de letra.
         """
+        # Objetos recebem a quantidade e o tamanho de cada célula e o tamanho da tela do jogo.
+        self.cn = cn
+        self.cs = cs
+        self.screen = screen        # screen = (cn * cs, cn * cs)
+        self.fonte = fonte
+        self.fase = fase
+
+        # Garantirá uma frequência de frames por segundo
+        self.clock = pygame.time.Clock()
+
+
+            # Acionar Classes
         # Cria os objetos da classe Trem
         self.trem = Trem(cn, cs, screen)
         # Aciona "definir_imagens_trem()" que carrega as imagens do metrô.
         self.trem.definir_imagens_trem()
         
         # Cria os objetos da classe Obstaculo
-        self.obstaculo = Obstaculo(cn, cs, screen, 1)
+        self.obstaculo = Obstaculo(cn, cs, screen, self.fase)       # Fase padrão é 1
         # Aciona "definir_imagens_obstaculo()" que carrega as imagens dos obstaculos.
         self.obstaculo.definir_imagens_obstaculo()
 
@@ -415,14 +508,14 @@ class Partida:
         # Aciona "sortear()" que sorteia a posição e a imagem do novo obstáculo.
         self.passageiro.sortear(cn)
 
+        # Cria os objetos da classe Submenu.
+        fontes = [pygame.font.Font(None, 120), pygame.font.Font(None, 30)]
+        self.submenu = SubMenu(cn, cs, screen, fontes)
+
+        
         # Uma nova posição será sorteada para o passageiro enquanto ele estiver sobre o metrô ou algum obstáculo.
         while self.passageiro.pos in self.trem.corpo or self.passageiro.pos in self.obstaculo.posicoes_objetos:
             self.passageiro.sortear(cn)
-        
-        # Objetos recebem a quantidade e o tamanho de cada célula e o tamanho da tela do jogo.
-        self.cn = cn
-        self.cs = cs
-        self.screen = screen        # screen = (cn * cs, cn * cs)
         
         # O status padrão de atividade para a partida é FALSE.
         self.ativo = False
@@ -439,6 +532,114 @@ class Partida:
         self.borda = pygame.transform.scale(self.borda, (cs,cs))
         # Pontuação inicial:
         self.pontuacao = 0
+
+
+    def inicia_partida(self):
+        """ Essa função é acionada após o usuário clicar no botão de uma fase. Ela, por sua vez, dá início à partida.
+        """
+        # Criamos um evento que ocorre a cada 150 milissegundos e que vai acionar o movimento do metrô.
+        SCREEN_UPDATE = pygame.USEREVENT 
+        pygame.time.set_timer(SCREEN_UPDATE, 150)
+
+        while True:
+            # Status padrão para "submenu.jogo" é "Inicia a partida", ou seja, após clicar no botão de uma fase, ela é iniciada imediatamente.
+            if self.submenu.jogo == "Inicia a partida":
+                # pygame.event.get() obtém os eventos que ocorrem.
+                for event in pygame.event.get():
+                    # Finaliza o programa se o botão X (canto superior direito) for clicado.
+                    if event.type == pygame.QUIT:
+                        pygame.quit()
+                        sys.exit()
+                    
+                    # Alterações de status e início da partida.
+                    self.submenu.comecar_fase()     # Retorna: self.jogo = "Partida em curso"
+                    self.ativo = True               # Permite que o movimento do metrô seja atualizado
+                    self.submenu.musica.stop()      # Para a música do menu
+                    self.submenu.musica.stop()
+                    print("para musica")
+                    self.musica.stop()
+                    self.musica.play()              # Inicia a música de fundo da partida
+
+                pygame.display.flip()           # Renderiza
+                self.clock.tick(60)             # Garante uma frequência de cerca de 60 frames por segundo
+                    
+            # "self.submenu.comecar_fase()" (9 linhas acima) altera o status de "self.submenu.jogo" para "Partida em curso", dando início a ela.
+            elif self.submenu.jogo == "Partida em curso":
+                # pygame.event.get() obtém os eventos que ocorrem.
+                for event in pygame.event.get():
+                    # Finaliza o programa se o botão X (canto superior direito) for clicado.
+                    if event.type == pygame.QUIT:
+                        pygame.quit()
+                        sys.exit()
+                    
+                    if event.type == SCREEN_UPDATE:
+                        pygame.time.set_timer(SCREEN_UPDATE, 150)
+                        if self.ativo == True:
+                            self.atualizar()
+                    
+                    # Se ocorrer evento "tecla para baixo":
+                    if event.type == pygame.KEYDOWN:
+                        # Se a partida estiver acontecendo e a tecla clicada for o SPACE = PAUSA.
+                        if event.key == pygame.K_SPACE and self.ativo == True:
+                            self.pausa = operator.not_(self.pausa)          # Status de pausa é TRUE (na classe Partida)
+                            self.submenu.pausa = self.pausa                    # Altera o status de pausa na classe submenu (para carregar a interface de pausa)
+
+                        # Acionar "self.trem.sentido" para mover o metrô.
+                        # Para tecla UP ou W = Movimento para CIMA.
+                        if event.key == pygame.K_UP and self.trem.corpo[1] != self.trem.corpo[0] + Vector2(0, -1) or event.key == pygame.K_w and self.trem.corpo[1] != self.trem.corpo[0] + Vector2(0, -1):
+                            self.trem.sentido = Vector2(0, -1)
+                        # Para tecla DOWN ou S = Movimento para BAIXO
+                        if event.key == pygame.K_DOWN and self.trem.corpo[1] != self.trem.corpo[0] + Vector2(0, 1) or event.key == pygame.K_s and self.trem.corpo[1] != self.trem.corpo[0] + Vector2(0, 1):
+                            self.trem.sentido = Vector2(0, 1)
+                        # Para tecla RIGHT ou D = Movimento para DIREITA
+                        if event.key == pygame.K_RIGHT and self.trem.corpo[1] != self.trem.corpo[0] + Vector2(1, 0) or event.key == pygame.K_d and self.trem.corpo[1] != self.trem.corpo[0] + Vector2(1, 0):
+                            self.trem.sentido = Vector2(1, 0)
+                        # Para tecla LEFT ou A = Movimento para ESQUERDA
+                        if event.key == pygame.K_LEFT and self.trem.corpo[1] != self.trem.corpo[0] + Vector2(-1, 0) or event.key == pygame.K_a and self.trem.corpo[1] != self.trem.corpo[0] + Vector2(-1, 0):
+                            self.trem.sentido = Vector2(-1, 0)
+                        
+                        # Se o status de atividade for FALSE (motivado por colisão), o "self.submenu.jogo" passa a ser "Fim da partida", decretando o fim dela.
+                        if self.ativo == False:
+                            self.submenu.jogo = "Fim da partida"
+                            self.submenu.registrar_recorde()                   # Aciona a classe Recorde para exibir na tela os recordes.
+                            self.submenu.recorde.escrever(self.pontuacao)      # Escreve a pontuação, nome do jogador e data na folha de registros.
+                            self.__del__()                                  # "Limpa" o mapa para a próxima partida.
+                
+                # Exibe na tela o metrô, os obstáculos, os passageiros a borda e a pontuação.
+                self.desenhar_elementos()             
+                # Para "Partida em curso" e jogo pausado, self.submenu.desenhar_elementos() exibe submenu de pausa.
+                self.submenu.desenhar_elementos()
+                # Renderiza
+                pygame.display.flip() 
+                # Garante uma frequência de cerca de 60 frames por segundo
+                self.clock.tick(60)
+
+            elif self.submenu.jogo == "Fim da partida":
+                # pygame.event.get() obtém os eventos que ocorrem.
+                for event in pygame.event.get():
+                    # Finaliza o programa se o botão X (canto superior direito) for clicado.
+                    if event.type == pygame.QUIT:
+                        self.submenu.recorde.arquivo.close()
+                        pygame.quit()
+                        sys.exit()
+
+                    # Se ocorrer evento "tecla para baixo":
+                    if event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_SPACE:
+                            pass
+
+
+                # Preenche a tela com cor
+                self.screen.fill((100,100,200))
+
+                # Exibe na tela o metrô, os obstáculos, os passageiros a borda e a pontuação.
+                self.desenhar_elementos()
+                # Para "Fim da partida", self.submenu.desenhar_elementos() exibe classificação/recordes.
+                self.submenu.desenhar_elementos()
+                # Renderiza.
+                pygame.display.flip()
+                # Garante uma frequência de cerca de 60 frames por segundo.
+                self.clock.tick(60)
 
 
     def atualizar(self):
@@ -462,12 +663,12 @@ class Partida:
         Args:
             self: palavra-chave que acessa os atributos e métodos da classe Obstaculo.
         """
-        self.fundo()                                # Preenche a tela de fundo
-        self.desenhar_borda()                       # Desenha a borda
-        self.passageiro.desenhar_passageiro()       # Desenha o passageiros
-        self.obstaculo.desenhar_obstaculo()         # Desenha os obstáculos
-        self.trem.desenhar_trem()                   # Desenha o metrô
-        self.desenhar_pontuacao()                   # Desenha a pontuação
+        self.fundo()                                    # Preenche a tela de fundo
+        self.desenhar_borda()                           # Desenha a borda
+        self.passageiro.desenhar_passageiro()           # Desenha o passageiros
+        self.obstaculo.desenhar_obstaculo()             # Desenha os obstáculos
+        self.trem.desenhar_trem()                       # Desenha o metrô
+        self.desenhar_pontuacao()                       # Desenha a pontuação
 
 
     def checar_colisao(self):
@@ -600,7 +801,7 @@ class Partida:
 
 
 
-class Menu:
+class SubMenu:
     """ Gera um objeto "Rect" para armazenar e manipular a primeira camada de áreas retangulares que 
         que formam a superfície do jogo.
     """
@@ -619,8 +820,8 @@ class Menu:
         self.cs = cs
         self.screen = screen        # screen = (cn * cs, cn * cs)
         self.fontes = fontes
-        # "self.jogo" recebe início, ou seja, menu
-        self.jogo = "Menu"
+        # "self.jogo" recebe início, ou seja, seus status é "inicia a partida"
+        self.jogo = "Inicia a partida"          
         self.pausa = False
         self.abertura()
         self.nome = "Jogador"
@@ -634,7 +835,9 @@ class Menu:
             self: palavra-chave que acessa os atributos e métodos da classe Obstaculo.
         """
         self.musica = pygame.mixer.Sound('src/sons/chegada.mp3')
+        print('antes do play não toca')
         self.musica.play()
+        print('depois do play toca')
     
 
     def desenhar_elementos(self):
@@ -643,54 +846,21 @@ class Menu:
         Args:
             self: palavra-chave que acessa os atributos e métodos da classe Obstaculo.
         """
-        if self.jogo == "Menu":
-            self.desenhar_tela_inicial()
+        if self.jogo == "Inicia a partida":
             self.cadastrar()
-        elif self.jogo == "Meio" and self.pausa == True:
+        elif self.jogo == "Partida em curso" and self.pausa == True:
             self.pausar_jogo()
-        elif self.jogo == "Fim":
+        elif self.jogo == "Fim da partida":
             self.fim_jogo()
-            
-
-    def desenhar_tela_inicial(self):
-        """ 
-        
-        Args:
-            self: palavra-chave que acessa os atributos e métodos da classe Obstaculo.
-        """
-        fundo = pygame.image.load('src/imagens/estação_menu.jpg').convert_alpha()
-        fundo_rect = pygame.Rect(0, 0, self.cs * self.cn, self.cs * self.cn)
-        fundo = pygame.transform.scale(fundo, (self.cs * self.cn, self.cs * self.cn))
-        self.screen.blit(fundo, fundo_rect)
-    
-        titulo = "Metrô"
-        titulo_superficie = self.fontes[0].render(titulo, True, (250, 100, 0))
-        titulo_rect = titulo_superficie.get_rect(center = (int(self.cs * (self.cn / 2)), 5 * self.cs))
-        self.screen.blit(titulo_superficie, titulo_rect)
-
-        instrucao = "Bem-vindo"
-        instrucao_superficie = self.fontes[1].render(instrucao, True, (0, 80, 200))
-        instrucao_rect = instrucao_superficie.get_rect(center = (int(self.cs * (self.cn / 2 - 6)), 13 * self.cs))
-        self.screen.blit(instrucao_superficie, instrucao_rect)
-        
-        instrucao = ", o Maquinista."
-        instrucao_superficie = self.fontes[1].render(instrucao, True, (0, 80, 200))
-        instrucao_rect = instrucao_superficie.get_rect(center = (int(self.cs * (7 + self.cn / 2)), 13 * self.cs))
-        self.screen.blit(instrucao_superficie, instrucao_rect)
-        
-        instrucao = "Pressione a barra de espaço e tenha um bom dia"
-        instrucao_superficie = self.fontes[1].render(instrucao, True, (0, 80, 200))
-        instrucao_rect = instrucao_superficie.get_rect(center = (int(self.cs * (self.cn / 2)), 16 * self.cs))
-        self.screen.blit(instrucao_superficie, instrucao_rect)
         
 
     def comecar_fase(self):
-        """ 
+        """ Altera o status de jogo para "Partida em curso", ou seja, modo partida.
         
         Args:
             self: palavra-chave que acessa os atributos e métodos da classe Obstaculo.
         """
-        self.jogo = "Meio"
+        self.jogo = "Partida em curso"
         
 
     def pausar_jogo(self):
@@ -699,11 +869,11 @@ class Menu:
         Args:
             self: palavra-chave que acessa os atributos e métodos da classe Obstaculo.
         """
-        menu_pausa_rect = pygame.Rect(self.cs * 5, self.cs * 4, self.cs * 15, self.cs * 17)
-        pygame.draw.rect(self.screen, (200, 200, 50), menu_pausa_rect)
+        submenu_pausa_rect = pygame.Rect(self.cs * 5, self.cs * 4, self.cs * 15, self.cs * 17)
+        pygame.draw.rect(self.screen, (200, 200, 50), submenu_pausa_rect)
         
-        pausa_1 = "O trem fez uma parada"
-        pausa_2 = "Aguarde"
+        pausa_1 = "Você paralisou o metrô!"
+        pausa_2 = "Volte quando estiver preparado."
         pausa_superficie = self.fontes[1].render(pausa_1, True, (250, 100, 0))
         pausa_rect = pausa_superficie.get_rect(center = (int(self.cs * (self.cn/2)), 5 * self.cs))
         self.screen.blit(pausa_superficie, pausa_rect)
@@ -718,8 +888,8 @@ class Menu:
         Args:
             self: palavra-chave que acessa os atributos e métodos da classe Obstaculo.
         """
-        menu_fim_rect = pygame.Rect(self.cs * 5, self.cs * 4, self.cs * 15, self.cs * 17)
-        pygame.draw.rect(self.screen, (200, 200, 50), menu_fim_rect)
+        submenu_fim_rect = pygame.Rect(self.cs * 5, self.cs * 4, self.cs * 15, self.cs * 17)
+        pygame.draw.rect(self.screen, (200, 200, 50), submenu_fim_rect)
 
         self.recorde.ler()
         listas = self.recorde.df.values.tolist()
@@ -739,11 +909,12 @@ class Menu:
     
 
     def cadastrar(self):
-        nome_superficie = self.fontes[1].render(self.nome, True, "yellow")
-        self.nome_rect = nome_superficie.get_rect(center = (int(self.cs * (self.cn / 2)), 13 * self.cs))
-        self.screen.blit(nome_superficie, self.nome_rect)
+        # Cria uma superfície Rect
+        cadastro_superficie = self.fontes[1].render(self.nome, True, "yellow")
+        self.cadastro_rect = cadastro_superficie.get_rect(midleft = (560, 200))
+        self.screen.blit(cadastro_superficie, self.cadastro_rect)
         if self.selecionado == True:
-            pygame.draw.rect(self.screen, (200, 150, 0), self.nome_rect, 2)
+            pygame.draw.rect(self.screen, (200, 150, 0), self.cadastro_rect, 2)
 
 
 
