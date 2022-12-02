@@ -23,9 +23,9 @@ class Jogo:
         pygame.time.set_timer(self.SCREEN_UPDATE, 150)
         # Criamos um evento que ocorre a cada 150 milissegundos e que vai acionar o movimento do trem
 
-    def loop(self):
+def loop(self):
         while True:
-            if self.menu.jogo == "Início":
+            if self.menu.jogo == "Menu":
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         pygame.quit()
@@ -103,6 +103,7 @@ class Jogo:
                 self.menu.desenhar_elementos()
                 pygame.display.flip() # Renderiza
                 self.clock.tick(60) # Garante uma frequência de cerca de 60 frames por segundo
+            
             
 if __name__ == "__main__":
     jogo = Jogo()
