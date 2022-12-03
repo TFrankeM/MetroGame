@@ -27,7 +27,7 @@ class Menu:
         self.cs = cs
         # Cria os objetos da classe SubMenu
         self.fontes = [pygame.font.Font(None, 120), pygame.font.Font(None, 30)]
-        self.submenu = SubMenu(cn, cs, screen, self.fontes)
+        self.submenu = SubMenu(cn, cs, screen, self.fontes, "Jogador")
 
     def fonte(self, tamanho): 
         """ Reponsável por carregar a fonte "caverson".
@@ -96,27 +96,32 @@ class Menu:
                 if evento.type == pygame.MOUSEBUTTONDOWN:
                     if fase_1.checar_clique(jogar_mouse_pos):
                         # Cria os objetos da classe Partida
-                        self.partida = Partida(cn, cs, screen, pygame.font.Font(None, 30), 1)    # Fase = 1
+                        self.partida = Partida(cn, cs, screen, pygame.font.Font(None, 30), 1, self.submenu.nome)    # Fase = 1
+                        self.submenu.musica.stop()
                         self.partida.inicia_partida()         
 
                     if fase_2.checar_clique(jogar_mouse_pos):
                         # Cria os objetos da classe Partida
-                        self.partida = Partida(cn, cs, screen, pygame.font.Font(None, 30), 2)    # Fase = 2
+                        self.partida = Partida(cn, cs, screen, pygame.font.Font(None, 30), 2, self.submenu.nome)    # Fase = 2
+                        self.submenu.musica.stop()
                         self.partida.inicia_partida()
 
                     if fase_3.checar_clique(jogar_mouse_pos):
                         # Cria os objetos da classe Partida
-                        self.partida = Partida(cn, cs, screen, pygame.font.Font(None, 30), 3)    # Fase = 3
+                        self.partida = Partida(cn, cs, screen, pygame.font.Font(None, 30), 3, self.submenu.nome)    # Fase = 3
+                        self.submenu.musica.stop()
                         self.partida.inicia_partida()
                         
                     if fase_4.checar_clique(jogar_mouse_pos):
                         # Cria os objetos da classe Partida
-                        self.partida = Partida(cn, cs, screen, pygame.font.Font(None, 30), 4)    # Fase = 4
+                        self.partida = Partida(cn, cs, screen, pygame.font.Font(None, 30), 4, self.submenu.nome)    # Fase = 4
+                        self.submenu.musica.stop()
                         self.partida.inicia_partida()
 
                     if fase_5.checar_clique(jogar_mouse_pos):
                        # Cria os objetos da classe Partida
-                        self.partida = Partida(cn, cs, screen, pygame.font.Font(None, 30), 5)    # Fase = 5
+                        self.partida = Partida(cn, cs, screen, pygame.font.Font(None, 30), 5, self.submenu.nome)    # Fase = 5
+                        self.submenu.musica.stop()
                         self.partida.inicia_partida()
 
                     if jogar_voltar.checar_clique(jogar_mouse_pos):
