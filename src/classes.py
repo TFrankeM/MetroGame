@@ -469,7 +469,7 @@ class Partida:
     """ Os acontecimentos do jogo se desenvolvem nos objetos dessa classe, responsáveis por acionar as 
     classes Trem, Obstaculo e Passageiro.
     """
-    def __init__(self, cn, cs, screen, fonte, fase):
+    def __init__(self, cn, cs, screen, fonte, fase, nome):
         """ Construtor da classe.
 
         Args:
@@ -510,7 +510,7 @@ class Partida:
 
         # Cria os objetos da classe Submenu.
         fontes = [pygame.font.Font(None, 120), pygame.font.Font(None, 30)]
-        self.submenu = SubMenu(cn, cs, screen, fontes)
+        self.submenu = SubMenu(cn, cs, screen, fontes, nome)
 
         
         # Uma nova posição será sorteada para o passageiro enquanto ele estiver sobre o metrô ou algum obstáculo.
@@ -532,6 +532,8 @@ class Partida:
         self.borda = pygame.transform.scale(self.borda, (cs,cs))
         # Pontuação inicial:
         self.pontuacao = 0
+        #Tempo da partida:
+        self.tempo = 0
 
 
     def inicia_partida(self):
@@ -540,6 +542,8 @@ class Partida:
         # Criamos um evento que ocorre a cada 150 milissegundos e que vai acionar o movimento do metrô.
         SCREEN_UPDATE = pygame.USEREVENT 
         pygame.time.set_timer(SCREEN_UPDATE, 150)
+        TIMER = pygame.USEREVENT 
+        pygame.time.set_timer(TIMER, 1000)
 
         while True:
             # Status padrão para "submenu.jogo" é "Inicia a partida", ou seja, após clicar no botão de uma fase, ela é iniciada imediatamente.
@@ -576,6 +580,9 @@ class Partida:
                         pygame.time.set_timer(SCREEN_UPDATE, 150)
                         if self.ativo == True:
                             self.atualizar()
+                    if event.type == TIMER:
+                        if self.ativo == True:
+                            self.tempo+=1
                     
                     # Se ocorrer evento "tecla para baixo":
                     if event.type == pygame.KEYDOWN:
@@ -602,7 +609,7 @@ class Partida:
                         if self.ativo == False:
                             self.submenu.jogo = "Fim da partida"
                             self.submenu.registrar_recorde()                   # Aciona a classe Recorde para exibir na tela os recordes.
-                            self.submenu.recorde.escrever(self.pontuacao)      # Escreve a pontuação, nome do jogador e data na folha de registros.
+                            self.submenu.recorde.escrever(self.pontuacao, self.tempo)      # Escreve a pontuação, nome do jogador e data na folha de registros.
                             self.__del__()                                  # "Limpa" o mapa para a próxima partida.
                 
                 # Exibe na tela o metrô, os obstáculos, os passageiros a borda e a pontuação.
@@ -805,7 +812,7 @@ class SubMenu:
     """ Gera um objeto "Rect" para armazenar e manipular a primeira camada de áreas retangulares que 
         que formam a superfície do jogo.
     """
-    def __init__(self, cn, cs, screen, fontes):
+    def __init__(self, cn, cs, screen, fontes, nome):
         """ Construtor da classe.
 
         Args:
@@ -824,7 +831,7 @@ class SubMenu:
         self.jogo = "Inicia a partida"          
         self.pausa = False
         self.abertura()
-        self.nome = "Jogador"
+        self.nome = nome
         self.selecionado = True
 
 
@@ -898,11 +905,10 @@ class SubMenu:
             nome_superficie = self.fontes[1].render(nome, True, "blue")
             nome_rect = nome_superficie.get_rect(center = (int(self.cs * (self.cn / 2 - 3)), (10 + i) * self.cn))
             self.screen.blit(nome_superficie, nome_rect)
-            linha = " | " + listas[i][1] + " | " + str(listas[i][2])
+            linha = " | " + listas[i][1] + " | " + str(listas[i][2]) + " | " + str(listas[i][3])
             recordes_superficie = self.fontes[1].render(linha, True, (0, 0, 0))
             recordes_rect = recordes_superficie.get_rect(center = (int(self.cs * (3 + self.cn / 2)), (10 + i) * self.cn))
             self.screen.blit(recordes_superficie, recordes_rect)
-    
 
     def registrar_recorde(self):
         self.recorde = Recorde(self.nome)
@@ -930,13 +936,13 @@ class Recorde:
         self.nome = nome
     
 
-    def escrever(self, pontuacao):
+    def escrever(self, pontuacao, tempo):
         """
         
         Args:
             self: palavra-chave que acessa os atributos e métodos da classe Obstaculo.
         """
-        self.arquivo.write(f"{self.nome}|{date.today()}|{pontuacao}\n")
+        self.arquivo.write(f"{self.nome}|{date.today()}|{pontuacao}|{tempo}\n")
         
 
     def ler(self):
@@ -945,21 +951,24 @@ class Recorde:
         Args:
             self: palavra-chave que acessa os atributos e métodos da classe Obstaculo.
         """
-        nomes = []
-        datas = []
-        pontos = []
-        self.arquivo.seek(0, 0)
+        nomes=[]
+        datas=[]
+        pontos=[]
+        tempos=[]
+        self.arquivo.seek(0,0)
         for linha in self.arquivo.readlines():
-            nome, data, ponto = re.split("\|", linha)
-            ponto = re.sub("\n", "", ponto)
+            nome, data, ponto, tempo = re.split("\|", linha)
+            tempo = re.sub("\n", "", tempo)
             nomes.append(nome)
             datas.append(data)
             pontos.append(int(ponto))
-        dic = {"Jogador": nomes, "Data": datas, "Pontuação": pontos}
+            tempos.append(int(tempo))
+        dic = {"Jogador":nomes, "Data":datas, "Pontuação":pontos, "Tempo":tempos}
         self.df = pd.DataFrame(dic)
-        self.df.sort_values(by = "Data", axis = 0, ascending = False, inplace = True)
-        self.df.sort_values(by = "Pontuação", axis = 0, ascending = False, inplace = True)
-        self.df.drop_duplicates(subset = "Jogador", inplace = True)
+        self.df.sort_values(by="Data", axis = 0, ascending=False, inplace=True)
+        self.df.sort_values(by="Tempo", axis = 0, ascending=True, inplace=True)
+        self.df.sort_values(by="Pontuação", axis = 0, ascending=False, inplace=True)
+        self.df.drop_duplicates(subset="Jogador", inplace=True)
     
 
     def __del__(self):
