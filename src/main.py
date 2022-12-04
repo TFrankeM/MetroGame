@@ -5,24 +5,29 @@ from classes import Botao, Partida, SubMenu
 # Inicia o módulo PyGame.
 pygame.init()
 
-# Quantidade de células no mapa
+
+# Quantidade de células no mapa.
 cn = 25
-# Tamanho das células
+# Tamanho das células.
 cs = 32
 
 # Define as dimensões da tela do jogo.
 screen = pygame.display.set_mode((cn * cs,cn * cs)) 
 pygame.display.set_caption("Metrô")
 
-# Imagem de fundo do menu principal
-imagem_fundo = pygame.image.load("src/imagens/estação_menu.jpg")
-# fundo = pygame.image.load('src/imagens/estação_menu.jpg').convert_alpha()
 
+# Imagem de fundo do menu principal.
+estacao_com_metro = pygame.image.load("src/imagens/estação_menu.jpg")
+# Imagem de fundo do menu Jogar, Opção e Créditos.
+estacao_sem_metro = pygame.image.load("src/imagens/estação_sem_metro.jpeg")
+retang_fundo = pygame.image.load("src/imagens/retang_fundo.png")
 
 class Menu:
-    def __init__(self, screen, imagem_fundo, cn, cs):
+    def __init__(self, screen, estacao_com_metro, estacao_sem_metro, retang_fundo,cn, cs):
         self.screen = screen
-        self.imagem_fundo = imagem_fundo
+        self.imagem_menu_principal = estacao_com_metro
+        self.imagem_submenus = estacao_sem_metro
+        self.retang_fundo = retang_fundo
         self.cn = cn
         self.cs = cs
         # Cria os objetos da classe SubMenu
@@ -44,42 +49,63 @@ class Menu:
         """ É um sub menu para as fases do jogo.
         """
         while True:
+            # Cria a superfície da imagem de fundo.
+            fundo_rect = pygame.Rect(0, 0, self.cs * self.cn, self.cs * self.cn)         # (Xo, Yo, X, Y)
+            # Ajusta as dimensões da imagem de fundo.
+            imagem_fundo = pygame.transform.scale(self.imagem_submenus, (self.cs * self.cn, self.cs * self.cn))
+            # SCREEN.blit(nome_imagem, (x_pos, y_pos))
+            self.screen.blit(imagem_fundo, fundo_rect)
+
+            # Cria a superfície das instruções.
+            intrucoes_rect = pygame.Rect(380, 330, 750, 650)     # (Xo, Yo, X, Y)
+            # Ajusta as dimensões da imagem de fundo.
+            imagem_intrucoes = pygame.transform.scale(pygame.image.load("src/imagens/instrucoes.png"), (370, 320))
+            # SCREEN.blit(nome_imagem, (x_pos, y_pos))
+            self.screen.blit(imagem_intrucoes, intrucoes_rect)
+
+            # Cria a superfície do quadrado cinza.
+            fundo_cinza_rect = pygame.Rect(100, 220, 700, 320)                           # (Xo, Yo, X, Y)
+            # Ajusta as dimensões do retangulo_cinza.
+            imagem_cinza = pygame.transform.scale(self.retang_fundo, (600, 100))
+            # SCREEN.blit(nome_imagem, (x_pos, y_pos))
+            self.screen.blit(imagem_cinza, fundo_cinza_rect)
+
             # Obtem a posição (x,y) do cursor do mouse.
             jogar_mouse_pos = pygame.mouse.get_pos()
 
-            # Preenche a tela com preto, sobrepondo o menu principal.
-            self.screen.fill("black")
+            # Título da tela de jogar.
+            jogar_titulo = self.fonte(80).render("Fases", True, "#e48b39")
+            jogar_rect = jogar_titulo.get_rect(center = (400, 120))
+            self.screen.blit(jogar_titulo, jogar_rect)
 
             # Texto da tela de jogar.
-            jogar_texto = self.fonte(20).render("Que bom te conhecer, maquinista", True, "White")
-            # Superfície do texto.
-            jogar_rect = jogar_texto.get_rect(center=(400, 200))
-            # Adicionar à tela de jogo.
-            self.screen.blit(jogar_texto, jogar_rect)
-            
-                     
-            '''
-            cadastro = Botao(imagem = None, pos = (200, 100), texto_cont = "Jogador", 
-                             fonte = self.fonte(20), cor_base = "White", cor_com_mause = "Green")
-            '''
+            texto_1 = self.fonte(25).render("Que bom te conhecer, maquinista                        ", True, "#d7fcd4")
+            texto_2 = self.fonte(25).render("Escolha uma fase:", True, "#d7fcd4")
+            y_coord = 250
+            for texto in [texto_1, texto_2]:
+                texto_rect = texto.get_rect(center = (400, y_coord))
+                self.screen.blit(texto, texto_rect)
+                y_coord += 40
+
+            # BOTÕES
             # Cria o botão da fase 1.
-            fase_1 = Botao(imagem = None, pos = (200, 300), texto_cont = "FASE 1: Brasil", 
-                           fonte = self.fonte(20), cor_base = "White", cor_com_mause = "Green")
+            fase_1 = Botao(imagem = pygame.image.load("src/imagens/retang_fundo_fases.png"), pos = (200, 370), texto_cont = "FASE 1: Inglaterra", 
+                           fonte = self.fonte(22), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
             # Cria o botão da fase 2.
-            fase_2 = Botao(imagem = None, pos = (200, 350), texto_cont = "FASE 2: Estados Unidos", 
-                           fonte = self.fonte(20), cor_base = "White", cor_com_mause = "Green")
+            fase_2 = Botao(imagem = pygame.image.load("src/imagens/retang_fundo_fases.png"), pos = (200, 430), texto_cont = "FASE 2: Brasil", 
+                           fonte = self.fonte(22), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
             # Cria o botão da fase 3.
-            fase_3 = Botao(imagem = None, pos = (200, 400), texto_cont = "FASE 3: Inglaterra", 
-                           fonte = self.fonte(20), cor_base = "White", cor_com_mause = "Green")
+            fase_3 = Botao(imagem = pygame.image.load("src/imagens/retang_fundo_fases.png"), pos = (200, 490), texto_cont = "FASE 3: Estados Unidos", 
+                           fonte = self.fonte(22), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
             # Cria o botão da fase 4.
-            fase_4 = Botao(imagem = None, pos = (200, 450), texto_cont = "FASE 4: França", 
-                           fonte = self.fonte(20), cor_base = "White", cor_com_mause = "Green")
+            fase_4 = Botao(imagem = pygame.image.load("src/imagens/retang_fundo_fases.png"), pos = (200, 550), texto_cont = "FASE 4: China", 
+                           fonte = self.fonte(22), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
             # Cria o botão da fase 5.
-            fase_5 = Botao(imagem = None, pos = (200, 500), texto_cont = "FASE 5: China", 
-                           fonte = self.fonte(20), cor_base = "White", cor_com_mause = "Green")
+            fase_5 = Botao(imagem = pygame.image.load("src/imagens/retang_fundo_fases.png"), pos = (200, 610), texto_cont = "FASE 5: França", 
+                           fonte = self.fonte(22), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
             # Cria o botão de voltar.
-            jogar_voltar = Botao(imagem = None, pos = (200, 700), texto_cont = "VOLTAR", 
-                                 fonte = self.fonte(50), cor_base = "White", cor_com_mause = "Green")
+            jogar_voltar = Botao(imagem = None, pos = (400, 700), texto_cont = "Voltar", 
+                                 fonte = self.fonte(50), cor_base = "Black", cor_com_mause = "#568e81")
 
             # Acionar as funções de atualização e mudança de cor para os botões criados.
             for botao in [fase_1, fase_2, fase_3, fase_4, fase_5, jogar_voltar]:
@@ -95,31 +121,37 @@ class Menu:
                 # É checado se o botão esquerdo do mouse clicou sobre algum botão, nesse caso, ele é redirecionado para a referida página.
                 if evento.type == pygame.MOUSEBUTTONDOWN:
                     if fase_1.checar_clique(jogar_mouse_pos):
-                        # Cria os objetos da classe Partida
+                        # Cria os objetos da classe Partida.
                         self.partida = Partida(cn, cs, screen, pygame.font.Font(None, 30), 1, self.submenu.nome)    # Fase = 1
                         self.submenu.musica.stop()
                         self.partida.inicia_partida()         
 
                     if fase_2.checar_clique(jogar_mouse_pos):
-                        # Cria os objetos da classe Partida
+                        # Cria os objetos da classe Partida.
                         self.partida = Partida(cn, cs, screen, pygame.font.Font(None, 30), 2, self.submenu.nome)    # Fase = 2
                         self.submenu.musica.stop()
                         self.partida.inicia_partida()
 
                     if fase_3.checar_clique(jogar_mouse_pos):
-                        # Cria os objetos da classe Partida
+
+                        # Cria os objetos da classe Partida.
+
                         self.partida = Partida(cn, cs, screen, pygame.font.Font(None, 30), 3, self.submenu.nome)    # Fase = 3
                         self.submenu.musica.stop()
                         self.partida.inicia_partida()
                         
                     if fase_4.checar_clique(jogar_mouse_pos):
-                        # Cria os objetos da classe Partida
+
+                        # Cria os objetos da classe Partida.
+
                         self.partida = Partida(cn, cs, screen, pygame.font.Font(None, 30), 4, self.submenu.nome)    # Fase = 4
                         self.submenu.musica.stop()
                         self.partida.inicia_partida()
 
                     if fase_5.checar_clique(jogar_mouse_pos):
-                       # Cria os objetos da classe Partida
+
+                       # Cria os objetos da classe Partida.
+
                         self.partida = Partida(cn, cs, screen, pygame.font.Font(None, 30), 5, self.submenu.nome)    # Fase = 5
                         self.submenu.musica.stop()
                         self.partida.inicia_partida()
@@ -149,11 +181,22 @@ class Menu:
         """ É um sub menu para as opções de jogo.
         """
         while True:
+
+            # Cria a superfície da imagem de fundo.
+            fundo_rect = pygame.Rect(0, 0, self.cs * self.cn, self.cs * self.cn)
+            # Ajusta as dimensões da imagem de fundo.
+            imagem_fundo = pygame.transform.scale(self.imagem_submenus, (self.cs * self.cn, self.cs * self.cn))
+            # SCREEN.blit(nome_imagem, (x_pos, y_pos))
+            self.screen.blit(imagem_fundo, fundo_rect)
+
             # Obtem a posição (x,y) do cursor do mouse.
             opcoes_menu_pos = pygame.mouse.get_pos()
 
-            # Preenche a tela com branco, sobrepondo o menu principal.
-            self.screen.fill("white")
+            # Título da tela de opcoes.
+            opcoes_titulo = self.fonte(80).render("Opções", True, "#e48b39")
+            opcoes_rect = opcoes_titulo.get_rect(center = (400, 120))
+            self.screen.blit(opcoes_titulo, opcoes_rect)
+
 
             # Texto da tela de opções.
             opcoes_texto = self.fonte(45).render("This is the OPTIONS screen.", True, "Black")
@@ -163,8 +206,10 @@ class Menu:
             self.screen.blit(opcoes_texto, opcoes_rect)
 
             # Cria o botão de voltar.
-            opcoes_voltar = Botao(imagem = None, pos = (400, 460), texto_cont = "BACK", 
-                                 fonte = self.fonte(75), cor_base = "Black", cor_com_mause = "Green")
+
+            opcoes_voltar = Botao(imagem = None, pos = (400, 700), texto_cont = "Voltar", 
+                                 fonte = self.fonte(50), cor_base = "Black", cor_com_mause = "#568e81")
+
 
             # Aciona changecolor para alterar a cor quando o mouse está sobre o botão.
             opcoes_voltar.mudar_cor(opcoes_menu_pos)
@@ -189,42 +234,61 @@ class Menu:
         """ É um sub menu para os créditos do jogo.
         """
         while True:
+
+            # Cria a superfície da imagem de fundo.
+            fundo_rect = pygame.Rect(0, 0, self.cs * self.cn, self.cs * self.cn)
+            # Ajusta as dimensões da imagem de fundo.
+            imagem_fundo = pygame.transform.scale(self.imagem_submenus, (self.cs * self.cn, self.cs * self.cn))
+            # SCREEN.blit(nome_imagem, (x_pos, y_pos))
+            self.screen.blit(imagem_fundo, fundo_rect)
+
+            # Cria a superfície do quadrado cinza.
+            fundo_rect2 = pygame.Rect(100, 200, 700, 650)   # (Xo, Yo, X, Y)
+            # Ajusta as dimensões do retangulo_cinza.
+            imagem_fundo2 = pygame.transform.scale(self.retang_fundo, (600, 450))
+            # SCREEN.blit(nome_imagem, (x_pos, y_pos))
+            self.screen.blit(imagem_fundo2, fundo_rect2)
+
             # Obtem a posição (x,y) do cursor do mouse.
             opcoes_menu_pos = pygame.mouse.get_pos()
 
-            # Preenche a tela com branco, sobrepondo o menu principal.
-            self.screen.fill("white")
-
             # Texto da tela de créditos.
-            credito_titulo = self.fonte(50).render("Créditos", True, "#e48b39")
+            credito_titulo = self.fonte(80).render("Créditos", True, "#e48b39")
             # Superfície do texto.
-            credito_rect = credito_titulo.get_rect(center=(400, 100))
+            credito_rect = credito_titulo.get_rect(center=(400, 120))
             # Adicionar à tela de créditos.
             self.screen.blit(credito_titulo, credito_rect)
 
+            # Título da tela de créditos.
+            texto_1 = self.fonte(20).render("Metrô", True, "#e48b39")
+            texto_rect = texto_1.get_rect(center = (285, 250))
+            self.screen.blit(texto_1, texto_rect)
             # Texto da tela de créditos.
-            texto_1 = self.fonte(20).render("Metrô foi desenvolvido por:", True, "Black")
-            texto_2 = self.fonte(20).render("Rodrigo Kalil", True, "Blue")
-            texto_3 = self.fonte(20).render("Rodrigo Prieto", True, "Blue")
-            texto_4 = self.fonte(20).render("Ricael Daniel Vieira da Silva", True, "Blue")
-            texto_5 = self.fonte(20).render("Thiago Franke Melchiors", True, "Blue")
-            texto_6 = self.fonte(20).render("Alunos do 2º semestre de Ciência de Dados da FGV EMAp.", True, "Black")
-            texto_7 = self.fonte(20).render("2022", True, "Black")
+            texto_2 = self.fonte(20).render("             foi desenvolvido por:", True, "#d7fcd4")
+            texto_3 = self.fonte(23).render("Rodrigo Kalil,", True, "Black")
+            texto_4 = self.fonte(23).render("Rodrigo Dhery Silva Prieto,", True, "Black")
+            texto_5 = self.fonte(23).render("Ricael Daniel Vieira da Silva e", True, "Black")
+            texto_6 = self.fonte(23).render("Thiago Franke Melchiors,", True, "Black")
+            texto_7 = self.fonte(20).render("Alunos do segundo semestre de Ciência de Dados da FGV EMAp.", True, "#d7fcd4")
+            texto_8 = self.fonte(20).render("2022", True, "#d7fcd4")
 
             y_coord = 250
-            for texto in [texto_1, texto_2, texto_3, texto_4, texto_5, texto_6, texto_7]:
+            for texto in [texto_2, texto_3, texto_4, texto_5, texto_6, texto_7, texto_8]:
+
                 texto_rect = texto.get_rect(center = (400, y_coord))
                 self.screen.blit(texto, texto_rect)
                 y_coord += 60
 
             # Cria o botão de voltar.
-            opcoes_voltar = Botao(imagem = None, pos = (400, 640), texto_cont = "Voltar", 
-                                 fonte = self.fonte(50), cor_base = "Black", cor_com_mause = "Green")
 
+            creditos_voltar = Botao(imagem = None, pos = (400, 700), texto_cont = "Voltar", 
+                                 fonte = self.fonte(50), cor_base = "Black", cor_com_mause = "#568e81")
+                                 
             # Aciona changecolor para alterar a cor quando o mouse está sobre o botão.
-            opcoes_voltar.mudar_cor(opcoes_menu_pos)
+            creditos_voltar.mudar_cor(opcoes_menu_pos)
             # Adiciona o texto e a imagem à tela.
-            opcoes_voltar.atualizar(self.screen)
+            creditos_voltar.atualizar(self.screen)
+
 
             # pygame.event.get() obtém os eventos que ocorrem.
             for evento in pygame.event.get():
@@ -234,7 +298,8 @@ class Menu:
                     sys.exit()
                 # Se o botão esquerdo do mouse for clicado sobre o botão "Voltar", é acionado a função "menu_principal" e voltamos ao menu.
                 if evento.type == pygame.MOUSEBUTTONDOWN:
-                    if opcoes_voltar.checar_clique(opcoes_menu_pos):
+
+                    if creditos_voltar.checar_clique(opcoes_menu_pos):
                         self.menu_principal()
 
             # Faz com que a superfície de exibição apareça no monitor do usuário.
@@ -249,7 +314,8 @@ class Menu:
             # Cria a superfície da imagem de fundo.
             fundo_rect = pygame.Rect(0, 0, self.cs * self.cn, self.cs * self.cn)
             # Ajusta as dimensões da imagem de fundo.
-            imagem_fundo = pygame.transform.scale(self.imagem_fundo, (self.cs * self.cn, self.cs * self.cn))
+            imagem_fundo = pygame.transform.scale(self.imagem_menu_principal, (self.cs * self.cn, self.cs * self.cn))
+
             # SCREEN.blit(nome_imagem, (x_pos, y_pos))
             self.screen.blit(imagem_fundo, fundo_rect)
             
@@ -259,22 +325,23 @@ class Menu:
             # Título principal do menu.
             menu_text = self.fonte(100).render("Metrô", True, "#e48b39")
             # Cria um objeto rect para colocar o texto.
-            menu_rect = menu_text.get_rect(center = (400, 100))
+            menu_rect = menu_text.get_rect(center = (400, 120))
+
             # Adicionar na tela o título.
             self.screen.blit(menu_text, menu_rect)
 
             # Criar os botões do menu acionando a classe Botao:
             # Botão de jogar.
-            botao_jogar = Botao(imagem = pygame.image.load("src/imagens/retang_fundo.png"), pos = (400, 250), 
+            botao_jogar = Botao(imagem = pygame.image.load("src/imagens/retang_fundo.png"), pos = (400, 300), 
                                 texto_cont = "JOGAR", fonte = self.fonte(75), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
             # Botão de opções.
-            botao_opcoes = Botao(imagem = pygame.image.load("src/imagens/retang_fundo.png"), pos=(400, 380), 
+            botao_opcoes = Botao(imagem = pygame.image.load("src/imagens/retang_fundo.png"), pos=(400, 430), 
                                 texto_cont = "OPÇÕES", fonte = self.fonte(75), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
             # Botão de créditos.
-            botao_creditos = Botao(imagem = pygame.image.load("src/imagens/retang_fundo.png"), pos=(400, 510), 
+            botao_creditos = Botao(imagem = pygame.image.load("src/imagens/retang_fundo.png"), pos=(400, 560), 
                                 texto_cont = "CRÉDITOS", fonte = self.fonte(75), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
             # Botão de sair.
-            botao_sair = Botao(imagem = pygame.image.load("src/imagens/retang_fundo.png"), pos = (400, 640), 
+            botao_sair = Botao(imagem = pygame.image.load("src/imagens/retang_fundo.png"), pos = (400, 690), 
                                 texto_cont = "SAIR", fonte = self.fonte(75), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
 
             # Acionar as funções de atualização e mudança de cor para os botões criados.
@@ -306,5 +373,6 @@ class Menu:
             # Faz com que a superfície de exibição apareça no monitor do usuário.
             pygame.display.update()
 
-menu = Menu(screen, imagem_fundo, cn, cs)
+
+menu = Menu(screen, estacao_com_metro, estacao_sem_metro, retang_fundo, cn, cs)
 menu.menu_principal()
