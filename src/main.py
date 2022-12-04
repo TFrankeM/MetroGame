@@ -5,6 +5,7 @@ from classes import Botao, Partida, SubMenu
 # Inicia o módulo PyGame.
 pygame.init()
 
+
 # Quantidade de células no mapa.
 cn = 25
 # Tamanho das células.
@@ -13,6 +14,7 @@ cs = 32
 # Define as dimensões da tela do jogo.
 screen = pygame.display.set_mode((cn * cs,cn * cs)) 
 pygame.display.set_caption("Metrô")
+
 
 # Imagem de fundo do menu principal.
 estacao_com_metro = pygame.image.load("src/imagens/estação_menu.jpg")
@@ -131,19 +133,25 @@ class Menu:
                         self.partida.inicia_partida()
 
                     if fase_3.checar_clique(jogar_mouse_pos):
+
                         # Cria os objetos da classe Partida.
+
                         self.partida = Partida(cn, cs, screen, pygame.font.Font(None, 30), 3, self.submenu.nome)    # Fase = 3
                         self.submenu.musica.stop()
                         self.partida.inicia_partida()
                         
                     if fase_4.checar_clique(jogar_mouse_pos):
+
                         # Cria os objetos da classe Partida.
+
                         self.partida = Partida(cn, cs, screen, pygame.font.Font(None, 30), 4, self.submenu.nome)    # Fase = 4
                         self.submenu.musica.stop()
                         self.partida.inicia_partida()
 
                     if fase_5.checar_clique(jogar_mouse_pos):
+
                        # Cria os objetos da classe Partida.
+
                         self.partida = Partida(cn, cs, screen, pygame.font.Font(None, 30), 5, self.submenu.nome)    # Fase = 5
                         self.submenu.musica.stop()
                         self.partida.inicia_partida()
@@ -173,6 +181,7 @@ class Menu:
         """ É um sub menu para as opções de jogo.
         """
         while True:
+
             # Cria a superfície da imagem de fundo.
             fundo_rect = pygame.Rect(0, 0, self.cs * self.cn, self.cs * self.cn)
             # Ajusta as dimensões da imagem de fundo.
@@ -188,6 +197,7 @@ class Menu:
             opcoes_rect = opcoes_titulo.get_rect(center = (400, 120))
             self.screen.blit(opcoes_titulo, opcoes_rect)
 
+
             # Texto da tela de opções.
             opcoes_texto = self.fonte(45).render("This is the OPTIONS screen.", True, "Black")
             # Superfície do texto.
@@ -196,8 +206,10 @@ class Menu:
             self.screen.blit(opcoes_texto, opcoes_rect)
 
             # Cria o botão de voltar.
+
             opcoes_voltar = Botao(imagem = None, pos = (400, 700), texto_cont = "Voltar", 
                                  fonte = self.fonte(50), cor_base = "Black", cor_com_mause = "#568e81")
+
 
             # Aciona changecolor para alterar a cor quando o mouse está sobre o botão.
             opcoes_voltar.mudar_cor(opcoes_menu_pos)
@@ -222,6 +234,7 @@ class Menu:
         """ É um sub menu para os créditos do jogo.
         """
         while True:
+
             # Cria a superfície da imagem de fundo.
             fundo_rect = pygame.Rect(0, 0, self.cs * self.cn, self.cs * self.cn)
             # Ajusta as dimensões da imagem de fundo.
@@ -261,11 +274,13 @@ class Menu:
 
             y_coord = 250
             for texto in [texto_2, texto_3, texto_4, texto_5, texto_6, texto_7, texto_8]:
+
                 texto_rect = texto.get_rect(center = (400, y_coord))
                 self.screen.blit(texto, texto_rect)
                 y_coord += 60
 
             # Cria o botão de voltar.
+
             creditos_voltar = Botao(imagem = None, pos = (400, 700), texto_cont = "Voltar", 
                                  fonte = self.fonte(50), cor_base = "Black", cor_com_mause = "#568e81")
                                  
@@ -273,6 +288,7 @@ class Menu:
             creditos_voltar.mudar_cor(opcoes_menu_pos)
             # Adiciona o texto e a imagem à tela.
             creditos_voltar.atualizar(self.screen)
+
 
             # pygame.event.get() obtém os eventos que ocorrem.
             for evento in pygame.event.get():
@@ -282,6 +298,7 @@ class Menu:
                     sys.exit()
                 # Se o botão esquerdo do mouse for clicado sobre o botão "Voltar", é acionado a função "menu_principal" e voltamos ao menu.
                 if evento.type == pygame.MOUSEBUTTONDOWN:
+
                     if creditos_voltar.checar_clique(opcoes_menu_pos):
                         self.menu_principal()
 
@@ -298,6 +315,7 @@ class Menu:
             fundo_rect = pygame.Rect(0, 0, self.cs * self.cn, self.cs * self.cn)
             # Ajusta as dimensões da imagem de fundo.
             imagem_fundo = pygame.transform.scale(self.imagem_menu_principal, (self.cs * self.cn, self.cs * self.cn))
+
             # SCREEN.blit(nome_imagem, (x_pos, y_pos))
             self.screen.blit(imagem_fundo, fundo_rect)
             
@@ -308,6 +326,7 @@ class Menu:
             menu_text = self.fonte(100).render("Metrô", True, "#e48b39")
             # Cria um objeto rect para colocar o texto.
             menu_rect = menu_text.get_rect(center = (400, 120))
+
             # Adicionar na tela o título.
             self.screen.blit(menu_text, menu_rect)
 
@@ -353,6 +372,7 @@ class Menu:
             
             # Faz com que a superfície de exibição apareça no monitor do usuário.
             pygame.display.update()
+
 
 menu = Menu(screen, estacao_com_metro, estacao_sem_metro, retang_fundo, cn, cs)
 menu.menu_principal()

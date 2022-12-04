@@ -368,12 +368,14 @@ class Obstaculo:
             self.corpo[0] = [Vector2(7, 8), Vector2(17, 8), Vector2(7, 16), Vector2(17, 16)]
             self.corpo[1] = [Vector2(9, 10), Vector2(15, 10), Vector2(9, 14), Vector2(15, 14)]
         # Obstáculos fase 4.
+
         if self.fase == 4:
             self.corpo[0] = [Vector2(5, 5), Vector2(5, 6), Vector2(4, 5), 
                              Vector2(19, 5), Vector2(19, 6), Vector2(20, 5), 
                              Vector2(19, 5), Vector2(19, 6), Vector2(20, 5),
                              Vector2(5, 19), Vector2(5, 18), Vector2(4, 19),
                              Vector2(19, 19), Vector2(19, 18), Vector2(20, 19)]
+
         # Obstáculos fase 5.
         if self.fase == 5:
             self.corpo[0] = [Vector2(11, 3), Vector2(13, 3), Vector2(11, 21), Vector2(13, 21),
@@ -573,6 +575,7 @@ class Partida:
                     self.ativo = True               # Permite que o movimento do metrô seja atualizado
                     self.submenu.musica.stop()      # Para a música do menu
                     self.submenu.musica.stop()
+
                     self.musica.stop()
                     self.musica.play()              # Inicia a música de fundo da partida
 
@@ -886,7 +889,9 @@ class SubMenu:
             self: palavra-chave que acessa os atributos e métodos da classe Obstaculo.
         """
         self.musica = pygame.mixer.Sound('src/sons/chegada.mp3')
+        print('antes do play não toca')
         self.musica.play()
+        print('depois do play toca')
     
 
     def desenhar_elementos(self):
@@ -959,6 +964,7 @@ class SubMenu:
 
     def cadastrar(self):
         # Cria uma superfície Rect
+
         cadastro_superficie = self.fontes[1].render(self.nome, True, "#e48b39")
         self.cadastro_rect = cadastro_superficie.get_rect(midleft = (540, 250))
         self.screen.blit(cadastro_superficie, self.cadastro_rect)
