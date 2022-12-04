@@ -488,7 +488,7 @@ class Partida:
     """ Os acontecimentos do jogo se desenvolvem nos objetos dessa classe, responsáveis por acionar as 
     classes Trem, Obstaculo e Passageiro.
     """
-    def __init__(self, cn, cs, screen, fonte, fase, nome):
+    def __init__(self, cn, cs, screen, fonte, fase, nome, idioma):
         """ Construtor da classe.
 
         Args:
@@ -551,6 +551,8 @@ class Partida:
         self.pontuacao = 0
         #Tempo da partida:
         self.tempo = 0
+        
+        self.idioma = idioma
 
 
     def inicia_partida(self):
@@ -562,7 +564,7 @@ class Partida:
         TIMER = pygame.USEREVENT 
         pygame.time.set_timer(TIMER, 1000)
 
-        self.pas = self.tradutor.translate("passageiros", dest=self.submenu.idioma).text
+        self.pas = self.tradutor.translate("passageiros", dest=self.idioma).text
         
         while True:
             # Status padrão para "submenu.jogo" é "Inicia a partida", ou seja, após clicar no botão de uma fase, ela é iniciada imediatamente.
