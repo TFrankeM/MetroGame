@@ -182,7 +182,8 @@ class Menu:
                     if evento.key == pygame.K_BACKSPACE and self.submenu.selecionado == True:
                         self.submenu.nome = self.submenu.nome[:-1]
                     elif len(self.submenu.nome) < 20 and self.submenu.selecionado == True:
-                        self.submenu.nome += evento.unicode
+                        if evento.key != pygame.K_RETURN and evento.key != pygame.K_KP_ENTER:
+                            self.submenu.nome += evento.unicode
             self.submenu.desenhar_elementos()  
 
             # Faz com que a superfície de exibição apareça no monitor do usuário.
