@@ -1,5 +1,6 @@
 import pygame, sys
 from classes import Botao, Partida, SubMenu
+from googletrans import Translator
 
 
 # Inicia o módulo PyGame.
@@ -33,6 +34,7 @@ class Menu:
         # Cria os objetos da classe SubMenu
         self.fontes = [pygame.font.Font(None, 120), pygame.font.Font(None, 30)]
         self.submenu = SubMenu(cn, cs, screen, self.fontes, "Jogador")
+        self.tradutor = Translator()
 
     def fonte(self, tamanho): 
         """ Reponsável por carregar a fonte "caverson".
@@ -180,7 +182,25 @@ class Menu:
     def opcoes(self):
         """ É um sub menu para as opções de jogo.
         """
-        while True:
+        
+        # Título da tela de opcoes.
+        op_t = self.tradutor.translate("Opções", dest=self.submenu.idioma).text
+        opcoes_titulo = self.fonte(45).render(op_t, True, "Black")
+        # Superfície do texto.
+        opcoes_rect_t = opcoes_titulo.get_rect(center=(400, 120))
+        
+        # Texto da tela de opções.
+        op_tx = self.tradutor.translate("This is the OPTIONS screen.", dest=self.submenu.idioma).text
+        opcoes_texto = self.fonte(45).render(op_tx, True, "Black")
+        # Superfície do texto.
+        opcoes_rect_tx = opcoes_texto.get_rect(center=(400, 200))
+        
+        self.fundo = pygame.image.load("src/imagens/retang_fundo.png")
+        
+        idioma = self.atualizar_idiomas()
+        
+        condicao = True
+        while condicao:
 
             # Cria a superfície da imagem de fundo.
             fundo_rect = pygame.Rect(0, 0, self.cs * self.cn, self.cs * self.cn)
@@ -192,22 +212,34 @@ class Menu:
             # Obtem a posição (x,y) do cursor do mouse.
             opcoes_menu_pos = pygame.mouse.get_pos()
 
-            # Título da tela de opcoes.
-            opcoes_titulo = self.fonte(80).render("Opções", True, "#e48b39")
-            opcoes_rect = opcoes_titulo.get_rect(center = (400, 120))
-            self.screen.blit(opcoes_titulo, opcoes_rect)
-
-
-            # Texto da tela de opções.
-            opcoes_texto = self.fonte(45).render("This is the OPTIONS screen.", True, "Black")
-            # Superfície do texto.
-            opcoes_rect = opcoes_texto.get_rect(center=(400, 260))
             # Adicionar à tela de opções.
-            self.screen.blit(opcoes_texto, opcoes_rect)
+            self.screen.blit(opcoes_titulo, opcoes_rect_t)
+            self.screen.blit(opcoes_texto, opcoes_rect_tx)
+            
+            idioma[0].mudar_cor(opcoes_menu_pos)
+            idioma[0].atualizar(self.screen)
+
+            idioma[1].mudar_cor(opcoes_menu_pos)
+            idioma[1].atualizar(self.screen)
+
+            idioma[2].mudar_cor(opcoes_menu_pos)
+            idioma[2].atualizar(self.screen)
+
+            idioma[3].mudar_cor(opcoes_menu_pos)
+            idioma[3].atualizar(self.screen)
+
+            idioma[4].mudar_cor(opcoes_menu_pos)
+            idioma[4].atualizar(self.screen)
+
+            idioma[5].mudar_cor(opcoes_menu_pos)
+            idioma[5].atualizar(self.screen)
+
+            idioma[6].mudar_cor(opcoes_menu_pos)
+            idioma[6].atualizar(self.screen)
 
             # Cria o botão de voltar.
-
-            opcoes_voltar = Botao(imagem = None, pos = (400, 700), texto_cont = "Voltar", 
+            back = self.tradutor.translate("Back", dest=self.submenu.idioma).text
+            opcoes_voltar = Botao(imagem = None, pos = (400, 700), texto_cont = back, 
                                  fonte = self.fonte(50), cor_base = "Black", cor_com_mause = "#568e81")
 
 
@@ -225,7 +257,29 @@ class Menu:
                 # Se o botão esquerdo do mouse for clicado sobre o botão "Voltar", é acionado a função "menu_principal" e voltamos ao menu.
                 if evento.type == pygame.MOUSEBUTTONDOWN:
                     if opcoes_voltar.checar_clique(opcoes_menu_pos):
+                        condicao = False
                         self.menu_principal()
+                    elif idioma[0].checar_clique(opcoes_menu_pos):
+                        self.submenu.idioma = "pt"
+                        idioma = self.atualizar_idiomas()
+                    elif idioma[1].checar_clique(opcoes_menu_pos):
+                        self.submenu.idioma = "en"
+                        idioma = self.atualizar_idiomas()
+                    elif idioma[2].checar_clique(opcoes_menu_pos):
+                        self.submenu.idioma = "fr"
+                        idioma = self.atualizar_idiomas()
+                    elif idioma[3].checar_clique(opcoes_menu_pos):
+                        self.submenu.idioma = "la"
+                        idioma = self.atualizar_idiomas()
+                    elif idioma[6].checar_clique(opcoes_menu_pos):
+                        self.submenu.idioma = "jw"
+                        idioma = self.atualizar_idiomas()
+                    elif idioma[5].checar_clique(opcoes_menu_pos):
+                        self.submenu.idioma = "eo"
+                        idioma = self.atualizar_idiomas()
+                    elif idioma[4].checar_clique(opcoes_menu_pos):
+                        self.submenu.idioma = "de"
+                        idioma = self.atualizar_idiomas()
 
             # Faz com que a superfície de exibição apareça no monitor do usuário.
             pygame.display.update()
@@ -372,6 +426,36 @@ class Menu:
             
             # Faz com que a superfície de exibição apareça no monitor do usuário.
             pygame.display.update()
+    
+    def atualizar_idiomas(self):
+        idioma = self.tradutor.translate("Portugues", dest=self.submenu.idioma).text
+        idioma_portugues = Botao(imagem = pygame.transform.scale(self.fundo, (150, self.cs)), pos = (400, 250), 
+                            texto_cont = idioma, fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+
+        idioma = self.tradutor.translate("Ingles", dest=self.submenu.idioma).text
+        idioma_ingles = Botao(imagem = pygame.transform.scale(self.fundo, (150, self.cs)), pos = (400, 280), 
+                            texto_cont = idioma, fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+
+        idioma = self.tradutor.translate("Frances", dest=self.submenu.idioma).text
+        idioma_frances = Botao(imagem = pygame.transform.scale(self.fundo, (150, self.cs)), pos = (400, 310), 
+                            texto_cont = idioma, fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+
+        idioma = self.tradutor.translate("Latim", dest=self.submenu.idioma).text
+        idioma_latim = Botao(imagem = pygame.transform.scale(self.fundo, (150, self.cs)), pos = (400, 340), 
+                            texto_cont = idioma, fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+
+        idioma = self.tradutor.translate("Alemao", dest=self.submenu.idioma).text
+        idioma_alemao = Botao(imagem = pygame.transform.scale(self.fundo, (150, self.cs)), pos = (400, 370), 
+                            texto_cont = idioma, fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+
+        idioma = self.tradutor.translate("Esperanto", dest=self.submenu.idioma).text
+        idioma_esperanto = Botao(imagem = pygame.transform.scale(self.fundo, (150, self.cs)), pos = (400, 400), 
+                            texto_cont = idioma, fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+
+        idioma = self.tradutor.translate("Javanes", dest=self.submenu.idioma).text
+        idioma_javanes = Botao(imagem = pygame.transform.scale(self.fundo, (150, self.cs)), pos = (400, 430), 
+                            texto_cont = idioma, fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+        return [idioma_portugues, idioma_ingles, idioma_frances, idioma_latim, idioma_alemao, idioma_esperanto, idioma_javanes]
 
 
 menu = Menu(screen, estacao_com_metro, estacao_sem_metro, retang_fundo, cn, cs)
