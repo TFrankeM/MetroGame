@@ -195,15 +195,9 @@ class Menu:
         
         # Título da tela de opcoes.
         op_t = self.tradutor.translate("Opções", dest=self.submenu.idioma).text
-        opcoes_titulo = self.fonte(45).render(op_t, True, "Black")
-        # Superfície do texto.
-        opcoes_rect_t = opcoes_titulo.get_rect(center=(400, 120))
         
         # Texto da tela de opções.
         op_tx = self.tradutor.translate("This is the OPTIONS screen.", dest=self.submenu.idioma).text
-        opcoes_texto = self.fonte(45).render(op_tx, True, "Black")
-        # Superfície do texto.
-        opcoes_rect_tx = opcoes_texto.get_rect(center=(400, 200))
         
         self.fundo = pygame.image.load("src/imagens/retang_fundo.png")
         
@@ -218,6 +212,13 @@ class Menu:
             imagem_fundo = pygame.transform.scale(self.imagem_submenus, (self.cs * self.cn, self.cs * self.cn))
             # SCREEN.blit(nome_imagem, (x_pos, y_pos))
             self.screen.blit(imagem_fundo, fundo_rect)
+            
+            opcoes_texto = self.fonte(45).render(op_tx, True, "Black")
+            # Superfície do texto.
+            opcoes_rect_tx = opcoes_texto.get_rect(center=(400, 200))
+            opcoes_titulo = self.fonte(45).render(op_t, True, "Black")
+            # Superfície do texto.
+            opcoes_rect_t = opcoes_titulo.get_rect(center=(400, 120))
 
             # Obtem a posição (x,y) do cursor do mouse.
             opcoes_menu_pos = pygame.mouse.get_pos()
@@ -272,24 +273,38 @@ class Menu:
                     elif idioma[0].checar_clique(opcoes_menu_pos):
                         self.submenu.idioma = "pt"
                         idioma = self.atualizar_idiomas()
+                        op_t = self.tradutor.translate("Opções", dest=self.submenu.idioma).text
+                        op_tx = self.tradutor.translate("This is the OPTIONS screen.", dest=self.submenu.idioma).text
                     elif idioma[1].checar_clique(opcoes_menu_pos):
                         self.submenu.idioma = "en"
                         idioma = self.atualizar_idiomas()
+                        op_t = self.tradutor.translate("Opções", dest=self.submenu.idioma).text
+                        op_tx = self.tradutor.translate("This is the OPTIONS screen.", dest=self.submenu.idioma).text
                     elif idioma[2].checar_clique(opcoes_menu_pos):
                         self.submenu.idioma = "fr"
                         idioma = self.atualizar_idiomas()
+                        op_t = self.tradutor.translate("Opções", dest=self.submenu.idioma).text
+                        op_tx = self.tradutor.translate("This is the OPTIONS screen.", dest=self.submenu.idioma).text
                     elif idioma[3].checar_clique(opcoes_menu_pos):
                         self.submenu.idioma = "la"
                         idioma = self.atualizar_idiomas()
+                        op_t = self.tradutor.translate("Opções", dest=self.submenu.idioma).text
+                        op_tx = self.tradutor.translate("This is the OPTIONS screen.", dest=self.submenu.idioma).text
                     elif idioma[6].checar_clique(opcoes_menu_pos):
                         self.submenu.idioma = "jw"
                         idioma = self.atualizar_idiomas()
+                        op_t = self.tradutor.translate("Opções", dest=self.submenu.idioma).text
+                        op_tx = self.tradutor.translate("This is the OPTIONS screen.", dest=self.submenu.idioma).text
                     elif idioma[5].checar_clique(opcoes_menu_pos):
                         self.submenu.idioma = "eo"
                         idioma = self.atualizar_idiomas()
+                        op_t = self.tradutor.translate("Opções", dest=self.submenu.idioma).text
+                        op_tx = self.tradutor.translate("This is the OPTIONS screen.", dest=self.submenu.idioma).text
                     elif idioma[4].checar_clique(opcoes_menu_pos):
                         self.submenu.idioma = "de"
                         idioma = self.atualizar_idiomas()
+                        op_t = self.tradutor.translate("Opções", dest=self.submenu.idioma).text
+                        op_tx = self.tradutor.translate("This is the OPTIONS screen.", dest=self.submenu.idioma).text
 
             # Faz com que a superfície de exibição apareça no monitor do usuário.
             pygame.display.update()
