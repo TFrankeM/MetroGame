@@ -6,6 +6,7 @@ from datetime import date
 import re
 import pandas as pd
 import operator
+from googletrans import Translator
 
 pygame.init()
 
@@ -529,6 +530,7 @@ class Partida:
         # Cria os objetos da classe Submenu.
         fontes = [pygame.font.Font(None, 120), pygame.font.Font(None, 30)]
         self.submenu = SubMenu(cn, cs, screen, fontes, nome)
+        self.tradutor = Translator()
 
         
         # Uma nova posição será sorteada para o passageiro enquanto ele estiver sobre o metrô ou algum obstáculo.
@@ -560,6 +562,8 @@ class Partida:
         TIMER = pygame.USEREVENT 
         pygame.time.set_timer(TIMER, 1000)
 
+        self.pas = self.tradutor.translate("passageiros", dest=self.submenu.idioma).text
+        
         while True:
             # Status padrão para "submenu.jogo" é "Inicia a partida", ou seja, após clicar no botão de uma fase, ela é iniciada imediatamente.
             if self.submenu.jogo == "Inicia a partida":
@@ -754,7 +758,7 @@ class Partida:
         # Comprimento do metrô, descontados os vagões iniciais.
         self.pontuacao = str(len(self.trem.corpo) - 3)
         # Conteúdo exibido no objeto Rect.
-        pontuacao_superficie = self.fonte.render(f"{self.pontuacao} passageiros", True, (0,0,0))
+        pontuacao_superficie = self.fonte.render(f"{self.pontuacao} "+self.pas, True, (0,0,0))
         # Contrução do  objeto Rect.
         pontuacao_rect = pontuacao_superficie.get_rect(center = (int(self.cs * self.cn - 110), int(20)))
         self.screen.blit(pontuacao_superficie, pontuacao_rect)

@@ -50,6 +50,15 @@ class Menu:
     def jogar(self):
         """ É um sub menu para as fases do jogo.
         """
+        txt_1 = self.tradutor.translate("Que bom te conhecer, maquinista", dest=self.submenu.idioma).text
+        txt_2 = self.tradutor.translate("Escolha uma fase:", dest=self.submenu.idioma).text
+        fa = self.tradutor.translate("Fases", dest=self.submenu.idioma).text
+        fa_1 = self.tradutor.translate("FASE 1: Inglaterra", dest=self.submenu.idioma).text
+        fa_2 = self.tradutor.translate("FASE 2: Brasil", dest=self.submenu.idioma).text
+        fa_3 = self.tradutor.translate("FASE 3: Estados Unidos", dest=self.submenu.idioma).text
+        fa_4 = self.tradutor.translate("FASE 4: China", dest=self.submenu.idioma).text
+        fa_5 = self.tradutor.translate("FASE 5: França", dest=self.submenu.idioma).text
+        volta = self.tradutor.translate("Voltar", dest=self.submenu.idioma).text
         while True:
             # Cria a superfície da imagem de fundo.
             fundo_rect = pygame.Rect(0, 0, self.cs * self.cn, self.cs * self.cn)         # (Xo, Yo, X, Y)
@@ -76,13 +85,13 @@ class Menu:
             jogar_mouse_pos = pygame.mouse.get_pos()
 
             # Título da tela de jogar.
-            jogar_titulo = self.fonte(80).render("Fases", True, "#e48b39")
+            jogar_titulo = self.fonte(80).render(fa, True, "#e48b39")
             jogar_rect = jogar_titulo.get_rect(center = (400, 120))
             self.screen.blit(jogar_titulo, jogar_rect)
 
             # Texto da tela de jogar.
-            texto_1 = self.fonte(25).render("Que bom te conhecer, maquinista                        ", True, "#d7fcd4")
-            texto_2 = self.fonte(25).render("Escolha uma fase:", True, "#d7fcd4")
+            texto_1 = self.fonte(25).render(txt_1+"                        ", True, "#d7fcd4")
+            texto_2 = self.fonte(25).render(txt_2, True, "#d7fcd4")
             y_coord = 250
             for texto in [texto_1, texto_2]:
                 texto_rect = texto.get_rect(center = (400, y_coord))
@@ -91,22 +100,22 @@ class Menu:
 
             # BOTÕES
             # Cria o botão da fase 1.
-            fase_1 = Botao(imagem = pygame.image.load("src/imagens/retang_fundo_fases.png"), pos = (200, 370), texto_cont = "FASE 1: Inglaterra", 
+            fase_1 = Botao(imagem = pygame.image.load("src/imagens/retang_fundo_fases.png"), pos = (200, 370), texto_cont = fa_1, 
                            fonte = self.fonte(22), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
             # Cria o botão da fase 2.
-            fase_2 = Botao(imagem = pygame.image.load("src/imagens/retang_fundo_fases.png"), pos = (200, 430), texto_cont = "FASE 2: Brasil", 
+            fase_2 = Botao(imagem = pygame.image.load("src/imagens/retang_fundo_fases.png"), pos = (200, 430), texto_cont = fa_2, 
                            fonte = self.fonte(22), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
             # Cria o botão da fase 3.
-            fase_3 = Botao(imagem = pygame.image.load("src/imagens/retang_fundo_fases.png"), pos = (200, 490), texto_cont = "FASE 3: Estados Unidos", 
+            fase_3 = Botao(imagem = pygame.image.load("src/imagens/retang_fundo_fases.png"), pos = (200, 490), texto_cont = fa_3, 
                            fonte = self.fonte(22), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
             # Cria o botão da fase 4.
-            fase_4 = Botao(imagem = pygame.image.load("src/imagens/retang_fundo_fases.png"), pos = (200, 550), texto_cont = "FASE 4: China", 
+            fase_4 = Botao(imagem = pygame.image.load("src/imagens/retang_fundo_fases.png"), pos = (200, 550), texto_cont = fa_4, 
                            fonte = self.fonte(22), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
             # Cria o botão da fase 5.
-            fase_5 = Botao(imagem = pygame.image.load("src/imagens/retang_fundo_fases.png"), pos = (200, 610), texto_cont = "FASE 5: França", 
+            fase_5 = Botao(imagem = pygame.image.load("src/imagens/retang_fundo_fases.png"), pos = (200, 610), texto_cont = fa_5, 
                            fonte = self.fonte(22), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
             # Cria o botão de voltar.
-            jogar_voltar = Botao(imagem = None, pos = (400, 700), texto_cont = "Voltar", 
+            jogar_voltar = Botao(imagem = None, pos = (400, 700), texto_cont = volta, 
                                  fonte = self.fonte(50), cor_base = "Black", cor_com_mause = "#568e81")
 
             # Acionar as funções de atualização e mudança de cor para os botões criados.
@@ -287,6 +296,14 @@ class Menu:
     def creditos(self):
         """ É um sub menu para os créditos do jogo.
         """
+        ct = self.tradutor.translate("Créditos", dest=self.submenu.idioma).text
+        t_2 = self.tradutor.translate("foi desenvolvido por:", dest=self.submenu.idioma).text
+        t_3 = self.tradutor.translate("Rodrigo Kalil,", dest=self.submenu.idioma).text
+        t_4 = self.tradutor.translate("Rodrigo Dhery Silva Prieto,", dest=self.submenu.idioma).text
+        t_5 = self.tradutor.translate("Ricael Daniel Vieira da Silva e", dest=self.submenu.idioma).text
+        t_6 = self.tradutor.translate("Thiago Franke Melchiors,", dest=self.submenu.idioma).text
+        t_7 = self.tradutor.translate("Alunos do segundo semestre de Ciência de Dados da FGV EMAp.", dest=self.submenu.idioma).text
+        volta = self.tradutor.translate("Voltar", dest=self.submenu.idioma).text
         while True:
 
             # Cria a superfície da imagem de fundo.
@@ -307,7 +324,7 @@ class Menu:
             opcoes_menu_pos = pygame.mouse.get_pos()
 
             # Texto da tela de créditos.
-            credito_titulo = self.fonte(80).render("Créditos", True, "#e48b39")
+            credito_titulo = self.fonte(80).render(ct, True, "#e48b39")
             # Superfície do texto.
             credito_rect = credito_titulo.get_rect(center=(400, 120))
             # Adicionar à tela de créditos.
@@ -318,12 +335,12 @@ class Menu:
             texto_rect = texto_1.get_rect(center = (285, 250))
             self.screen.blit(texto_1, texto_rect)
             # Texto da tela de créditos.
-            texto_2 = self.fonte(20).render("             foi desenvolvido por:", True, "#d7fcd4")
-            texto_3 = self.fonte(23).render("Rodrigo Kalil,", True, "Black")
-            texto_4 = self.fonte(23).render("Rodrigo Dhery Silva Prieto,", True, "Black")
-            texto_5 = self.fonte(23).render("Ricael Daniel Vieira da Silva e", True, "Black")
-            texto_6 = self.fonte(23).render("Thiago Franke Melchiors,", True, "Black")
-            texto_7 = self.fonte(20).render("Alunos do segundo semestre de Ciência de Dados da FGV EMAp.", True, "#d7fcd4")
+            texto_2 = self.fonte(20).render("             "+t_2, True, "#d7fcd4")
+            texto_3 = self.fonte(23).render(t_3, True, "Black")
+            texto_4 = self.fonte(23).render(t_4, True, "Black")
+            texto_5 = self.fonte(23).render(t_5, True, "Black")
+            texto_6 = self.fonte(23).render(t_6, True, "Black")
+            texto_7 = self.fonte(20).render(t_7, True, "#d7fcd4")
             texto_8 = self.fonte(20).render("2022", True, "#d7fcd4")
 
             y_coord = 250
@@ -335,7 +352,7 @@ class Menu:
 
             # Cria o botão de voltar.
 
-            creditos_voltar = Botao(imagem = None, pos = (400, 700), texto_cont = "Voltar", 
+            creditos_voltar = Botao(imagem = None, pos = (400, 700), texto_cont = volta, 
                                  fonte = self.fonte(50), cor_base = "Black", cor_com_mause = "#568e81")
                                  
             # Aciona changecolor para alterar a cor quando o mouse está sobre o botão.
@@ -364,6 +381,10 @@ class Menu:
         """ Responsável por gerar o menu principal do jogo, acionando as funções "jogar" e "opcoes" e a classe Botao para criar os botões. 
         """
         # O loop ocorre enquanto não for clicado no botão "SAIR".
+        j = self.tradutor.translate("JOGAR", dest=self.submenu.idioma).text
+        o = self.tradutor.translate("OPÇÕES", dest=self.submenu.idioma).text
+        c = self.tradutor.translate("CRÉDITOS", dest=self.submenu.idioma).text
+        s = self.tradutor.translate("SAIR", dest=self.submenu.idioma).text
         while True:
             # Cria a superfície da imagem de fundo.
             fundo_rect = pygame.Rect(0, 0, self.cs * self.cn, self.cs * self.cn)
@@ -387,16 +408,16 @@ class Menu:
             # Criar os botões do menu acionando a classe Botao:
             # Botão de jogar.
             botao_jogar = Botao(imagem = pygame.image.load("src/imagens/retang_fundo.png"), pos = (400, 300), 
-                                texto_cont = "JOGAR", fonte = self.fonte(75), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+                                texto_cont = j, fonte = self.fonte(75), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
             # Botão de opções.
             botao_opcoes = Botao(imagem = pygame.image.load("src/imagens/retang_fundo.png"), pos=(400, 430), 
-                                texto_cont = "OPÇÕES", fonte = self.fonte(75), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+                                texto_cont = o, fonte = self.fonte(75), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
             # Botão de créditos.
             botao_creditos = Botao(imagem = pygame.image.load("src/imagens/retang_fundo.png"), pos=(400, 560), 
-                                texto_cont = "CRÉDITOS", fonte = self.fonte(75), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+                                texto_cont = c, fonte = self.fonte(75), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
             # Botão de sair.
             botao_sair = Botao(imagem = pygame.image.load("src/imagens/retang_fundo.png"), pos = (400, 690), 
-                                texto_cont = "SAIR", fonte = self.fonte(75), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+                                texto_cont = s, fonte = self.fonte(75), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
 
             # Acionar as funções de atualização e mudança de cor para os botões criados.
             for botao in [botao_jogar, botao_opcoes, botao_creditos, botao_sair]:
