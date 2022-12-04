@@ -3,6 +3,8 @@ sys.path.insert(0, ".\src")
 import unittest as u
 import classes as c
 from pygame.math import Vector2
+from datetime import date
+import re
 
 def setUpModule():
     print("Iniciando rodada de testes")
@@ -39,6 +41,14 @@ class TesteClasses(u.TestCase):
         print("O vagão novo foi adicionado")
         self.assertFalse(trem.novo_vagao)
         print("O tamanho do trem foi fixado")
+    
+    def test_case_recorde_escrever(self):
+        recorde = c.Recorde("Individuo")
+        recorde.escrever(1000, 2)
+        recorde.arquivo.seek(0,0)
+        linhas = recorde.arquivo.readlines()
+        nome, data, pontuacao, tempo = re.split("\|", linhas[-1])
+        self.assertEqual(f"{nome}|{data}|{pontuacao}|{tempo}", f"Individuo|{date.today()}|1000|2\n")
 
 
 
