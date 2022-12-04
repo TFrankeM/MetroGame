@@ -24,7 +24,7 @@ estacao_sem_metro = pygame.image.load("src/imagens/estação_sem_metro.jpeg")
 retang_fundo = pygame.image.load("src/imagens/retang_fundo.png")
 
 class Menu:
-    def __init__(self, screen, estacao_com_metro, estacao_sem_metro, retang_fundo,cn, cs):
+    def __init__(self, screen=pygame.display.set_mode((cn * cs,cn * cs)) , estacao_com_metro=pygame.image.load("src/imagens/estação_menu.jpg"), estacao_sem_metro=pygame.image.load("src/imagens/estação_sem_metro.jpeg"), retang_fundo=pygame.image.load("src/imagens/retang_fundo.png"),cn=25, cs=32):
         self.screen = screen
         self.imagem_menu_principal = estacao_com_metro
         self.imagem_submenus = estacao_sem_metro
@@ -35,6 +35,8 @@ class Menu:
         self.fontes = [pygame.font.Font(None, 120), pygame.font.Font(None, 30)]
         self.submenu = SubMenu(cn, cs, screen, self.fontes, "Jogador")
         self.tradutor = Translator()
+        self.idiomas = ["Português", "Inglês", "Francês", "Latim", "Alemão", "Esperanto", "Javanes", "Espanhol"]
+        self.fundo = pygame.image.load("src/imagens/retang_fundo.png")
 
     def fonte(self, tamanho): 
         """ Reponsável por carregar a fonte "caverson".
@@ -198,8 +200,6 @@ class Menu:
         
         # Texto da tela de opções.
         op_tx = self.tradutor.translate("This is the OPTIONS screen.", dest=self.submenu.idioma).text
-        
-        self.fundo = pygame.image.load("src/imagens/retang_fundo.png")
         
         idioma = self.atualizar_idiomas()
         
@@ -473,38 +473,40 @@ class Menu:
             pygame.display.update()
     
     def atualizar_idiomas(self):
-        idioma = self.tradutor.translate("Portugues", dest=self.submenu.idioma).text
+        self.idiomas[0] = self.tradutor.translate(self.idiomas[0], dest=self.submenu.idioma).text
         idioma_portugues = Botao(imagem = pygame.transform.scale(self.fundo, (150, self.cs)), pos = (400, 250), 
-                            texto_cont = idioma, fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+                            texto_cont = self.idiomas[0], fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
 
-        idioma = self.tradutor.translate("Ingles", dest=self.submenu.idioma).text
+        self.idiomas[1] = self.tradutor.translate(self.idiomas[1], dest=self.submenu.idioma).text
         idioma_ingles = Botao(imagem = pygame.transform.scale(self.fundo, (150, self.cs)), pos = (400, 280), 
-                            texto_cont = idioma, fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+                            texto_cont = self.idiomas[1], fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
 
-        idioma = self.tradutor.translate("Frances", dest=self.submenu.idioma).text
+        self.idiomas[2] = self.tradutor.translate(self.idiomas[2], dest=self.submenu.idioma).text
         idioma_frances = Botao(imagem = pygame.transform.scale(self.fundo, (150, self.cs)), pos = (400, 310), 
-                            texto_cont = idioma, fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+                            texto_cont = self.idiomas[2], fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
 
-        idioma = self.tradutor.translate("Latim", dest=self.submenu.idioma).text
+        self.idiomas[3] = self.tradutor.translate(self.idiomas[3], dest=self.submenu.idioma).text
         idioma_latim = Botao(imagem = pygame.transform.scale(self.fundo, (150, self.cs)), pos = (400, 340), 
-                            texto_cont = idioma, fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+                            texto_cont = self.idiomas[3], fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
 
-        idioma = self.tradutor.translate("Alemao", dest=self.submenu.idioma).text
+        self.idiomas[4] = self.tradutor.translate(self.idiomas[4], dest=self.submenu.idioma).text
         idioma_alemao = Botao(imagem = pygame.transform.scale(self.fundo, (150, self.cs)), pos = (400, 370), 
-                            texto_cont = idioma, fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+                            texto_cont = self.idiomas[4], fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
 
-        idioma = self.tradutor.translate("Esperanto", dest=self.submenu.idioma).text
+        self.idiomas[5] = self.tradutor.translate(self.idiomas[5], dest=self.submenu.idioma).text
         idioma_esperanto = Botao(imagem = pygame.transform.scale(self.fundo, (150, self.cs)), pos = (400, 400), 
-                            texto_cont = idioma, fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+                            texto_cont = self.idiomas[5], fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
 
-        idioma = self.tradutor.translate("Javanes", dest=self.submenu.idioma).text
+        self.idiomas[6] = self.tradutor.translate(self.idiomas[6], dest=self.submenu.idioma).text
         idioma_javanes = Botao(imagem = pygame.transform.scale(self.fundo, (150, self.cs)), pos = (400, 430), 
-                            texto_cont = idioma, fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
-        idioma = self.tradutor.translate("Espanhol", dest=self.submenu.idioma).text
+                            texto_cont = self.idiomas[6], fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+        
+        self.idiomas[7] = self.tradutor.translate(self.idiomas[7], dest=self.submenu.idioma).text
         idioma_espanhol = Botao(imagem = pygame.transform.scale(self.fundo, (150, self.cs)), pos = (400, 460), 
-                            texto_cont = idioma, fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+                            texto_cont = self.idiomas[7], fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
         return [idioma_portugues, idioma_ingles, idioma_frances, idioma_latim, idioma_alemao, idioma_esperanto, idioma_javanes, idioma_espanhol]
 
 
-menu = Menu(screen, estacao_com_metro, estacao_sem_metro, retang_fundo, cn, cs)
-menu.menu_principal()
+if __name__ == "__main__":
+    menu = Menu(screen, estacao_com_metro, estacao_sem_metro, retang_fundo, cn, cs)
+    menu.menu_principal()
