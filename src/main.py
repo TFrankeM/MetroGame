@@ -247,6 +247,9 @@ class Menu:
 
             idioma[6].mudar_cor(opcoes_menu_pos)
             idioma[6].atualizar(self.screen)
+            
+            idioma[7].mudar_cor(opcoes_menu_pos)
+            idioma[7].atualizar(self.screen)
 
             # Cria o botão de voltar.
             back = self.tradutor.translate("Back", dest=self.submenu.idioma).text
@@ -302,6 +305,11 @@ class Menu:
                         op_tx = self.tradutor.translate("This is the OPTIONS screen.", dest=self.submenu.idioma).text
                     elif idioma[4].checar_clique(opcoes_menu_pos):
                         self.submenu.idioma = "de"
+                        idioma = self.atualizar_idiomas()
+                        op_t = self.tradutor.translate("Opções", dest=self.submenu.idioma).text
+                        op_tx = self.tradutor.translate("This is the OPTIONS screen.", dest=self.submenu.idioma).text
+                    elif idioma[7].checar_clique(opcoes_menu_pos):
+                        self.submenu.idioma = "es"
                         idioma = self.atualizar_idiomas()
                         op_t = self.tradutor.translate("Opções", dest=self.submenu.idioma).text
                         op_tx = self.tradutor.translate("This is the OPTIONS screen.", dest=self.submenu.idioma).text
@@ -492,7 +500,10 @@ class Menu:
         idioma = self.tradutor.translate("Javanes", dest=self.submenu.idioma).text
         idioma_javanes = Botao(imagem = pygame.transform.scale(self.fundo, (150, self.cs)), pos = (400, 430), 
                             texto_cont = idioma, fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
-        return [idioma_portugues, idioma_ingles, idioma_frances, idioma_latim, idioma_alemao, idioma_esperanto, idioma_javanes]
+        idioma = self.tradutor.translate("Espanhol", dest=self.submenu.idioma).text
+        idioma_espanhol = Botao(imagem = pygame.transform.scale(self.fundo, (150, self.cs)), pos = (400, 460), 
+                            texto_cont = idioma, fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+        return [idioma_portugues, idioma_ingles, idioma_frances, idioma_latim, idioma_alemao, idioma_esperanto, idioma_javanes, idioma_espanhol]
 
 
 menu = Menu(screen, estacao_com_metro, estacao_sem_metro, retang_fundo, cn, cs)

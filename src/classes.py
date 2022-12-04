@@ -886,7 +886,7 @@ class SubMenu:
         self.abertura()
         self.nome = nome
         self.selecionado = True
-        self.idioma = "en"
+        self.idioma = "pt"
 
 
     def abertura(self):
