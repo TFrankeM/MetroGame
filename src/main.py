@@ -134,14 +134,14 @@ class Menu:
                         self.partida = Partida(cn, cs, screen, pygame.font.Font(None, 30), 1, self.submenu.nome, self.submenu.idioma)    # Fase = 1
                         self.submenu.musica.stop()
                         self.partida.inicia_partida()
-                        self.submenu.musica.play()
+                        self.submenu.musica.play(-1)
 
                     if fase_2.checar_clique(jogar_mouse_pos):
                         # Cria os objetos da classe Partida.
                         self.partida = Partida(cn, cs, screen, pygame.font.Font(None, 30), 2, self.submenu.nome, self.submenu.idioma)    # Fase = 2
                         self.submenu.musica.stop()
                         self.partida.inicia_partida()
-                        self.submenu.musica.play()
+                        self.submenu.musica.play(-1)
 
                         
 
@@ -152,7 +152,7 @@ class Menu:
                         self.partida = Partida(cn, cs, screen, pygame.font.Font(None, 30), 3, self.submenu.nome, self.submenu.idioma)    # Fase = 3
                         self.submenu.musica.stop()
                         self.partida.inicia_partida()
-                        self.submenu.musica.play()
+                        self.submenu.musica.play(-1)
 
                         
                         
@@ -163,7 +163,7 @@ class Menu:
                         self.partida = Partida(cn, cs, screen, pygame.font.Font(None, 30), 4, self.submenu.nome, self.submenu.idisoma)    # Fase = 4
                         self.submenu.musica.stop()
                         self.partida.inicia_partida()
-                        self.submenu.musica.play()
+                        self.submenu.musica.play(-1)
 
                         
 
@@ -174,7 +174,7 @@ class Menu:
                         self.partida = Partida(cn, cs, screen, pygame.font.Font(None, 30), 5, self.submenu.nome, self.submenu.idioma)    # Fase = 5
                         self.submenu.musica.stop()
                         self.partida.inicia_partida()
-                        self.submenu.musica.play()
+                        self.submenu.musica.play(-1)
 
                         
 
