@@ -773,7 +773,7 @@ class Obstaculo:
 class Botao():
 	""" Classe responsável por criar os botões do menu principal e dos submenus.
 	"""
-	def __init__(self, imagem, pos, texto_cont, fonte, cor_base, cor_com_mause):
+	def __init__(self, imagem, pos, texto_cont, fonte, cor_base, cor_com_mause, cor_selecao="#000000"):
 		""" Construtor da classe.
 
         Args:
@@ -790,7 +790,7 @@ class Botao():
 		self.x_pos = pos[0]
 		self.y_pos = pos[1]
 		self.fonte = fonte
-		self.cor_base, self.cor_com_mause = cor_base, cor_com_mause
+		self.cor_base, self.cor_com_mause, self.cor_selecao, self.selecionado = cor_base, cor_com_mause, cor_selecao, False
 		self.texto_cont = texto_cont
 		self.texto = self.fonte.render(self.texto_cont, True, self.cor_base)
 		# Se não há imagem de fundo, self.imagem recebe o texto.
@@ -884,7 +884,7 @@ class Partida:
         self.passageiro.sortear(cn)
 
         # Cria os objetos da classe Submenu.
-        fontes = [pygame.font.Font(None, 120), pygame.font.Font(None, 30)]
+        fontes = [pygame.font.Font(None, 120), pygame.font.Font(None, 30), pygame.font.Font(None, 40)]
         self.submenu = SubMenu(cn, cs, screen, fontes, nome, idioma)
         self.tradutor = Translator()
 
@@ -921,6 +921,7 @@ class Partida:
         pygame.time.set_timer(TIMER, 1000)
         self.gameplay = True
         self.submenu.musica_partida_metodo(self.musica)
+        self.submenu.fase_partida(self.fase)
 
         self.pas = self.tradutor.translate("passageiros", dest=self.idioma).text
         
@@ -1265,6 +1266,9 @@ class SubMenu:
             musica (pygame.Sound): música que toca durante a partida.
         """
         self.musica_partida = musica
+    
+    def fase_partida(self, fase):
+        self.fase = fase
 
 
     def abertura(self):
@@ -1310,49 +1314,51 @@ class SubMenu:
         
         self.pausa = True
         
+        cores = [(71, 74, 81), "purple", "green", "red", "yellow", "blue"]
+        
         while self.pausa:
             submenu_pausa_rect = pygame.Rect(self.cs * 5, self.cs * 4, self.cs * 15, self.cs * 17)
             pygame.draw.rect(self.screen, (200, 200, 50), submenu_pausa_rect)
             
             pausa_pos = pygame.mouse.get_pos()
             
-            pausa_superficie = self.fontes[1].render(pausa_1, True, (250, 100, 0))
-            pausa_rect = pausa_superficie.get_rect(center = (int(self.cs * (self.cn/2)), 5 * self.cs))
+            pausa_superficie = self.fontes[2].render(pausa_1, True, cores[self.fase])
+            pausa_rect = pausa_superficie.get_rect(center = (int(self.cs * (self.cn/2)), 8 * self.cs))
             self.screen.blit(pausa_superficie, pausa_rect)
-            pausa_superficie = self.fontes[1].render(pausa_2, True, (250, 100, 0))
-            pausa_rect = pausa_superficie.get_rect(center = (int(self.cs * (self.cn/2)), 6 * self.cs))
+            pausa_superficie = self.fontes[2].render(pausa_2, True, cores[self.fase])
+            pausa_rect = pausa_superficie.get_rect(center = (int(self.cs * (self.cn/2)), 9 * self.cs))
             self.screen.blit(pausa_superficie, pausa_rect)
-            pausa_superficie = self.fontes[1].render(pausa_3, True, (250, 100, 0))
-            pausa_rect = pausa_superficie.get_rect(center = (int(self.cs * (self.cn/2)), 7 * self.cs))
+            pausa_superficie = self.fontes[1].render(pausa_3, True, cores[0])
+            pausa_rect = pausa_superficie.get_rect(center = (int(self.cs * (self.cn/2)), 12 * self.cs))
             self.screen.blit(pausa_superficie, pausa_rect)
 
             # Criando botões para alterar o volume da música
-            vol_jogo_0 = Botao(imagem = None, pos = (350, 250, 0), 
+            vol_jogo_0 = Botao(imagem = None, pos = (350, 12 * self.cs + 26, 0), 
                                     texto_cont = "0", fonte = self.fontes[1], cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
             vol_jogo_0.mudar_cor(pausa_pos)
             vol_jogo_0.atualizar(self.screen)
 
-            vol_jogo_1 = Botao(imagem = None, pos = (370, 250, 0), 
+            vol_jogo_1 = Botao(imagem = None, pos = (370, 12 * self.cs + 26, 0), 
                                     texto_cont = "1", fonte = self.fontes[1], cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
             vol_jogo_1.mudar_cor(pausa_pos)
             vol_jogo_1.atualizar(self.screen)
 
-            vol_jogo_2 = Botao(imagem = None, pos = (390, 250, 0), 
+            vol_jogo_2 = Botao(imagem = None, pos = (390, 12 * self.cs + 26, 0), 
                                     texto_cont = "2", fonte = self.fontes[1], cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
             vol_jogo_2.mudar_cor(pausa_pos)
             vol_jogo_2.atualizar(self.screen)
 
-            vol_jogo_3 = Botao(imagem = None, pos = (410, 250, 0), 
+            vol_jogo_3 = Botao(imagem = None, pos = (410, 12 * self.cs + 26, 0), 
                                     texto_cont = "3", fonte = self.fontes[1], cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
             vol_jogo_3.mudar_cor(pausa_pos)
             vol_jogo_3.atualizar(self.screen)
 
-            vol_jogo_4 = Botao(imagem = None, pos = (430, 250, 0), 
+            vol_jogo_4 = Botao(imagem = None, pos = (430, 12 * self.cs + 26, 0), 
                                     texto_cont = "4", fonte = self.fontes[1], cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
             vol_jogo_4.mudar_cor(pausa_pos)
             vol_jogo_4.atualizar(self.screen)
 
-            vol_jogo_5 = Botao(imagem = None, pos = (450, 250, 0), 
+            vol_jogo_5 = Botao(imagem = None, pos = (450, 12 * self.cs + 26, 0), 
                                     texto_cont = "5", fonte = self.fontes[1], cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
             vol_jogo_5.mudar_cor(pausa_pos)
             vol_jogo_5.atualizar(self.screen)
@@ -1391,22 +1397,40 @@ class SubMenu:
         submenu_fim_rect = pygame.Rect(self.cs * 5, self.cs * 4, self.cs * 15, self.cs * 17)
         pygame.draw.rect(self.screen, (200, 200, 50), submenu_fim_rect)
 
-        cabecalho_texto = "OI"
-        cabecalho = self.fontes[1].render(cabecalho_texto, True, "Black")
-        cabecalho_rect = cabecalho.get_rect(center=(400, 200))
-        self.screen.blit(cabecalho, cabecalho_rect)
+        j, d, p, t = re.split("\.", self.traduzir_lingua("fim_textos"))
+        #cabecalho_texto = d+"     "+p+"     "+t
+        cabecalho_j = self.fontes[2].render(j, True, "Blue")
+        cabecalho_d = self.fontes[2].render(d, True, "Red")
+        cabecalho_p = self.fontes[2].render(p, True, "Yellow")
+        cabecalho_t = self.fontes[2].render(t, True, "Green")
+        cabecalho_rect = cabecalho_j.get_rect(center=(int(self.cs * (self.cn / 2 - 5.5)), (8) * self.cn))
+        self.screen.blit(cabecalho_j, cabecalho_rect)
+        cabecalho_rect = cabecalho_d.get_rect(center=(int(self.cs * (self.cn / 2 - 1.75)), (8) * self.cn))
+        self.screen.blit(cabecalho_d, cabecalho_rect)
+        cabecalho_rect = cabecalho_p.get_rect(center=(int(self.cs * (1.75 + self.cn / 2)), (8) * self.cn))
+        self.screen.blit(cabecalho_p, cabecalho_rect)
+        cabecalho_rect = cabecalho_t.get_rect(center=(int(self.cs * (5.5 + self.cn / 2)), (8) * self.cn))
+        self.screen.blit(cabecalho_t, cabecalho_rect)
         
         self.recorde.ler()
         listas = self.recorde.df.values.tolist()
         for i in range(min(5, len(listas))):
-            nome = listas[i][0]
-            nome_superficie = self.fontes[1].render(nome, True, "blue")
-            nome_rect = nome_superficie.get_rect(center = (int(self.cs * (self.cn / 2 - 3)), (10 + i) * self.cn))
-            self.screen.blit(nome_superficie, nome_rect)
-            linha = " | " + listas[i][1] + " | " + str(listas[i][2]) + " | " + str(listas[i][3])
-            recordes_superficie = self.fontes[1].render(linha, True, (0, 0, 0))
-            recordes_rect = recordes_superficie.get_rect(center = (int(self.cs * (3 + self.cn / 2)), (10 + i) * self.cn))
-            self.screen.blit(recordes_superficie, recordes_rect)
+            dado = listas[i][0]
+            dado_superficie = self.fontes[1].render(dado, True, "Blue")
+            dado_rect = dado_superficie.get_rect(center = (int(self.cs * (self.cn / 2 - 5.5)), (10 + i) * self.cn))
+            self.screen.blit(dado_superficie, dado_rect)
+            dado = listas[i][1]
+            dado_superficie = self.fontes[1].render(dado, True, "Red")
+            dado_rect = dado_superficie.get_rect(center = (int(self.cs * (self.cn / 2 - 1.75)), (10 + i) * self.cn))
+            self.screen.blit(dado_superficie, dado_rect)
+            dado = listas[i][2]
+            dado_superficie = self.fontes[1].render(str(dado), True, "Yellow")
+            dado_rect = dado_superficie.get_rect(center = (int(self.cs * (1.75 + self.cn / 2)), (10 + i) * self.cn))
+            self.screen.blit(dado_superficie, dado_rect)
+            dado = listas[i][3]
+            dado_superficie = self.fontes[1].render(str(dado), True, "Green")
+            dado_rect = dado_superficie.get_rect(center = (int(self.cs * (5.5 + self.cn / 2)), (10 + i) * self.cn))
+            self.screen.blit(dado_superficie, dado_rect)
 
 
     def registrar_recorde(self, fase):
@@ -1444,6 +1468,11 @@ class SubMenu:
                 return self.tradutor.translate("Você paralisou o metrô. Volte quando estiver preparado. Ajustar Volume", dest=self.idioma).text
             except TypeError or AttributeError or httpcore._exceptions.ReadTimeout:
                 self.traduzir_lingua("pausa_textos")
+        elif texto == "fim_textos":
+            try:
+                return self.tradutor.translate("Jogador. Dia. Pontos. Tempo", dest=self.idioma).text
+            except TypeError or AttributeError or httpcore._exceptions.ReadTimeout:
+                self.traduzir_lingua("pfim_textos")
     
     def __del__(self):
         """ Destrutor da classe
