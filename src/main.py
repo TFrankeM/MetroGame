@@ -320,34 +320,42 @@ class Menu:
                         self.menu_principal()
                     elif idioma[0].checar_clique(opcoes_menu_pos):
                         self.submenu.idioma = "pt"
+                        idioma[0].selecionado = True
                         idioma = self.atualizar_idiomas()
                         opcoes_textos = self.traduzir_lingua("opcoes_textos")
                     elif idioma[1].checar_clique(opcoes_menu_pos):
                         self.submenu.idioma = "en"
+                        idioma[1].selecionado = True
                         idioma = self.atualizar_idiomas()
                         opcoes_textos = self.traduzir_lingua("opcoes_textos")
                     elif idioma[2].checar_clique(opcoes_menu_pos):
                         self.submenu.idioma = "fr"
+                        idioma[2].selecionado = True
                         idioma = self.atualizar_idiomas()
                         opcoes_textos = self.traduzir_lingua("opcoes_textos")
                     elif idioma[3].checar_clique(opcoes_menu_pos):
                         self.submenu.idioma = "la"
+                        idioma[3].selecionado = True
                         idioma = self.atualizar_idiomas()
                         opcoes_textos = self.traduzir_lingua("opcoes_textos")
                     elif idioma[6].checar_clique(opcoes_menu_pos):
                         self.submenu.idioma = "jw"
+                        idioma[6].selecionado = True
                         idioma = self.atualizar_idiomas()
                         opcoes_textos = self.traduzir_lingua("opcoes_textos")
                     elif idioma[5].checar_clique(opcoes_menu_pos):
                         self.submenu.idioma = "eo"
+                        idioma[5].selecionado = True
                         idioma = self.atualizar_idiomas()
                         opcoes_textos = self.traduzir_lingua("opcoes_textos")
                     elif idioma[4].checar_clique(opcoes_menu_pos):
                         self.submenu.idioma = "de"
+                        idioma[4].selecionado = True
                         idioma = self.atualizar_idiomas()
                         opcoes_textos = self.traduzir_lingua("opcoes_textos")
                     elif idioma[7].checar_clique(opcoes_menu_pos):
                         self.submenu.idioma = "es"
+                        idioma[7].selecionado = True
                         idioma = self.atualizar_idiomas()
                         opcoes_textos = self.traduzir_lingua("opcoes_textos")
                     elif vol_menu_0.checar_clique(opcoes_menu_pos):

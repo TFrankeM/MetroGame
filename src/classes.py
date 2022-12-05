@@ -773,7 +773,7 @@ class Obstaculo:
 class Botao():
 	""" Classe responsável por criar os botões do menu principal e dos submenus.
 	"""
-	def __init__(self, imagem, pos, texto_cont, fonte, cor_base, cor_com_mause, cor_selecao="#000000"):
+	def __init__(self, imagem, pos, texto_cont, fonte, cor_base, cor_com_mause, cor_selecao="pink"):
 		""" Construtor da classe.
 
         Args:
@@ -835,8 +835,10 @@ class Botao():
 		if posicao[0] in range(self.rect.left, self.rect.right) and posicao[1] in range(self.rect.top, self.rect.bottom):
 			self.texto = self.fonte.render(self.texto_cont, True, self.cor_com_mause)
 		# Se o mouse não está sobre o botão, a cor da escrita é mantida. 
-		else:
-			self.texto = self.fonte.render(self.texto_cont, True, self.cor_base)
+		elif self.selecionado == True: 
+            self.fonte.render(self.texto_cont, True, self.cor_selecao)
+		else: 
+            self.texto = self.fonte.render(self.texto_cont, True, self.cor_base)
 
 
 
