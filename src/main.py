@@ -225,6 +225,8 @@ class Menu:
         vol_menu_5 = Botao(imagem = pygame.transform.scale(self.fundo, (self.cs, self.cs)), pos = (520, 600), 
                                texto_cont = "5", fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
         
+        vol_menu_5.selecionado = True
+        
         condicao = True
         while condicao:
             # Cria a superfície da imagem de fundo.

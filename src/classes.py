@@ -1316,6 +1316,21 @@ class SubMenu:
         
         cores = [(71, 74, 81), "purple", "green", "red", "yellow", "blue"]
         
+        vol_jogo_0 = Botao(imagem = None, pos = (350, 12 * self.cs + 26, 0), 
+                                    texto_cont = "0", fonte = self.fontes[1], cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+        vol_jogo_1 = Botao(imagem = None, pos = (370, 12 * self.cs + 26, 0), 
+                                    texto_cont = "1", fonte = self.fontes[1], cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+        vol_jogo_2 = Botao(imagem = None, pos = (390, 12 * self.cs + 26, 0), 
+                                    texto_cont = "2", fonte = self.fontes[1], cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+        vol_jogo_3 = Botao(imagem = None, pos = (410, 12 * self.cs + 26, 0), 
+                                    texto_cont = "3", fonte = self.fontes[1], cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+        vol_jogo_4 = Botao(imagem = None, pos = (430, 12 * self.cs + 26, 0), 
+                                    texto_cont = "4", fonte = self.fontes[1], cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+        vol_jogo_5 = Botao(imagem = None, pos = (450, 12 * self.cs + 26, 0), 
+                                    texto_cont = "5", fonte = self.fontes[1], cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+        
+        vol_jogo_5.selecionado = True
+        
         while self.pausa:
             submenu_pausa_rect = pygame.Rect(self.cs * 5, self.cs * 4, self.cs * 15, self.cs * 17)
             pygame.draw.rect(self.screen, (200, 200, 50), submenu_pausa_rect)
@@ -1333,33 +1348,21 @@ class SubMenu:
             self.screen.blit(pausa_superficie, pausa_rect)
 
             # Criando botões para alterar o volume da música
-            vol_jogo_0 = Botao(imagem = None, pos = (350, 12 * self.cs + 26, 0), 
-                                    texto_cont = "0", fonte = self.fontes[1], cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
             vol_jogo_0.mudar_cor(pausa_pos)
             vol_jogo_0.atualizar(self.screen)
 
-            vol_jogo_1 = Botao(imagem = None, pos = (370, 12 * self.cs + 26, 0), 
-                                    texto_cont = "1", fonte = self.fontes[1], cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
             vol_jogo_1.mudar_cor(pausa_pos)
             vol_jogo_1.atualizar(self.screen)
 
-            vol_jogo_2 = Botao(imagem = None, pos = (390, 12 * self.cs + 26, 0), 
-                                    texto_cont = "2", fonte = self.fontes[1], cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
             vol_jogo_2.mudar_cor(pausa_pos)
             vol_jogo_2.atualizar(self.screen)
 
-            vol_jogo_3 = Botao(imagem = None, pos = (410, 12 * self.cs + 26, 0), 
-                                    texto_cont = "3", fonte = self.fontes[1], cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
             vol_jogo_3.mudar_cor(pausa_pos)
             vol_jogo_3.atualizar(self.screen)
 
-            vol_jogo_4 = Botao(imagem = None, pos = (430, 12 * self.cs + 26, 0), 
-                                    texto_cont = "4", fonte = self.fontes[1], cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
             vol_jogo_4.mudar_cor(pausa_pos)
             vol_jogo_4.atualizar(self.screen)
 
-            vol_jogo_5 = Botao(imagem = None, pos = (450, 12 * self.cs + 26, 0), 
-                                    texto_cont = "5", fonte = self.fontes[1], cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
             vol_jogo_5.mudar_cor(pausa_pos)
             vol_jogo_5.atualizar(self.screen)
 
@@ -1371,16 +1374,52 @@ class SubMenu:
                 if evento.type == pygame.MOUSEBUTTONDOWN:
                     if vol_jogo_0.checar_clique(pausa_pos):
                         self.musica_partida.set_volume(0.0)
+                        vol_jogo_0.selecionado = True
+                        vol_jogo_1.selecionado = False
+                        vol_jogo_2.selecionado = False
+                        vol_jogo_3.selecionado = False
+                        vol_jogo_4.selecionado = False
+                        vol_jogo_5.selecionado = False
                     elif vol_jogo_1.checar_clique(pausa_pos):
                         self.musica_partida.set_volume(0.2)
+                        vol_jogo_0.selecionado = False
+                        vol_jogo_1.selecionado = True
+                        vol_jogo_2.selecionado = False
+                        vol_jogo_3.selecionado = False
+                        vol_jogo_4.selecionado = False
+                        vol_jogo_5.selecionado = False
                     elif vol_jogo_2.checar_clique(pausa_pos):
                         self.musica_partida.set_volume(0.4)
+                        vol_jogo_0.selecionado = False
+                        vol_jogo_1.selecionado = False
+                        vol_jogo_2.selecionado = True
+                        vol_jogo_3.selecionado = False
+                        vol_jogo_4.selecionado = False
+                        vol_jogo_5.selecionado = False
                     elif vol_jogo_3.checar_clique(pausa_pos):
                         self.musica_partida.set_volume(0.6)
+                        vol_jogo_0.selecionado = False
+                        vol_jogo_1.selecionado = False
+                        vol_jogo_2.selecionado = False
+                        vol_jogo_3.selecionado = True
+                        vol_jogo_4.selecionado = False
+                        vol_jogo_5.selecionado = False
                     elif vol_jogo_4.checar_clique(pausa_pos):
                         self.musica_partida.set_volume(0.8)
+                        vol_jogo_0.selecionado = False
+                        vol_jogo_1.selecionado = False
+                        vol_jogo_2.selecionado = False
+                        vol_jogo_3.selecionado = False
+                        vol_jogo_4.selecionado = True
+                        vol_jogo_5.selecionado = False
                     elif vol_jogo_5.checar_clique(pausa_pos):
                         self.musica_partida.set_volume(1.0)
+                        vol_jogo_0.selecionado = False
+                        vol_jogo_1.selecionado = False
+                        vol_jogo_2.selecionado = False
+                        vol_jogo_3.selecionado = False
+                        vol_jogo_4.selecionado = False
+                        vol_jogo_5.selecionado = True
                 if evento.type == pygame.KEYDOWN:
                     if evento.key == pygame.K_SPACE:      
                         self.pausa = False
