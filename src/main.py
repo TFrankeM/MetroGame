@@ -160,7 +160,7 @@ class Menu:
 
                         # Cria os objetos da classe Partida.
 
-                        self.partida = Partida(cn, cs, screen, pygame.font.Font(None, 30), 4, self.submenu.nome, self.submenu.idisoma)    # Fase = 4
+                        self.partida = Partida(cn, cs, screen, pygame.font.Font(None, 30), 4, self.submenu.nome, self.submenu.idioma)    # Fase = 4
                         self.submenu.musica.stop()
                         self.partida.inicia_partida()
                         self.submenu.musica.play(-1)

@@ -750,7 +750,7 @@ class Partida:
         self.batida.stop()  # Para o áudio da batida
         self.submenu.jogo = "Fim da partida"
         time.sleep(1)
-        self.submenu.registrar_recorde()                   # Aciona a classe Recorde para exibir na tela os recordes.
+        self.submenu.registrar_recorde(self.fase)                   # Aciona a classe Recorde para exibir na tela os recordes.
         self.submenu.recorde.escrever(self.pontuacao, self.tempo)      # Escreve a pontuação, nome do jogador e data na folha de registros.
         self.__del__()                                  # "Limpa" o mapa para a próxima partida.
         
@@ -1047,8 +1047,8 @@ class SubMenu:
             self.screen.blit(recordes_superficie, recordes_rect)
 
 
-    def registrar_recorde(self):
-        self.recorde = Recorde(self.nome)
+    def registrar_recorde(self, fase):
+        self.recorde = Recorde(self.nome, fase)
     
 
     def cadastrar(self):
@@ -1073,7 +1073,7 @@ class SubMenu:
 
 
 class Recorde:
-    def __init__(self, nome):
+    def __init__(self, nome, fase):
         """ Construtor da classe.
         
         Args:
@@ -1082,6 +1082,7 @@ class Recorde:
         """
         self.arquivo = open("registros.txt", "a+")
         self.nome = nome
+        self.fase = fase
     
 
     def escrever(self, pontuacao, tempo):
@@ -1090,7 +1091,7 @@ class Recorde:
         Args:
             self: palavra-chave que acessa os atributos e métodos da classe Obstaculo.
         """
-        self.arquivo.write(f"{self.nome}|{date.today()}|{pontuacao}|{tempo}\n")
+        self.arquivo.write(f"{self.nome}|{date.today()}|{pontuacao}|{tempo}|{self.fase}\n")
         
 
     def ler(self):
@@ -1103,16 +1104,19 @@ class Recorde:
         datas=[]
         pontos=[]
         tempos=[]
+        fases = []
         self.arquivo.seek(0,0)
         for linha in self.arquivo.readlines():
-            nome, data, ponto, tempo = re.split("\|", linha)
-            tempo = re.sub("\n", "", tempo)
+            nome, data, ponto, tempo, fase = re.split("\|", linha)
+            fase = re.sub("\n", "", fase)
             nomes.append(nome)
             datas.append(data)
             pontos.append(int(ponto))
             tempos.append(int(tempo))
-        dic = {"Jogador":nomes, "Data":datas, "Pontuação":pontos, "Tempo":tempos}
+            fases.append(int(fase))
+        dic = {"Jogador":nomes, "Data":datas, "Pontuação":pontos, "Tempo":tempos, "Fase":fases}
         self.df = pd.DataFrame(dic)
+        self.df = self.df[self.df["Fase"]==self.fase]
         self.df.sort_values(by="Data", axis = 0, ascending=False, inplace=True)
         self.df.sort_values(by="Tempo", axis = 0, ascending=True, inplace=True)
         self.df.sort_values(by="Pontuação", axis = 0, ascending=False, inplace=True)
