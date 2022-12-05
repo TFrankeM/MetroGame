@@ -55,15 +55,8 @@ class Menu:
     def jogar(self):
         """ É um sub menu para as fases do jogo.
         """
-        txt_1 = self.tradutor.translate("Que bom te conhecer, maquinista", dest=self.submenu.idioma).text
-        txt_2 = self.tradutor.translate("Escolha uma fase:", dest=self.submenu.idioma).text
-        fa = self.tradutor.translate("Fases", dest=self.submenu.idioma).text
-        fa_1 = self.tradutor.translate("FASE 1: Inglaterra", dest=self.submenu.idioma).text
-        fa_2 = self.tradutor.translate("FASE 2: Brasil", dest=self.submenu.idioma).text
-        fa_3 = self.tradutor.translate("FASE 3: Estados Unidos", dest=self.submenu.idioma).text
-        fa_4 = self.tradutor.translate("FASE 4: China", dest=self.submenu.idioma).text
-        fa_5 = self.tradutor.translate("FASE 5: França", dest=self.submenu.idioma).text
-        volta = self.tradutor.translate("Voltar", dest=self.submenu.idioma).text
+        jogar_textos = self.traduzir_lingua("jogar_textos")
+        txt_1, txt_2, fa, fa_1, fa_2, fa_3, fa_4, fa_5, volta = re.split("\.", jogar_textos)
         while True:
             # Cria a superfície da imagem de fundo.
             fundo_rect = pygame.Rect(0, 0, self.cs * self.cn, self.cs * self.cn)         # (Xo, Yo, X, Y)
@@ -198,9 +191,7 @@ class Menu:
         """ É um sub menu para as opções de jogo.
         """
         
-        opcoes_textos = self.tradutor.translate("Opções. This is the OPTIONS screen. Back", dest=self.submenu.idioma).text
-        op_t, op_tx, back = re.split("\.", opcoes_textos)
-        op_tx+="."
+        opcoes_textos = self.traduzir_lingua("opcoes_textos")
         
         idioma = self.atualizar_idiomas()
         
@@ -214,6 +205,8 @@ class Menu:
             # SCREEN.blit(nome_imagem, (x_pos, y_pos))
             self.screen.blit(imagem_fundo, fundo_rect)
             
+            op_t, op_tx, back = re.split("\.", opcoes_textos)
+            op_tx+="."
             # Texto da tela de opções.
             opcoes_texto = self.fonte(45).render(op_tx, True, "Black")
             # Superfície do texto.
@@ -279,58 +272,42 @@ class Menu:
                         self.submenu.idioma = "pt"
                         time.sleep(1)
                         idioma = self.atualizar_idiomas()
-                        opcoes_textos = self.tradutor.translate("Opções. This is the OPTIONS screen. Back", dest=self.submenu.idioma).text
-                        op_t, op_tx, back = re.split("\.", opcoes_textos)
-                        op_tx+="."
+                        opcoes_textos = self.traduzir_lingua("opcoes_textos")
                     elif idioma[1].checar_clique(opcoes_menu_pos):
                         self.submenu.idioma = "en"
                         time.sleep(1)
                         idioma = self.atualizar_idiomas()
-                        opcoes_textos = self.tradutor.translate("Opções. This is the OPTIONS screen. Back", dest=self.submenu.idioma).text
-                        op_t, op_tx, back = re.split("\.", opcoes_textos)
-                        op_tx+="."
+                        opcoes_textos = self.traduzir_lingua("opcoes_textos")
                     elif idioma[2].checar_clique(opcoes_menu_pos):
                         self.submenu.idioma = "fr"
                         time.sleep(1)
                         idioma = self.atualizar_idiomas()
-                        opcoes_textos = self.tradutor.translate("Opções. This is the OPTIONS screen. Back", dest=self.submenu.idioma).text
-                        op_t, op_tx, back = re.split("\.", opcoes_textos)
-                        op_tx+="."
+                        opcoes_textos = self.traduzir_lingua("opcoes_textos")
                     elif idioma[3].checar_clique(opcoes_menu_pos):
                         self.submenu.idioma = "la"
                         time.sleep(1)
                         idioma = self.atualizar_idiomas()
-                        opcoes_textos = self.tradutor.translate("Opções. This is the OPTIONS screen. Back", dest=self.submenu.idioma).text
-                        op_t, op_tx, back = re.split("\.", opcoes_textos)
-                        op_tx+="."
+                        opcoes_textos = self.traduzir_lingua("opcoes_textos")
                     elif idioma[6].checar_clique(opcoes_menu_pos):
                         self.submenu.idioma = "jw"
                         time.sleep(1)
                         idioma = self.atualizar_idiomas()
-                        opcoes_textos = self.tradutor.translate("Opções. This is the OPTIONS screen. Back", dest=self.submenu.idioma).text
-                        op_t, op_tx, back = re.split("\.", opcoes_textos)
-                        op_tx+="."
+                        opcoes_textos = self.traduzir_lingua("opcoes_textos")
                     elif idioma[5].checar_clique(opcoes_menu_pos):
                         self.submenu.idioma = "eo"
                         time.sleep(1)
                         idioma = self.atualizar_idiomas()
-                        opcoes_textos = self.tradutor.translate("Opções. This is the OPTIONS screen. Back", dest=self.submenu.idioma).text
-                        op_t, op_tx, back = re.split("\.", opcoes_textos)
-                        op_tx+="."
+                        opcoes_textos = self.traduzir_lingua("opcoes_textos")
                     elif idioma[4].checar_clique(opcoes_menu_pos):
                         self.submenu.idioma = "de"
                         time.sleep(1)
                         idioma = self.atualizar_idiomas()
-                        opcoes_textos = self.tradutor.translate("Opções. This is the OPTIONS screen. Back", dest=self.submenu.idioma).text
-                        op_t, op_tx, back = re.split("\.", opcoes_textos)
-                        op_tx+="."
+                        opcoes_textos = self.traduzir_lingua("opcoes_textos")
                     elif idioma[7].checar_clique(opcoes_menu_pos):
                         self.submenu.idioma = "es"
                         time.sleep(1)
                         idioma = self.atualizar_idiomas()
-                        opcoes_textos = self.tradutor.translate("Opções. This is the OPTIONS screen. Back", dest=self.submenu.idioma).text
-                        op_t, op_tx, back = re.split("\.", opcoes_textos)
-                        op_tx+="."
+                        opcoes_textos = self.traduzir_lingua("opcoes_textos")
 
             # Faz com que a superfície de exibição apareça no monitor do usuário.
             pygame.display.update()
@@ -338,7 +315,7 @@ class Menu:
     def creditos(self):
         """ É um sub menu para os créditos do jogo.
         """
-        creditos_textos = self.tradutor.translate("Créditos. foi desenvolvido por. Rodrigo Cavalcante Kalil. Rodrigo Dhery Silva Prieto. Ricael Daniel Vieira da Silva. Thiago Franke Melchiors. Alunos do segundo semestre de Ciência de Dados da FGV EMAp. Voltar", dest=self.submenu.idioma).text
+        creditos_textos = self.traduzir_lingua("creditos_textos")
         ct, t_2, t_3, t_4, t_5, t_6, t_7, volta = re.split("\.", creditos_textos)
         while True:
 
@@ -420,7 +397,7 @@ class Menu:
         feito = False
         while feito == False:
             try:
-                inicio_textos = self.tradutor.translate("JOGAR. OPÇÕES. CRÉDITOS. SAIR", dest=self.submenu.idioma).text
+                inicio_textos = self.traduzir_lingua("inicio_textos")
                 j, o, c, s = re.split("\.", inicio_textos)
             except TypeError or AttributeError or httpcore._exceptions.ReadTimeout:
                 pass
@@ -493,21 +470,42 @@ class Menu:
         subidioma = self.submenu.idioma
         novo_idioma = []
         for i in range(8):
-            novo_idioma.append(self.traduzir_lingua(self.idiomas[i], 250+30*i, subidioma))
+            novo_idioma.append(self.traduzir_lingua("idioma", self.idiomas[i], 250+30*i, subidioma))
         return novo_idioma
     
-    def traduzir_lingua(self, lingua, posicao, subidioma):
-        try:
-            lingua = self.tradutor.translate(lingua, dest=subidioma).text
-            idioma = Botao(imagem = pygame.transform.scale(self.fundo, (150, self.cs)), pos = (400, posicao), 
-                                texto_cont = lingua, fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
-            return idioma
-        except TypeError:
-            self.traduzir_lingua(lingua, posicao, idioma)
-        except httpcore._exceptions.ReadTimeout:
-            self.traduzir_lingua(lingua, posicao, idioma)
-        except AttributeError:
-            self.traduzir_lingua(lingua, posicao, idioma)
+    def traduzir_lingua(self, texto, lingua=None, posicao=None, subidioma=None):
+        if texto == "idioma":
+            try:
+                lingua = self.tradutor.translate(lingua, dest=subidioma).text
+                idioma = Botao(imagem = pygame.transform.scale(self.fundo, (150, self.cs)), pos = (400, posicao), 
+                                    texto_cont = lingua, fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+                return idioma
+            except TypeError:
+                self.traduzir_lingua(lingua, posicao, idioma)
+            except httpcore._exceptions.ReadTimeout:
+                self.traduzir_lingua(lingua, posicao, idioma)
+            except AttributeError:
+                self.traduzir_lingua(lingua, posicao, idioma)
+        elif texto == "inicio_textos":
+            try:
+                return self.tradutor.translate("JOGAR. OPÇÕES. CRÉDITOS. SAIR", dest=self.submenu.idioma).text
+            except TypeError or AttributeError or httpcore._exceptions.ReadTimeout:
+                self.traduzir_lingua("inicio_textos")
+        elif texto == "opcoes_textos":
+            try:
+                return self.tradutor.translate("Opções. This is the OPTIONS screen. Back", dest=self.submenu.idioma).text
+            except TypeError or AttributeError or httpcore._exceptions.ReadTimeout:
+                self.traduzir_lingua("opcoes_textos")
+        elif texto == "creditos_textos":
+            try:
+                return self.tradutor.translate("Créditos. foi desenvolvido por. Rodrigo Cavalcante Kalil. Rodrigo Dhery Silva Prieto. Ricael Daniel Vieira da Silva. Thiago Franke Melchiors. Alunos do segundo semestre de Ciência de Dados da FGV EMAp. Voltar", dest=self.submenu.idioma).text
+            except TypeError or AttributeError or httpcore._exceptions.ReadTimeout:
+                self.traduzir_lingua("creditos_textos")
+        elif texto == "jogar_textos":
+            try:
+                return self.tradutor.translate("Que bom te conhecer, maquinista. Escolha uma fase:. Fases. FASE 1: Inglaterra. FASE 2: Brasil. FASE 3: Estados Unidos. FASE 4: China. FASE 5: França. Voltar", dest=self.submenu.idioma).text
+            except TypeError or AttributeError or httpcore._exceptions.ReadTimeout:
+                self.traduzir_lingua("jogar_textos")
 
 
 if __name__ == "__main__":
