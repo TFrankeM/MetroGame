@@ -160,7 +160,7 @@ class Menu:
 
                         # Cria os objetos da classe Partida.
 
-                        self.partida = Partida(cn, cs, screen, pygame.font.Font(None, 30), 4, self.submenu.nome, self.submenu.idioma)    # Fase = 4
+                        self.partida = Partida(cn, cs, screen, pygame.font.Font(None, 30), 4, self.submenu.nome, self.submenu.idisoma)    # Fase = 4
                         self.submenu.musica.stop()
                         self.partida.inicia_partida()
                         self.submenu.musica.play()
@@ -219,7 +219,7 @@ class Menu:
             # SCREEN.blit(nome_imagem, (x_pos, y_pos))
             self.screen.blit(imagem_fundo, fundo_rect)
             
-            op_t, op_tx, back = re.split("\.", opcoes_textos)
+            op_t, op_tx, back, vol = re.split("\.", opcoes_textos)
             op_tx+="."
             
             # Título da tela de opcoes.
@@ -264,7 +264,7 @@ class Menu:
 
 
             # Cria os botões para mudar o volume da música do menu.
-            vol_menu_texto = self.fonte(45).render("VOLUME DO MENU", True, "Black")
+            vol_menu_texto = self.fonte(45).render(vol, True, "Black")
 
             opcoes_vol_rect = vol_menu_texto.get_rect(center=(400, 550))
 
@@ -534,11 +534,11 @@ class Menu:
                                     texto_cont = lingua, fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
                 return idioma
             except TypeError:
-                self.traduzir_lingua(lingua, posicao, idioma)
+                self.traduzir_lingua(lingua, posicao, subidioma)
             except httpcore._exceptions.ReadTimeout:
-                self.traduzir_lingua(lingua, posicao, idioma)
+                self.traduzir_lingua(lingua, posicao, subidioma)
             except AttributeError:
-                self.traduzir_lingua(lingua, posicao, idioma)
+                self.traduzir_lingua(lingua, posicao, subidioma)
         elif texto == "inicio_textos":
             try:
                 return self.tradutor.translate("JOGAR. OPÇÕES. CRÉDITOS. SAIR", dest=self.submenu.idioma).text
@@ -546,7 +546,7 @@ class Menu:
                 self.traduzir_lingua("inicio_textos")
         elif texto == "opcoes_textos":
             try:
-                return self.tradutor.translate("Opções. This is the OPTIONS screen. Back", dest=self.submenu.idioma).text
+                return self.tradutor.translate("Opções. This is the OPTIONS screen. Back. VOLUME DO MENU", dest=self.submenu.idioma).text
             except TypeError or AttributeError or httpcore._exceptions.ReadTimeout:
                 self.traduzir_lingua("opcoes_textos")
         elif texto == "creditos_textos":

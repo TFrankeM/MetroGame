@@ -7,6 +7,7 @@ import re
 import pandas as pd
 import operator
 from googletrans import Translator
+import httpcore
 
 pygame.init()
 
@@ -529,7 +530,7 @@ class Partida:
 
         # Cria os objetos da classe Submenu.
         fontes = [pygame.font.Font(None, 120), pygame.font.Font(None, 30)]
-        self.submenu = SubMenu(cn, cs, screen, fontes, nome)
+        self.submenu = SubMenu(cn, cs, screen, fontes, nome, idioma)
         self.tradutor = Translator()
 
         
@@ -564,7 +565,7 @@ class Partida:
         TIMER = pygame.USEREVENT 
         pygame.time.set_timer(TIMER, 1000)
         self.gameplay = True
-        self.submenu.musica_partida(self.musica)
+        self.submenu.musica_partida_metodo(self.musica)
 
         self.pas = self.tradutor.translate("passageiros", dest=self.idioma).text
         
@@ -612,8 +613,9 @@ class Partida:
                     if event.type == pygame.KEYDOWN:
                         # Se a partida estiver acontecendo e a tecla clicada for o SPACE = PAUSA.
                         if event.key == pygame.K_SPACE and self.ativo == True:
-                            self.pausa = operator.not_(self.pausa)          # Status de pausa é TRUE (na classe Partida)
-                            self.submenu.pausa = self.pausa                    # Altera o status de pausa na classe submenu (para carregar a interface de pausa)
+                            self.pausa = True         # Status de pausa é TRUE (na classe Partida)
+                            self.submenu.pausar_jogo()              
+                            self.pausa = False
 
                         # Acionar "self.trem.sentido" para mover o metrô.
                         # Para tecla UP ou W = Movimento para CIMA.
@@ -871,7 +873,7 @@ class SubMenu:
     """ Gera um objeto "Rect" para armazenar e manipular a primeira camada de áreas retangulares que 
         que formam a superfície do jogo.
     """
-    def __init__(self, cn, cs, screen, fontes, nome):
+    def __init__(self, cn, cs, screen, fontes, nome, idioma="pt"):
         """ Construtor da classe.
 
         Args:
@@ -880,6 +882,7 @@ class SubMenu:
             cs (int): Tamanho das células.
             screen (pygame.Surface): Janela do programa.
             fontes (list): estilos de letra.
+            idioma (str, optional): Idioma escolhido no até o momento de início da partida. Default to "pt".
         """
         # Objetos recebem a quantidade e o tamanho de cada célula e o tamanho da tela do jogo.
         self.cn = cn
@@ -892,10 +895,12 @@ class SubMenu:
         self.abertura()
         self.nome = nome
         self.selecionado = True
-        self.idioma = "pt"
+        self.idioma = idioma
+        self.tradutor = Translator()
+        self.pausa_textos = self.traduzir_lingua("pausa_textos")
 
  
-    def musica_partida(self, musica):
+    def musica_partida_metodo(self, musica):
         self.musica_partida = musica
 
 
@@ -941,70 +946,85 @@ class SubMenu:
         Args:
             self: palavra-chave que acessa os atributos e métodos da classe Obstaculo.
         """
-        submenu_pausa_rect = pygame.Rect(self.cs * 5, self.cs * 4, self.cs * 15, self.cs * 17)
-        pygame.draw.rect(self.screen, (200, 200, 50), submenu_pausa_rect)
         
-        pausa_pos = pygame.mouse.get_pos()
+        
+        
 
-        pausa_1 = "Você paralisou o metrô!"
-        pausa_2 = "Volte quando estiver preparado."
-        pausa_3 = "Ajustar Volume"
-        pausa_superficie = self.fontes[1].render(pausa_1, True, (250, 100, 0))
-        pausa_rect = pausa_superficie.get_rect(center = (int(self.cs * (self.cn/2)), 5 * self.cs))
-        self.screen.blit(pausa_superficie, pausa_rect)
-        pausa_superficie = self.fontes[1].render(pausa_2, True, (250, 100, 0))
-        pausa_rect = pausa_superficie.get_rect(center = (int(self.cs * (self.cn/2)), 6 * self.cs))
-        self.screen.blit(pausa_superficie, pausa_rect)
-        pausa_superficie = self.fontes[1].render(pausa_3, True, (250, 100, 0))
-        pausa_rect = pausa_superficie.get_rect(center = (int(self.cs * (self.cn/2)), 7 * self.cs))
-        self.screen.blit(pausa_superficie, pausa_rect)
+        
+        pausa_1, pausa_2, pausa_3 = re.split("\.", self.pausa_textos)
+        
+        self.pausa = True
+        
+        while self.pausa:
+            submenu_pausa_rect = pygame.Rect(self.cs * 5, self.cs * 4, self.cs * 15, self.cs * 17)
+            pygame.draw.rect(self.screen, (200, 200, 50), submenu_pausa_rect)
+            
+            pausa_pos = pygame.mouse.get_pos()
+            
+            pausa_superficie = self.fontes[1].render(pausa_1, True, (250, 100, 0))
+            pausa_rect = pausa_superficie.get_rect(center = (int(self.cs * (self.cn/2)), 5 * self.cs))
+            self.screen.blit(pausa_superficie, pausa_rect)
+            pausa_superficie = self.fontes[1].render(pausa_2, True, (250, 100, 0))
+            pausa_rect = pausa_superficie.get_rect(center = (int(self.cs * (self.cn/2)), 6 * self.cs))
+            self.screen.blit(pausa_superficie, pausa_rect)
+            pausa_superficie = self.fontes[1].render(pausa_3, True, (250, 100, 0))
+            pausa_rect = pausa_superficie.get_rect(center = (int(self.cs * (self.cn/2)), 7 * self.cs))
+            self.screen.blit(pausa_superficie, pausa_rect)
 
-        # Criando botões para alterar o volume da música
-        vol_jogo_0 = Botao(imagem = None, pos = (350, 250, 0), 
-                                texto_cont = "0", fonte = self.fontes[1], cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
-        vol_jogo_0.mudar_cor(pausa_pos)
-        vol_jogo_0.atualizar(self.screen)
+            # Criando botões para alterar o volume da música
+            vol_jogo_0 = Botao(imagem = None, pos = (350, 250, 0), 
+                                    texto_cont = "0", fonte = self.fontes[1], cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+            vol_jogo_0.mudar_cor(pausa_pos)
+            vol_jogo_0.atualizar(self.screen)
 
-        vol_jogo_1 = Botao(imagem = None, pos = (370, 250, 0), 
-                                texto_cont = "1", fonte = self.fontes[1], cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
-        vol_jogo_1.mudar_cor(pausa_pos)
-        vol_jogo_1.atualizar(self.screen)
+            vol_jogo_1 = Botao(imagem = None, pos = (370, 250, 0), 
+                                    texto_cont = "1", fonte = self.fontes[1], cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+            vol_jogo_1.mudar_cor(pausa_pos)
+            vol_jogo_1.atualizar(self.screen)
 
-        vol_jogo_2 = Botao(imagem = None, pos = (390, 250, 0), 
-                                texto_cont = "2", fonte = self.fontes[1], cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
-        vol_jogo_2.mudar_cor(pausa_pos)
-        vol_jogo_2.atualizar(self.screen)
+            vol_jogo_2 = Botao(imagem = None, pos = (390, 250, 0), 
+                                    texto_cont = "2", fonte = self.fontes[1], cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+            vol_jogo_2.mudar_cor(pausa_pos)
+            vol_jogo_2.atualizar(self.screen)
 
-        vol_jogo_3 = Botao(imagem = None, pos = (410, 250, 0), 
-                                texto_cont = "3", fonte = self.fontes[1], cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
-        vol_jogo_3.mudar_cor(pausa_pos)
-        vol_jogo_3.atualizar(self.screen)
+            vol_jogo_3 = Botao(imagem = None, pos = (410, 250, 0), 
+                                    texto_cont = "3", fonte = self.fontes[1], cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+            vol_jogo_3.mudar_cor(pausa_pos)
+            vol_jogo_3.atualizar(self.screen)
 
-        vol_jogo_4 = Botao(imagem = None, pos = (430, 250, 0), 
-                                texto_cont = "4", fonte = self.fontes[1], cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
-        vol_jogo_4.mudar_cor(pausa_pos)
-        vol_jogo_4.atualizar(self.screen)
+            vol_jogo_4 = Botao(imagem = None, pos = (430, 250, 0), 
+                                    texto_cont = "4", fonte = self.fontes[1], cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+            vol_jogo_4.mudar_cor(pausa_pos)
+            vol_jogo_4.atualizar(self.screen)
 
-        vol_jogo_5 = Botao(imagem = None, pos = (450, 250, 0), 
-                                texto_cont = "5", fonte = self.fontes[1], cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
-        vol_jogo_5.mudar_cor(pausa_pos)
-        vol_jogo_5.atualizar(self.screen)
+            vol_jogo_5 = Botao(imagem = None, pos = (450, 250, 0), 
+                                    texto_cont = "5", fonte = self.fontes[1], cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+            vol_jogo_5.mudar_cor(pausa_pos)
+            vol_jogo_5.atualizar(self.screen)
 
-        # Comandos para alterar o volume da música
-        for evento in pygame.event.get():
-            if evento.type == pygame.MOUSEBUTTONDOWN:
-                if vol_jogo_0.checar_clique(pausa_pos):
-                    self.musica_partida.set_volume(0.0)
-                elif vol_jogo_1.checar_clique(pausa_pos):
-                    self.musica_partida.set_volume(0.2)
-                elif vol_jogo_2.checar_clique(pausa_pos):
-                    self.musica_partida.set_volume(0.4)
-                elif vol_jogo_3.checar_clique(pausa_pos):
-                    self.musica_partida.set_volume(0.6)
-                elif vol_jogo_4.checar_clique(pausa_pos):
-                    self.musica_partida.set_volume(0.8)
-                elif vol_jogo_5.checar_clique(pausa_pos):
-                    self.musica_partida.set_volume(1.0)
+            # Comandos para alterar o volume da música
+            for evento in pygame.event.get():
+                if evento.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                if evento.type == pygame.MOUSEBUTTONDOWN:
+                    if vol_jogo_0.checar_clique(pausa_pos):
+                        self.musica_partida.set_volume(0.0)
+                    elif vol_jogo_1.checar_clique(pausa_pos):
+                        self.musica_partida.set_volume(0.2)
+                    elif vol_jogo_2.checar_clique(pausa_pos):
+                        self.musica_partida.set_volume(0.4)
+                    elif vol_jogo_3.checar_clique(pausa_pos):
+                        self.musica_partida.set_volume(0.6)
+                    elif vol_jogo_4.checar_clique(pausa_pos):
+                        self.musica_partida.set_volume(0.8)
+                    elif vol_jogo_5.checar_clique(pausa_pos):
+                        self.musica_partida.set_volume(1.0)
+                if evento.type == pygame.KEYDOWN:
+                    if evento.key == pygame.K_SPACE:      
+                        self.pausa = False
+            
+            pygame.display.flip()
     
 
     def fim_jogo(self):
@@ -1041,6 +1061,13 @@ class SubMenu:
         self.screen.blit(cadastro_superficie, self.cadastro_rect)
         if self.selecionado == True:
             pygame.draw.rect(self.screen, (200, 150, 0), self.cadastro_rect, 2)
+            
+    def traduzir_lingua(self, texto):
+        if texto == "pausa_textos":
+            try:
+                return self.tradutor.translate("Você paralisou o metrô. Volte quando estiver preparado. Ajustar Volume", dest=self.idioma).text
+            except TypeError or AttributeError or httpcore._exceptions.ReadTimeout:
+                self.traduzir_lingua("pausa_textos")
 
 
 
