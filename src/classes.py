@@ -911,10 +911,7 @@ class SubMenu:
             self: palavra-chave que acessa os atributos e métodos da classe Obstaculo.
         """
         self.musica = pygame.mixer.Sound('sons/chegada.mp3')
-        print('antes do play não toca')
-
         self.musica.play()
-        print('depois do play toca')
     
 
     def desenhar_elementos(self):
