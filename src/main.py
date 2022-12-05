@@ -4,7 +4,6 @@ from googletrans import Translator
 import time
 import httpcore
 
-
 # Inicia o módulo PyGame.
 pygame.init()
 
@@ -20,13 +19,13 @@ pygame.display.set_caption("Metrô")
 
 
 # Imagem de fundo do menu principal.
-estacao_com_metro = pygame.image.load("src/imagens/estação_menu.jpg")
+estacao_com_metro = pygame.image.load("imagens/estação_menu.jpg")
 # Imagem de fundo do menu Jogar, Opção e Créditos.
-estacao_sem_metro = pygame.image.load("src/imagens/estação_sem_metro.jpeg")
-retang_fundo = pygame.image.load("src/imagens/retang_fundo.png")
+estacao_sem_metro = pygame.image.load("imagens/estação_sem_metro.jpeg")
+retang_fundo = pygame.image.load("imagens/retang_fundo.png")
 
 class Menu:
-    def __init__(self, screen=pygame.display.set_mode((cn * cs,cn * cs)) , estacao_com_metro=pygame.image.load("src/imagens/estação_menu.jpg"), estacao_sem_metro=pygame.image.load("src/imagens/estação_sem_metro.jpeg"), retang_fundo=pygame.image.load("src/imagens/retang_fundo.png"),cn=25, cs=32):
+    def __init__(self, screen=pygame.display.set_mode((cn * cs,cn * cs)) , estacao_com_metro=pygame.image.load("imagens/estação_menu.jpg"), estacao_sem_metro=pygame.image.load("imagens/estação_sem_metro.jpeg"), retang_fundo=pygame.image.load("imagens/retang_fundo.png"),cn=25, cs=32):
         self.screen = screen
         self.imagem_menu_principal = estacao_com_metro
         self.imagem_submenus = estacao_sem_metro
@@ -38,17 +37,18 @@ class Menu:
         self.submenu = SubMenu(cn, cs, screen, self.fontes, "Jogador")
         self.tradutor = Translator()
         self.idiomas = ["Português", "Inglês", "Francês", "Latim", "Alemão", "Esperanto", "Javanes", "Espanhol"]
-        self.fundo = pygame.image.load("src/imagens/retang_fundo.png")
+        self.fundo = pygame.image.load("imagens/retang_fundo.png")
+
 
     def fonte(self, tamanho): 
         """ Reponsável por carregar a fonte "caverson".
 
-        :return pygame.font.Font("src/imagens/caverson.otf", tamanho): fonte de letra com tamanho definido.
+        :return pygame.font.Font("imagens/caverson.otf", tamanho): fonte de letra com tamanho definido.
 
         Args:
             tamanho (int): tamanho da escrita.
         """ 
-        return pygame.font.Font("src/imagens/caverson.otf", tamanho)
+        return pygame.font.Font("imagens/caverson.otf", tamanho)
 
 
     def jogar(self):
@@ -74,7 +74,7 @@ class Menu:
             # Cria a superfície das instruções.
             intrucoes_rect = pygame.Rect(380, 330, 750, 650)     # (Xo, Yo, X, Y)
             # Ajusta as dimensões da imagem de fundo.
-            imagem_intrucoes = pygame.transform.scale(pygame.image.load("src/imagens/instrucoes.png"), (370, 320))
+            imagem_intrucoes = pygame.transform.scale(pygame.image.load("imagens/instrucoes.png"), (370, 320))
             # SCREEN.blit(nome_imagem, (x_pos, y_pos))
             self.screen.blit(imagem_intrucoes, intrucoes_rect)
 
@@ -104,19 +104,19 @@ class Menu:
 
             # BOTÕES
             # Cria o botão da fase 1.
-            fase_1 = Botao(imagem = pygame.image.load("src/imagens/retang_fundo_fases.png"), pos = (200, 370), texto_cont = fa_1, 
+            fase_1 = Botao(imagem = pygame.image.load("imagens/retang_fundo_fases.png"), pos = (200, 370), texto_cont = fa_1, 
                            fonte = self.fonte(22), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
             # Cria o botão da fase 2.
-            fase_2 = Botao(imagem = pygame.image.load("src/imagens/retang_fundo_fases.png"), pos = (200, 430), texto_cont = fa_2, 
+            fase_2 = Botao(imagem = pygame.image.load("imagens/retang_fundo_fases.png"), pos = (200, 430), texto_cont = fa_2, 
                            fonte = self.fonte(22), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
             # Cria o botão da fase 3.
-            fase_3 = Botao(imagem = pygame.image.load("src/imagens/retang_fundo_fases.png"), pos = (200, 490), texto_cont = fa_3, 
+            fase_3 = Botao(imagem = pygame.image.load("imagens/retang_fundo_fases.png"), pos = (200, 490), texto_cont = fa_3, 
                            fonte = self.fonte(22), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
             # Cria o botão da fase 4.
-            fase_4 = Botao(imagem = pygame.image.load("src/imagens/retang_fundo_fases.png"), pos = (200, 550), texto_cont = fa_4, 
+            fase_4 = Botao(imagem = pygame.image.load("imagens/retang_fundo_fases.png"), pos = (200, 550), texto_cont = fa_4, 
                            fonte = self.fonte(22), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
             # Cria o botão da fase 5.
-            fase_5 = Botao(imagem = pygame.image.load("src/imagens/retang_fundo_fases.png"), pos = (200, 610), texto_cont = fa_5, 
+            fase_5 = Botao(imagem = pygame.image.load("imagens/retang_fundo_fases.png"), pos = (200, 610), texto_cont = fa_5, 
                            fonte = self.fonte(22), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
             # Cria o botão de voltar.
             jogar_voltar = Botao(imagem = None, pos = (400, 700), texto_cont = volta, 
@@ -253,6 +253,46 @@ class Menu:
             idioma[7].mudar_cor(opcoes_menu_pos)
             idioma[7].atualizar(self.screen)
 
+
+            # Cria os botões para mudar o volume do menu
+            vol_menu_texto = self.fonte(45).render("VOLUME DO MENU", True, "Black")
+
+            opcoes_vol_rect = vol_menu_texto.get_rect(center=(400, 550))
+
+            self.screen.blit(vol_menu_texto, opcoes_vol_rect)
+
+            vol_menu_0 = Botao(imagem = pygame.transform.scale(self.fundo, (self.cs, self.cs)), pos = (270, 600), 
+                                texto_cont = "0", fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+            vol_menu_0.mudar_cor(opcoes_menu_pos)
+            vol_menu_0.atualizar(self.screen)
+
+            vol_menu_1 = Botao(imagem = pygame.transform.scale(self.fundo, (self.cs, self.cs)), pos = (320, 600), 
+                                texto_cont = "1", fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+            vol_menu_1.mudar_cor(opcoes_menu_pos)
+            vol_menu_1.atualizar(self.screen)
+
+            vol_menu_2 = Botao(imagem = pygame.transform.scale(self.fundo, (self.cs, self.cs)), pos = (370, 600), 
+                                texto_cont = "2", fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+            vol_menu_2.mudar_cor(opcoes_menu_pos)
+            vol_menu_2.atualizar(self.screen)
+
+            vol_menu_3 = Botao(imagem = pygame.transform.scale(self.fundo, (self.cs, self.cs)), pos = (420, 600), 
+                                texto_cont = "3", fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+            vol_menu_3.mudar_cor(opcoes_menu_pos)
+            vol_menu_3.atualizar(self.screen)
+
+            vol_menu_4 = Botao(imagem = pygame.transform.scale(self.fundo, (self.cs, self.cs)), pos = (470, 600), 
+                                texto_cont = "4", fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+            vol_menu_4.mudar_cor(opcoes_menu_pos)
+            vol_menu_4.atualizar(self.screen)
+
+            vol_menu_5 = Botao(imagem = pygame.transform.scale(self.fundo, (self.cs, self.cs)), pos = (520, 600), 
+                                texto_cont = "5", fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+            vol_menu_5.mudar_cor(opcoes_menu_pos)
+            vol_menu_5.atualizar(self.screen)
+
+
+
             # Cria o botão de voltar.
             back = self.tradutor.translate("Back", dest=self.submenu.idioma).text
             opcoes_voltar = Botao(imagem = None, pos = (400, 700), texto_cont = back, 
@@ -277,52 +317,56 @@ class Menu:
                         self.menu_principal()
                     elif idioma[0].checar_clique(opcoes_menu_pos):
                         self.submenu.idioma = "pt"
-                        time.sleep(1)
                         idioma = self.atualizar_idiomas()
                         op_t = self.tradutor.translate("Opções", dest=self.submenu.idioma).text
                         op_tx = self.tradutor.translate("This is the OPTIONS screen.", dest=self.submenu.idioma).text
                     elif idioma[1].checar_clique(opcoes_menu_pos):
                         self.submenu.idioma = "en"
-                        time.sleep(1)
                         idioma = self.atualizar_idiomas()
                         op_t = self.tradutor.translate("Opções", dest=self.submenu.idioma).text
                         op_tx = self.tradutor.translate("This is the OPTIONS screen.", dest=self.submenu.idioma).text
                     elif idioma[2].checar_clique(opcoes_menu_pos):
                         self.submenu.idioma = "fr"
-                        time.sleep(1)
                         idioma = self.atualizar_idiomas()
                         op_t = self.tradutor.translate("Opções", dest=self.submenu.idioma).text
                         op_tx = self.tradutor.translate("This is the OPTIONS screen.", dest=self.submenu.idioma).text
                     elif idioma[3].checar_clique(opcoes_menu_pos):
                         self.submenu.idioma = "la"
-                        time.sleep(1)
                         idioma = self.atualizar_idiomas()
                         op_t = self.tradutor.translate("Opções", dest=self.submenu.idioma).text
                         op_tx = self.tradutor.translate("This is the OPTIONS screen.", dest=self.submenu.idioma).text
                     elif idioma[6].checar_clique(opcoes_menu_pos):
                         self.submenu.idioma = "jw"
-                        time.sleep(1)
                         idioma = self.atualizar_idiomas()
                         op_t = self.tradutor.translate("Opções", dest=self.submenu.idioma).text
                         op_tx = self.tradutor.translate("This is the OPTIONS screen.", dest=self.submenu.idioma).text
                     elif idioma[5].checar_clique(opcoes_menu_pos):
                         self.submenu.idioma = "eo"
-                        time.sleep(1)
                         idioma = self.atualizar_idiomas()
                         op_t = self.tradutor.translate("Opções", dest=self.submenu.idioma).text
                         op_tx = self.tradutor.translate("This is the OPTIONS screen.", dest=self.submenu.idioma).text
                     elif idioma[4].checar_clique(opcoes_menu_pos):
                         self.submenu.idioma = "de"
-                        time.sleep(1)
                         idioma = self.atualizar_idiomas()
                         op_t = self.tradutor.translate("Opções", dest=self.submenu.idioma).text
                         op_tx = self.tradutor.translate("This is the OPTIONS screen.", dest=self.submenu.idioma).text
                     elif idioma[7].checar_clique(opcoes_menu_pos):
                         self.submenu.idioma = "es"
-                        time.sleep(1)
                         idioma = self.atualizar_idiomas()
                         op_t = self.tradutor.translate("Opções", dest=self.submenu.idioma).text
                         op_tx = self.tradutor.translate("This is the OPTIONS screen.", dest=self.submenu.idioma).text
+                    elif vol_menu_0.checar_clique(opcoes_menu_pos):
+                        self.submenu.musica.set_volume(0.0)
+                    elif vol_menu_1.checar_clique(opcoes_menu_pos):
+                        self.submenu.musica.set_volume(0.2)
+                    elif vol_menu_2.checar_clique(opcoes_menu_pos):
+                        self.submenu.musica.set_volume(0.4)
+                    elif vol_menu_3.checar_clique(opcoes_menu_pos):
+                        self.submenu.musica.set_volume(0.6)
+                    elif vol_menu_4.checar_clique(opcoes_menu_pos):
+                        self.submenu.musica.set_volume(0.8)
+                    elif vol_menu_5.checar_clique(opcoes_menu_pos):
+                        self.submenu.musica.set_volume(1.0)
 
             # Faz com que a superfície de exibição apareça no monitor do usuário.
             pygame.display.update()
@@ -441,16 +485,16 @@ class Menu:
 
             # Criar os botões do menu acionando a classe Botao:
             # Botão de jogar.
-            botao_jogar = Botao(imagem = pygame.image.load("src/imagens/retang_fundo.png"), pos = (400, 300), 
+            botao_jogar = Botao(imagem = pygame.image.load("imagens/retang_fundo.png"), pos = (400, 300), 
                                 texto_cont = j, fonte = self.fonte(75), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
             # Botão de opções.
-            botao_opcoes = Botao(imagem = pygame.image.load("src/imagens/retang_fundo.png"), pos=(400, 430), 
+            botao_opcoes = Botao(imagem = pygame.image.load("imagens/retang_fundo.png"), pos=(400, 430), 
                                 texto_cont = o, fonte = self.fonte(75), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
             # Botão de créditos.
-            botao_creditos = Botao(imagem = pygame.image.load("src/imagens/retang_fundo.png"), pos=(400, 560), 
+            botao_creditos = Botao(imagem = pygame.image.load("imagens/retang_fundo.png"), pos=(400, 560), 
                                 texto_cont = c, fonte = self.fonte(75), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
             # Botão de sair.
-            botao_sair = Botao(imagem = pygame.image.load("src/imagens/retang_fundo.png"), pos = (400, 690), 
+            botao_sair = Botao(imagem = pygame.image.load("imagens/retang_fundo.png"), pos = (400, 690), 
                                 texto_cont = s, fonte = self.fonte(75), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
 
             # Acionar as funções de atualização e mudança de cor para os botões criados.
