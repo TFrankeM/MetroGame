@@ -582,17 +582,17 @@ class Partida:
                     self.submenu.comecar_fase()     # Retorna: self.jogo = "Partida em curso"
                     self.ativo = True               # Permite que o movimento do metrô seja atualizado
                     self.submenu.musica.stop()      # Para a música do menu
-                    self.submenu.musica.stop()
 
                     self.musica.stop()
                     self.musica.play()              # Inicia a música de fundo da partida
-                    self.musica.set_volume(0.4)     # Ajusta o volume da música de fundo da partida
+                    self.musica.set_volume(0.4)     # Ajusta o volume da música de fundo da partida 
 
                 pygame.display.flip()           # Renderiza
                 self.clock.tick(60)             # Garante uma frequência de cerca de 60 frames por segundo
                     
             # "self.submenu.comecar_fase()" (9 linhas acima) altera o status de "self.submenu.jogo" para "Partida em curso", dando início a ela.
             elif self.submenu.jogo == "Partida em curso":
+                
                 # pygame.event.get() obtém os eventos que ocorrem.
                 for event in pygame.event.get():
                     # Finaliza o programa se o botão X (canto superior direito) for clicado.
@@ -654,10 +654,12 @@ class Partida:
                         pygame.quit()
                         sys.exit()
 
-                    # Se ocorrer evento "tecla para baixo":
+                    # Volta ao menu e começa a música do menu:
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_SPACE:
-                            pass
+                            self.gameplay = False
+                            self.submenu.musica.play()
+                            self.submenu.musica.set_volume(0.4)
 
 
                 # Preenche a tela com cor
@@ -751,7 +753,7 @@ class Partida:
         self.musica.stop()  # Para a música de fundo
         time.sleep(1)
         self.batida.stop()  # Para o áudio da batida
-
+        
 
     def desenhar_pontuacao(self):
         """ Gera um objeto "Rect" para armazenar e manipular uma área retangular que contém o número de
@@ -760,6 +762,9 @@ class Partida:
         Args:
             self: palavra-chave que acessa os atributos e métodos da classe Obstaculo.
         """
+
+        pontuacao_pos = pygame.mouse.get_pos()
+
         # Comprimento do metrô, descontados os vagões iniciais.
         self.pontuacao = str(len(self.trem.corpo) - 3)
         # Conteúdo exibido no objeto Rect.
@@ -768,6 +773,8 @@ class Partida:
         pontuacao_rect = pontuacao_superficie.get_rect(center = (int(self.cs * self.cn - 110), int(20)))
         self.screen.blit(pontuacao_superficie, pontuacao_rect)
 
+
+        
 
     def desenhar_borda(self):
         """ Gera objetos "Rect" para armazenar e manipular áreas retangulares que contém a borda do jogo.
@@ -893,6 +900,7 @@ class SubMenu:
 
     def musica_partida(self, musica):
         self.musica_partida = musica
+
 
     def abertura(self):
         """ Inicia a música de fundo do menu.
@@ -1021,7 +1029,6 @@ class SubMenu:
             recordes_superficie = self.fontes[1].render(linha, True, (0, 0, 0))
             recordes_rect = recordes_superficie.get_rect(center = (int(self.cs * (3 + self.cn / 2)), (10 + i) * self.cn))
             self.screen.blit(recordes_superficie, recordes_rect)
-
 
 
     def registrar_recorde(self):
