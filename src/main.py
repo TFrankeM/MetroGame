@@ -67,10 +67,13 @@ class Menu:
 
             # Cria a superfície das instruções.
             intrucoes_rect = pygame.Rect(380, 330, 750, 650)     # (Xo, Yo, X, Y)
+            # Ajusta as dimensões do retangulo_cinza.
+            fundo_intrucoes = pygame.transform.scale(self.retang_fundo, (370, 320))      # (deltaX, deltaY)
             # Ajusta as dimensões da imagem de fundo.
-            imagem_intrucoes = pygame.transform.scale(pygame.image.load("imagens/instrucoes.png"), (370, 320))
+            imagem_intrucoes = pygame.transform.scale(pygame.image.load("imagens/" + self.submenu.idioma + ".png"), (370, 320))
             # SCREEN.blit(nome_imagem, (x_pos, y_pos))
-            self.screen.blit(imagem_intrucoes, intrucoes_rect)
+            self.screen.blit(fundo_intrucoes, intrucoes_rect)       # Aplica fundo cinza.
+            self.screen.blit(imagem_intrucoes, intrucoes_rect)      # Aplica imagem das instruções.
 
             # Cria a superfície do quadrado cinza.
             fundo_cinza_rect = pygame.Rect(100, 220, 700, 320)                           # (Xo, Yo, X, Y)
@@ -146,9 +149,7 @@ class Menu:
                         
 
                     if fase_3.checar_clique(jogar_mouse_pos):
-
                         # Cria os objetos da classe Partida.
-
                         self.partida = Partida(cn, cs, screen, pygame.font.Font(None, 30), 3, self.submenu.nome, self.submenu.idioma)    # Fase = 3
                         self.submenu.musica.stop()
                         self.partida.inicia_partida()
@@ -157,9 +158,7 @@ class Menu:
                         
                         
                     if fase_4.checar_clique(jogar_mouse_pos):
-
                         # Cria os objetos da classe Partida.
-
                         self.partida = Partida(cn, cs, screen, pygame.font.Font(None, 30), 4, self.submenu.nome, self.submenu.idioma)    # Fase = 4
                         self.submenu.musica.stop()
                         self.partida.inicia_partida()
@@ -168,9 +167,7 @@ class Menu:
                         
 
                     if fase_5.checar_clique(jogar_mouse_pos):
-
                        # Cria os objetos da classe Partida.
-
                         self.partida = Partida(cn, cs, screen, pygame.font.Font(None, 30), 5, self.submenu.nome, self.submenu.idioma)    # Fase = 5
                         self.submenu.musica.stop()
                         self.partida.inicia_partida()
@@ -204,14 +201,12 @@ class Menu:
         """ É um sub menu para as opções de jogo.
         """
         
-        
         opcoes_textos = self.traduzir_lingua("opcoes_textos")
         
         idioma = self.atualizar_idiomas()
         
         condicao = True
         while condicao:
-
             # Cria a superfície da imagem de fundo.
             fundo_rect = pygame.Rect(0, 0, self.cs * self.cn, self.cs * self.cn)
             # Ajusta as dimensões da imagem de fundo.
@@ -220,16 +215,15 @@ class Menu:
             self.screen.blit(imagem_fundo, fundo_rect)
             
             op_t, op_tx, back, vol = re.split("\.", opcoes_textos)
-            op_tx+="."
             
-            # Título da tela de opcoes.
+            # Renderiza o título.
+            opcoes_titulo = self.fonte(80).render(op_t, True, "#e48b39")
+            # Superfície do título.
+            opcoes_rect_t = opcoes_titulo.get_rect(center=(400, 120))
+            # Renderiza o texto.
             opcoes_texto = self.fonte(45).render(op_tx, True, "Black")
             # Superfície do texto.
-            opcoes_rect_tx = opcoes_texto.get_rect(center=(400, 200))
-            # Texto da tela de opções.
-            opcoes_titulo = self.fonte(45).render(op_t, True, "Black")
-            # Superfície do texto.
-            opcoes_rect_t = opcoes_titulo.get_rect(center=(400, 120))
+            opcoes_rect_tx = opcoes_texto.get_rect(center=(400, 210))
 
             # Obtem a posição (x,y) do cursor do mouse.
             opcoes_menu_pos = pygame.mouse.get_pos()
@@ -271,32 +265,32 @@ class Menu:
             self.screen.blit(vol_menu_texto, opcoes_vol_rect)
 
             vol_menu_0 = Botao(imagem = pygame.transform.scale(self.fundo, (self.cs, self.cs)), pos = (270, 600), 
-                                texto_cont = "0", fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+                               texto_cont = "0", fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
             vol_menu_0.mudar_cor(opcoes_menu_pos)
             vol_menu_0.atualizar(self.screen)
 
             vol_menu_1 = Botao(imagem = pygame.transform.scale(self.fundo, (self.cs, self.cs)), pos = (320, 600), 
-                                texto_cont = "1", fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+                               texto_cont = "1", fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
             vol_menu_1.mudar_cor(opcoes_menu_pos)
             vol_menu_1.atualizar(self.screen)
 
             vol_menu_2 = Botao(imagem = pygame.transform.scale(self.fundo, (self.cs, self.cs)), pos = (370, 600), 
-                                texto_cont = "2", fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+                               texto_cont = "2", fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
             vol_menu_2.mudar_cor(opcoes_menu_pos)
             vol_menu_2.atualizar(self.screen)
 
             vol_menu_3 = Botao(imagem = pygame.transform.scale(self.fundo, (self.cs, self.cs)), pos = (420, 600), 
-                                texto_cont = "3", fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+                               texto_cont = "3", fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
             vol_menu_3.mudar_cor(opcoes_menu_pos)
             vol_menu_3.atualizar(self.screen)
 
             vol_menu_4 = Botao(imagem = pygame.transform.scale(self.fundo, (self.cs, self.cs)), pos = (470, 600), 
-                                texto_cont = "4", fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+                               texto_cont = "4", fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
             vol_menu_4.mudar_cor(opcoes_menu_pos)
             vol_menu_4.atualizar(self.screen)
 
             vol_menu_5 = Botao(imagem = pygame.transform.scale(self.fundo, (self.cs, self.cs)), pos = (520, 600), 
-                                texto_cont = "5", fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+                               texto_cont = "5", fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
             vol_menu_5.mudar_cor(opcoes_menu_pos)
             vol_menu_5.atualizar(self.screen)
 
@@ -523,7 +517,7 @@ class Menu:
         subidioma = self.submenu.idioma
         novo_idioma = []
         for i in range(8):
-            novo_idioma.append(self.traduzir_lingua("idioma", self.idiomas[i], 250+30*i, subidioma))
+            novo_idioma.append(self.traduzir_lingua("idioma", self.idiomas[i], 270+30*i, subidioma))
         return novo_idioma
     
     def traduzir_lingua(self, texto, lingua=None, posicao=None, subidioma=None):
@@ -546,12 +540,12 @@ class Menu:
                 self.traduzir_lingua("inicio_textos")
         elif texto == "opcoes_textos":
             try:
-                return self.tradutor.translate("Opções. This is the OPTIONS screen. Back. VOLUME DO MENU", dest=self.submenu.idioma).text
+                return self.tradutor.translate("Opções. Idioma do jogo. Voltar. Volume do menu", dest=self.submenu.idioma).text
             except TypeError or AttributeError or httpcore._exceptions.ReadTimeout:
                 self.traduzir_lingua("opcoes_textos")
         elif texto == "creditos_textos":
             try:
-                return self.tradutor.translate("Créditos. foi desenvolvido por. Rodrigo Cavalcante Kalil. Rodrigo Dhery Silva Prieto. Ricael Daniel Vieira da Silva. Thiago Franke Melchiors. Alunos do segundo semestre de Ciência de Dados da FGV EMAp. Voltar", dest=self.submenu.idioma).text
+                return self.tradutor.translate("Créditos. foi desenvolvido por. Ricael Daniel Vieira da Silva. Rodrigo Cavalcante Kalil. Rodrigo Dhery Silva Prieto. Thiago Franke Melchiors. Alunos do segundo semestre de Ciência de Dados da FGV EMAp. Voltar", dest=self.submenu.idioma).text
             except TypeError or AttributeError or httpcore._exceptions.ReadTimeout:
                 self.traduzir_lingua("creditos_textos")
         elif texto == "jogar_textos":
