@@ -39,21 +39,21 @@ class Passageiro:
             self: palavra-chave que acessa os atributos e métodos da classe Passageiro.
         """
         # Carregando as imagens das pessoas/passageiros em uma lista.
-        self.pessoas = [pygame.image.load('src/imagens/passageiros/p1.png').convert_alpha(),
-                        pygame.image.load('src/imagens/passageiros/p2.png').convert_alpha(),
-                        pygame.image.load('src/imagens/passageiros/p3.png').convert_alpha(),
-                        pygame.image.load('src/imagens/passageiros/p4.png').convert_alpha(),
-                        pygame.image.load('src/imagens/passageiros/p5.png').convert_alpha(),
-                        pygame.image.load('src/imagens/passageiros/p6.png').convert_alpha(),
-                        pygame.image.load('src/imagens/passageiros/p7.png').convert_alpha(),
-                        pygame.image.load('src/imagens/passageiros/p8.png').convert_alpha(),
-                        pygame.image.load('src/imagens/passageiros/p9.png').convert_alpha(),
-                        pygame.image.load('src/imagens/passageiros/p10.png').convert_alpha(),
-                        pygame.image.load('src/imagens/passageiros/p11.png').convert_alpha(),
-                        pygame.image.load('src/imagens/passageiros/p12.png').convert_alpha(),
-                        pygame.image.load('src/imagens/passageiros/p13.png').convert_alpha(),
-                        pygame.image.load('src/imagens/passageiros/p14.png').convert_alpha(),
-                        pygame.image.load('src/imagens/passageiros/p15.png').convert_alpha()]
+        self.pessoas = [pygame.image.load('imagens/passageiros/p1.png').convert_alpha(),
+                        pygame.image.load('imagens/passageiros/p2.png').convert_alpha(),
+                        pygame.image.load('imagens/passageiros/p3.png').convert_alpha(),
+                        pygame.image.load('imagens/passageiros/p4.png').convert_alpha(),
+                        pygame.image.load('imagens/passageiros/p5.png').convert_alpha(),
+                        pygame.image.load('imagens/passageiros/p6.png').convert_alpha(),
+                        pygame.image.load('imagens/passageiros/p7.png').convert_alpha(),
+                        pygame.image.load('imagens/passageiros/p8.png').convert_alpha(),
+                        pygame.image.load('imagens/passageiros/p9.png').convert_alpha(),
+                        pygame.image.load('imagens/passageiros/p10.png').convert_alpha(),
+                        pygame.image.load('imagens/passageiros/p11.png').convert_alpha(),
+                        pygame.image.load('imagens/passageiros/p12.png').convert_alpha(),
+                        pygame.image.load('imagens/passageiros/p13.png').convert_alpha(),
+                        pygame.image.load('imagens/passageiros/p14.png').convert_alpha(),
+                        pygame.image.load('imagens/passageiros/p15.png').convert_alpha()]
 
 
     def desenhar_passageiro(self):
@@ -125,27 +125,27 @@ class Trem:
             self: palavra-chave que acessa os atributos e métodos da classe Trem.
         """
         # Carrega as imagens da frente do metrô.
-        self.frente_direita = pygame.image.load('src/imagens/metro/horizontal_frente.png').convert_alpha()
+        self.frente_direita = pygame.image.load('imagens/metro/horizontal_frente.png').convert_alpha()
         self.frente_direita = pygame.transform.scale(self.frente_direita, (self.cs,self.cs))
         self.frente_esquerda = pygame.transform.flip(self.frente_direita, True, False)
-        self.frente_emcima = pygame.image.load('src/imagens/metro/vertical_emcima.png').convert_alpha()
+        self.frente_emcima = pygame.image.load('imagens/metro/vertical_emcima.png').convert_alpha()
         self.frente_emcima = pygame.transform.scale(self.frente_emcima, (self.cs,self.cs))
-        self.frente_embaixo = pygame.image.load('src/imagens/metro/vertical_embaixo.png').convert_alpha()
+        self.frente_embaixo = pygame.image.load('imagens/metro/vertical_embaixo.png').convert_alpha()
         self.frente_embaixo = pygame.transform.scale(self.frente_embaixo, (self.cs,self.cs))
 
         # Carrega as imagens da traseira do metrô.
-        self.traseira_esquerda = pygame.image.load('src/imagens/metro/horizontal_traseira.png').convert_alpha()
+        self.traseira_esquerda = pygame.image.load('imagens/metro/horizontal_traseira.png').convert_alpha()
         self.traseira_esquerda = pygame.transform.scale(self.traseira_esquerda, (self.cs,self.cs))
         self.traseira_direita = pygame.transform.flip(self.traseira_esquerda, True, False)
-        self.traseira_emcima = pygame.image.load('src/imagens/metro/vertical_emcima.png').convert_alpha()
+        self.traseira_emcima = pygame.image.load('imagens/metro/vertical_emcima.png').convert_alpha()
         self.traseira_emcima = pygame.transform.scale(self.traseira_emcima, (self.cs,self.cs))
-        self.traseira_embaixo = pygame.image.load('src/imagens/metro/vertical_embaixo.png').convert_alpha()
+        self.traseira_embaixo = pygame.image.load('imagens/metro/vertical_embaixo.png').convert_alpha()
         self.traseira_embaixo = pygame.transform.scale(self.traseira_embaixo, (self.cs,self.cs))
 
         # Carrega as imagens do vagão do meio do metrô.
-        self.meio_horizontal = pygame.image.load('src/imagens/metro/horizontal_meio.png').convert_alpha()
+        self.meio_horizontal = pygame.image.load('imagens/metro/horizontal_meio.png').convert_alpha()
         self.meio_horizontal = pygame.transform.scale(self.meio_horizontal, (self.cs,self.cs))
-        self.meio_vertical = pygame.image.load('src/imagens/metro/vertical_meio.png').convert_alpha()
+        self.meio_vertical = pygame.image.load('imagens/metro/vertical_meio.png').convert_alpha()
         self.meio_vertical = pygame.transform.scale(self.meio_vertical, (self.cs,self.cs))
 
         # Carrega curvas/quinas
@@ -153,7 +153,7 @@ class Trem:
         # db = direita, em baixo
         # ec = erquerda, em cima
         # eb = esquerda, em baixo
-        self.conexao_dc = pygame.image.load('src/imagens/metro/curva.png').convert_alpha()
+        self.conexao_dc = pygame.image.load('imagens/metro/curva.png').convert_alpha()
         self.conexao_dc = pygame.transform.scale(self.conexao_dc, (self.cs, self.cs))
         self.conexao_db = pygame.transform.rotate(self.conexao_dc, 270)
         self.conexao_ec = pygame.transform.rotate(self.conexao_dc, 90)
@@ -321,18 +321,18 @@ class Obstaculo:
         # Dicionário com as imagens carregadas dos obstáculos.
         self.obstaculos = {}
         # Imagens da fase 1.
-        self.obstaculos[1] = [pygame.image.load('src/imagens/obstaculos/b1.png').convert_alpha(),
-                              pygame.image.load('src/imagens/obstaculos/b2.png').convert_alpha(),
-                              pygame.image.load('src/imagens/obstaculos/b3.png').convert_alpha()]
+        self.obstaculos[1] = [pygame.image.load('imagens/obstaculos/b1.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/b2.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/b3.png').convert_alpha()]
         # Imagens da fase 2.
-        self.obstaculos[2] = [pygame.image.load('src/imagens/obstaculos/b3.png').convert_alpha()]
+        self.obstaculos[2] = [pygame.image.load('imagens/obstaculos/b3.png').convert_alpha()]
         # Imagens da fase 3.
-        self.obstaculos[3] = [pygame.image.load('src/imagens/obstaculos/b1.png').convert_alpha(),
-                              pygame.image.load('src/imagens/obstaculos/b3.png').convert_alpha()]
+        self.obstaculos[3] = [pygame.image.load('imagens/obstaculos/b1.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/b3.png').convert_alpha()]
         # Imagens da fase 4.
-        self.obstaculos[4] = [pygame.image.load('src/imagens/obstaculos/b1.png').convert_alpha()]
+        self.obstaculos[4] = [pygame.image.load('imagens/obstaculos/b1.png').convert_alpha()]
         # Imagens da fase 5.
-        self.obstaculos[5] = [pygame.image.load('src/imagens/obstaculos/b2.png').convert_alpha()]
+        self.obstaculos[5] = [pygame.image.load('imagens/obstaculos/b2.png').convert_alpha()]
 
 
     def adicionar_obstaculo(self):
@@ -544,9 +544,9 @@ class Partida:
         # Fonte da letra.
         self.fonte = fonte
         # Carregamento da música de fundo.
-        self.musica = pygame.mixer.Sound('src/sons/musica_fundo.mpeg')
+        self.musica = pygame.mixer.Sound('sons/musica_fundo.mpeg')
         # Carregamento do sons de batida.
-        self.batida = pygame.mixer.Sound('src/sons/batida.wav')
+        self.batida = pygame.mixer.Sound('sons/batida.wav')
         # Pontuação inicial:
         self.pontuacao = 0
         #Tempo da partida:
@@ -563,10 +563,12 @@ class Partida:
         pygame.time.set_timer(SCREEN_UPDATE, 150)
         TIMER = pygame.USEREVENT 
         pygame.time.set_timer(TIMER, 1000)
+        self.gameplay = True
+        self.submenu.musica_partida(self.musica)
 
         self.pas = self.tradutor.translate("passageiros", dest=self.idioma).text
         
-        while True:
+        while self.gameplay == True:
             # Status padrão para "submenu.jogo" é "Inicia a partida", ou seja, após clicar no botão de uma fase, ela é iniciada imediatamente.
             if self.submenu.jogo == "Inicia a partida":
                 # pygame.event.get() obtém os eventos que ocorrem.
@@ -584,6 +586,7 @@ class Partida:
 
                     self.musica.stop()
                     self.musica.play()              # Inicia a música de fundo da partida
+                    self.musica.set_volume(0.4)     # Ajusta o volume da música de fundo da partida
 
                 pygame.display.flip()           # Renderiza
                 self.clock.tick(60)             # Garante uma frequência de cerca de 60 frames por segundo
@@ -761,7 +764,7 @@ class Partida:
         self.pontuacao = str(len(self.trem.corpo) - 3)
         # Conteúdo exibido no objeto Rect.
         pontuacao_superficie = self.fonte.render(f"{self.pontuacao} "+self.pas, True, (0,0,0))
-        # Contrução do  objeto Rect.
+        # Contrução do objeto Rect.
         pontuacao_rect = pontuacao_superficie.get_rect(center = (int(self.cs * self.cn - 110), int(20)))
         self.screen.blit(pontuacao_superficie, pontuacao_rect)
 
@@ -774,15 +777,15 @@ class Partida:
         """
         # Carregamento das imagens das bordas dos mapas.
         if self.fase == 1:          # Borda da fase 1
-            self.borda = pygame.image.load('src/imagens/obstaculos/borda.jpg').convert_alpha()
+            self.borda = pygame.image.load('imagens/obstaculos/borda.jpg').convert_alpha()
         if self.fase == 2:          # Borda da fase 2
-            self.borda = pygame.image.load('src/imagens/obstaculos/b4.jpg').convert_alpha()
+            self.borda = pygame.image.load('imagens/obstaculos/b4.jpg').convert_alpha()
         if self.fase == 3:          # Borda da fase 3
-            self.borda = pygame.image.load('src/imagens/obstaculos/borda.jpg').convert_alpha()
+            self.borda = pygame.image.load('imagens/obstaculos/borda.jpg').convert_alpha()
         if self.fase == 4:          # Borda da fase 4
-            self.borda = pygame.image.load('src/imagens/obstaculos/borda.jpg').convert_alpha()
+            self.borda = pygame.image.load('imagens/obstaculos/borda.jpg').convert_alpha()
         if self.fase == 5:          # Borda da fase 5
-            self.borda = pygame.image.load('src/imagens/obstaculos/borda.jpg').convert_alpha()
+            self.borda = pygame.image.load('imagens/obstaculos/borda.jpg').convert_alpha()
         # Ajustar as proporções da imagem.
         self.borda = pygame.transform.scale(self.borda, (self.cs, self.cs))
 
@@ -888,6 +891,8 @@ class SubMenu:
         self.selecionado = True
         self.idioma = "pt"
 
+    def musica_partida(self, musica):
+        self.musica_partida = musica
 
     def abertura(self):
         """ Inicia a música de fundo do menu.
@@ -895,7 +900,7 @@ class SubMenu:
         Args:
             self: palavra-chave que acessa os atributos e métodos da classe Obstaculo.
         """
-        self.musica = pygame.mixer.Sound('src/sons/chegada.mp3')
+        self.musica = pygame.mixer.Sound('sons/chegada.mp3')
         print('antes do play não toca')
         self.musica.play()
         print('depois do play toca')
@@ -933,14 +938,67 @@ class SubMenu:
         submenu_pausa_rect = pygame.Rect(self.cs * 5, self.cs * 4, self.cs * 15, self.cs * 17)
         pygame.draw.rect(self.screen, (200, 200, 50), submenu_pausa_rect)
         
+        pausa_pos = pygame.mouse.get_pos()
+
         pausa_1 = "Você paralisou o metrô!"
         pausa_2 = "Volte quando estiver preparado."
+        pausa_3 = "Ajustar Volume"
         pausa_superficie = self.fontes[1].render(pausa_1, True, (250, 100, 0))
         pausa_rect = pausa_superficie.get_rect(center = (int(self.cs * (self.cn/2)), 5 * self.cs))
         self.screen.blit(pausa_superficie, pausa_rect)
         pausa_superficie = self.fontes[1].render(pausa_2, True, (250, 100, 0))
         pausa_rect = pausa_superficie.get_rect(center = (int(self.cs * (self.cn/2)), 6 * self.cs))
         self.screen.blit(pausa_superficie, pausa_rect)
+        pausa_superficie = self.fontes[1].render(pausa_3, True, (250, 100, 0))
+        pausa_rect = pausa_superficie.get_rect(center = (int(self.cs * (self.cn/2)), 7 * self.cs))
+        self.screen.blit(pausa_superficie, pausa_rect)
+
+        # Criando botões para alterar o volume da música
+        vol_jogo_0 = Botao(imagem = None, pos = (350, 250, 0), 
+                                texto_cont = "0", fonte = self.fontes[1], cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+        vol_jogo_0.mudar_cor(pausa_pos)
+        vol_jogo_0.atualizar(self.screen)
+
+        vol_jogo_1 = Botao(imagem = None, pos = (370, 250, 0), 
+                                texto_cont = "1", fonte = self.fontes[1], cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+        vol_jogo_1.mudar_cor(pausa_pos)
+        vol_jogo_1.atualizar(self.screen)
+
+        vol_jogo_2 = Botao(imagem = None, pos = (390, 250, 0), 
+                                texto_cont = "2", fonte = self.fontes[1], cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+        vol_jogo_2.mudar_cor(pausa_pos)
+        vol_jogo_2.atualizar(self.screen)
+
+        vol_jogo_3 = Botao(imagem = None, pos = (410, 250, 0), 
+                                texto_cont = "3", fonte = self.fontes[1], cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+        vol_jogo_3.mudar_cor(pausa_pos)
+        vol_jogo_3.atualizar(self.screen)
+
+        vol_jogo_4 = Botao(imagem = None, pos = (430, 250, 0), 
+                                texto_cont = "4", fonte = self.fontes[1], cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+        vol_jogo_4.mudar_cor(pausa_pos)
+        vol_jogo_4.atualizar(self.screen)
+
+        vol_jogo_5 = Botao(imagem = None, pos = (450, 250, 0), 
+                                texto_cont = "5", fonte = self.fontes[1], cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+        vol_jogo_5.mudar_cor(pausa_pos)
+        vol_jogo_5.atualizar(self.screen)
+
+        # Comandos para alterar o volume da música
+        for evento in pygame.event.get():
+            if evento.type == pygame.MOUSEBUTTONDOWN:
+                if vol_jogo_0.checar_clique(pausa_pos):
+                    self.musica_partida.set_volume(0.0)
+                elif vol_jogo_1.checar_clique(pausa_pos):
+                    self.musica_partida.set_volume(0.2)
+                elif vol_jogo_2.checar_clique(pausa_pos):
+                    self.musica_partida.set_volume(0.4)
+                elif vol_jogo_3.checar_clique(pausa_pos):
+                    self.musica_partida.set_volume(0.6)
+                elif vol_jogo_4.checar_clique(pausa_pos):
+                    self.musica_partida.set_volume(0.8)
+                elif vol_jogo_5.checar_clique(pausa_pos):
+                    self.musica_partida.set_volume(1.0)
     
 
     def fim_jogo(self):
@@ -963,6 +1021,7 @@ class SubMenu:
             recordes_superficie = self.fontes[1].render(linha, True, (0, 0, 0))
             recordes_rect = recordes_superficie.get_rect(center = (int(self.cs * (3 + self.cn / 2)), (10 + i) * self.cn))
             self.screen.blit(recordes_superficie, recordes_rect)
+
 
 
     def registrar_recorde(self):
