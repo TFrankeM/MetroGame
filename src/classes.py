@@ -834,11 +834,9 @@ class Botao():
 		# Se o mouse está sobre o botão, a cor da escrita é alterada. 
 		if posicao[0] in range(self.rect.left, self.rect.right) and posicao[1] in range(self.rect.top, self.rect.bottom):
 			self.texto = self.fonte.render(self.texto_cont, True, self.cor_com_mause)
-		# Se o mouse não está sobre o botão, a cor da escrita é mantida. 
-		elif self.selecionado == True: 
-            self.fonte.render(self.texto_cont, True, self.cor_selecao)
-		else: 
-            self.texto = self.fonte.render(self.texto_cont, True, self.cor_base)
+	    # Se o mouse não está sobre o botão, a cor da escrita é mantida. 
+		elif self.selecionado == True: self.texto = self.fonte.render(self.texto_cont, True, self.cor_selecao)
+		else: self.texto = self.fonte.render(self.texto_cont, True, self.cor_base)
 
 
 

@@ -205,6 +205,26 @@ class Menu:
         
         idioma = self.atualizar_idiomas()
         
+        idioma[0].selecionado = True
+        
+        vol_menu_0 = Botao(imagem = pygame.transform.scale(self.fundo, (self.cs, self.cs)), pos = (270, 600), 
+                               texto_cont = "0", fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+        
+        vol_menu_1 = Botao(imagem = pygame.transform.scale(self.fundo, (self.cs, self.cs)), pos = (320, 600), 
+                               texto_cont = "1", fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+        
+        vol_menu_2 = Botao(imagem = pygame.transform.scale(self.fundo, (self.cs, self.cs)), pos = (370, 600), 
+                               texto_cont = "2", fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+        
+        vol_menu_3 = Botao(imagem = pygame.transform.scale(self.fundo, (self.cs, self.cs)), pos = (420, 600), 
+                               texto_cont = "3", fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+        
+        vol_menu_4 = Botao(imagem = pygame.transform.scale(self.fundo, (self.cs, self.cs)), pos = (470, 600), 
+                               texto_cont = "4", fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+        
+        vol_menu_5 = Botao(imagem = pygame.transform.scale(self.fundo, (self.cs, self.cs)), pos = (520, 600), 
+                               texto_cont = "5", fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+        
         condicao = True
         while condicao:
             # Cria a superfície da imagem de fundo.
@@ -264,33 +284,27 @@ class Menu:
 
             self.screen.blit(vol_menu_texto, opcoes_vol_rect)
 
-            vol_menu_0 = Botao(imagem = pygame.transform.scale(self.fundo, (self.cs, self.cs)), pos = (270, 600), 
-                               texto_cont = "0", fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+            
             vol_menu_0.mudar_cor(opcoes_menu_pos)
             vol_menu_0.atualizar(self.screen)
 
-            vol_menu_1 = Botao(imagem = pygame.transform.scale(self.fundo, (self.cs, self.cs)), pos = (320, 600), 
-                               texto_cont = "1", fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+            
             vol_menu_1.mudar_cor(opcoes_menu_pos)
             vol_menu_1.atualizar(self.screen)
 
-            vol_menu_2 = Botao(imagem = pygame.transform.scale(self.fundo, (self.cs, self.cs)), pos = (370, 600), 
-                               texto_cont = "2", fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+            
             vol_menu_2.mudar_cor(opcoes_menu_pos)
             vol_menu_2.atualizar(self.screen)
 
-            vol_menu_3 = Botao(imagem = pygame.transform.scale(self.fundo, (self.cs, self.cs)), pos = (420, 600), 
-                               texto_cont = "3", fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+            
             vol_menu_3.mudar_cor(opcoes_menu_pos)
             vol_menu_3.atualizar(self.screen)
 
-            vol_menu_4 = Botao(imagem = pygame.transform.scale(self.fundo, (self.cs, self.cs)), pos = (470, 600), 
-                               texto_cont = "4", fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+            
             vol_menu_4.mudar_cor(opcoes_menu_pos)
             vol_menu_4.atualizar(self.screen)
 
-            vol_menu_5 = Botao(imagem = pygame.transform.scale(self.fundo, (self.cs, self.cs)), pos = (520, 600), 
-                               texto_cont = "5", fonte = self.fonte(25), cor_base = "#d7fcd4", cor_com_mause = "#5b9388")
+            
             vol_menu_5.mudar_cor(opcoes_menu_pos)
             vol_menu_5.atualizar(self.screen)
 
@@ -320,56 +334,92 @@ class Menu:
                         self.menu_principal()
                     elif idioma[0].checar_clique(opcoes_menu_pos):
                         self.submenu.idioma = "pt"
-                        idioma[0].selecionado = True
                         idioma = self.atualizar_idiomas()
                         opcoes_textos = self.traduzir_lingua("opcoes_textos")
+                        idioma[0].selecionado = True
                     elif idioma[1].checar_clique(opcoes_menu_pos):
                         self.submenu.idioma = "en"
-                        idioma[1].selecionado = True
                         idioma = self.atualizar_idiomas()
                         opcoes_textos = self.traduzir_lingua("opcoes_textos")
+                        idioma[1].selecionado = True
                     elif idioma[2].checar_clique(opcoes_menu_pos):
                         self.submenu.idioma = "fr"
-                        idioma[2].selecionado = True
                         idioma = self.atualizar_idiomas()
                         opcoes_textos = self.traduzir_lingua("opcoes_textos")
+                        idioma[2].selecionado = True
                     elif idioma[3].checar_clique(opcoes_menu_pos):
                         self.submenu.idioma = "la"
-                        idioma[3].selecionado = True
                         idioma = self.atualizar_idiomas()
                         opcoes_textos = self.traduzir_lingua("opcoes_textos")
+                        idioma[3].selecionado = True
                     elif idioma[6].checar_clique(opcoes_menu_pos):
                         self.submenu.idioma = "jw"
-                        idioma[6].selecionado = True
                         idioma = self.atualizar_idiomas()
                         opcoes_textos = self.traduzir_lingua("opcoes_textos")
+                        idioma[6].selecionado = True
                     elif idioma[5].checar_clique(opcoes_menu_pos):
                         self.submenu.idioma = "eo"
-                        idioma[5].selecionado = True
                         idioma = self.atualizar_idiomas()
                         opcoes_textos = self.traduzir_lingua("opcoes_textos")
+                        idioma[5].selecionado = True
                     elif idioma[4].checar_clique(opcoes_menu_pos):
                         self.submenu.idioma = "de"
-                        idioma[4].selecionado = True
                         idioma = self.atualizar_idiomas()
                         opcoes_textos = self.traduzir_lingua("opcoes_textos")
+                        idioma[4].selecionado = True
                     elif idioma[7].checar_clique(opcoes_menu_pos):
                         self.submenu.idioma = "es"
-                        idioma[7].selecionado = True
                         idioma = self.atualizar_idiomas()
                         opcoes_textos = self.traduzir_lingua("opcoes_textos")
+                        idioma[7].selecionado = True
                     elif vol_menu_0.checar_clique(opcoes_menu_pos):
                         self.submenu.musica.set_volume(0.0)
+                        vol_menu_0.selecionado = True
+                        vol_menu_1.selecionado = False
+                        vol_menu_2.selecionado = False
+                        vol_menu_3.selecionado = False
+                        vol_menu_4.selecionado = False
+                        vol_menu_5.selecionado = False
                     elif vol_menu_1.checar_clique(opcoes_menu_pos):
                         self.submenu.musica.set_volume(0.2)
+                        vol_menu_0.selecionado = False
+                        vol_menu_1.selecionado = True
+                        vol_menu_2.selecionado = False
+                        vol_menu_3.selecionado = False
+                        vol_menu_4.selecionado = False
+                        vol_menu_5.selecionado = False
                     elif vol_menu_2.checar_clique(opcoes_menu_pos):
                         self.submenu.musica.set_volume(0.4)
+                        vol_menu_0.selecionado = False
+                        vol_menu_1.selecionado = False
+                        vol_menu_2.selecionado = True
+                        vol_menu_3.selecionado = False
+                        vol_menu_4.selecionado = False
+                        vol_menu_5.selecionado = False
                     elif vol_menu_3.checar_clique(opcoes_menu_pos):
                         self.submenu.musica.set_volume(0.6)
+                        vol_menu_0.selecionado = False
+                        vol_menu_1.selecionado = False
+                        vol_menu_2.selecionado = False
+                        vol_menu_3.selecionado = True
+                        vol_menu_4.selecionado = False
+                        vol_menu_5.selecionado = False
                     elif vol_menu_4.checar_clique(opcoes_menu_pos):
                         self.submenu.musica.set_volume(0.8)
+                        vol_menu_0.selecionado = False
+                        vol_menu_1.selecionado = False
+                        vol_menu_2.selecionado = False
+                        vol_menu_3.selecionado = False
+                        vol_menu_4.selecionado = True
+                        vol_menu_5.selecionado = False
                     elif vol_menu_5.checar_clique(opcoes_menu_pos):
                         self.submenu.musica.set_volume(1.0)
+                        vol_menu_0.selecionado = False
+                        vol_menu_1.selecionado = False
+                        vol_menu_2.selecionado = False
+                        vol_menu_3.selecionado = False
+                        vol_menu_4.selecionado = False
+                        vol_menu_5.selecionado = True
 
             # Faz com que a superfície de exibição apareça no monitor do usuário.
             pygame.display.update()
