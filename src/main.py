@@ -214,7 +214,7 @@ class Menu:
         op_t = self.tradutor.translate("Opções", dest=self.submenu.idioma).text
         
         # Texto da tela de opções.
-        op_tx = self.tradutor.translate("This is the OPTIONS screen.", dest=self.submenu.idioma).text
+        op_tx = self.tradutor.translate("Escolha o idioma.", dest=self.submenu.idioma).text
         
         idioma = self.atualizar_idiomas()
         

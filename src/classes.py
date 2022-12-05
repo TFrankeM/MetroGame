@@ -629,12 +629,7 @@ class Partida:
                         if event.key == pygame.K_LEFT and self.trem.corpo[1] != self.trem.corpo[0] + Vector2(-1, 0) or event.key == pygame.K_a and self.trem.corpo[1] != self.trem.corpo[0] + Vector2(-1, 0):
                             self.trem.sentido = Vector2(-1, 0)
                         
-                        # Se o status de atividade for FALSE (motivado por colisão), o "self.submenu.jogo" passa a ser "Fim da partida", decretando o fim dela.
-                        if self.ativo == False:
-                            self.submenu.jogo = "Fim da partida"
-                            self.submenu.registrar_recorde()                   # Aciona a classe Recorde para exibir na tela os recordes.
-                            self.submenu.recorde.escrever(self.pontuacao, self.tempo)      # Escreve a pontuação, nome do jogador e data na folha de registros.
-                            self.__del__()                                  # "Limpa" o mapa para a próxima partida.
+                        
                 
                 # Exibe na tela o metrô, os obstáculos, os passageiros a borda e a pontuação.
                 self.desenhar_elementos()             
@@ -751,6 +746,11 @@ class Partida:
         self.musica.stop()  # Para a música de fundo
         time.sleep(1)
         self.batida.stop()  # Para o áudio da batida
+        self.submenu.jogo = "Fim da partida"
+        time.sleep(1)
+        self.submenu.registrar_recorde()                   # Aciona a classe Recorde para exibir na tela os recordes.
+        self.submenu.recorde.escrever(self.pontuacao, self.tempo)      # Escreve a pontuação, nome do jogador e data na folha de registros.
+        self.__del__()                                  # "Limpa" o mapa para a próxima partida.
         
 
     def desenhar_pontuacao(self):
@@ -864,7 +864,6 @@ class Partida:
         self.passageiro.__del__()
         self.obstaculo.__del__()
         self.trem.__del__()
-        #print(f"A partida acabou.")
 
 
 
