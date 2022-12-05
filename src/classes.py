@@ -585,7 +585,7 @@ class Partida:
                     self.submenu.musica.stop()      # Para a música do menu
 
                     self.musica.stop()
-                    self.musica.play()              # Inicia a música de fundo da partida
+                    self.musica.play(-1)              # Inicia a música de fundo da partida
                     self.musica.set_volume(0.4)     # Ajusta o volume da música de fundo da partida 
 
                 pygame.display.flip()           # Renderiza
@@ -866,6 +866,7 @@ class Partida:
         self.passageiro.__del__()
         self.obstaculo.__del__()
         self.trem.__del__()
+        self.submenu.__del__()
 
 
 
@@ -911,7 +912,7 @@ class SubMenu:
             self: palavra-chave que acessa os atributos e métodos da classe Obstaculo.
         """
         self.musica = pygame.mixer.Sound('sons/chegada.mp3')
-        self.musica.play()
+        self.musica.play(-1)
     
 
     def desenhar_elementos(self):
@@ -1065,6 +1066,9 @@ class SubMenu:
                 return self.tradutor.translate("Você paralisou o metrô. Volte quando estiver preparado. Ajustar Volume", dest=self.idioma).text
             except TypeError or AttributeError or httpcore._exceptions.ReadTimeout:
                 self.traduzir_lingua("pausa_textos")
+    
+    def __del__(self):
+        pass
 
 
 
