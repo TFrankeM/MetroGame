@@ -883,6 +883,7 @@ class SubMenu:
             cs (int): Tamanho das células.
             screen (pygame.Surface): Janela do programa.
             fontes (list): estilos de letra.
+            nome (str): nome cedido pelo usuário para identificá-lo.
             idioma (str, optional): Idioma escolhido no até o momento de início da partida. Default to "pt".
         """
         # Objetos recebem a quantidade e o tamanho de cada célula e o tamanho da tela do jogo.
@@ -902,6 +903,12 @@ class SubMenu:
 
  
     def musica_partida_metodo(self, musica):
+        """ Recebe a música de fundo da partida
+
+        Args:
+            self: palavra-chave que acessa os atributos e métodos da classe Submenu.
+            musica (pygame.Sound): música que toca durante a partida.
+        """
         self.musica_partida = musica
 
 
@@ -909,17 +916,17 @@ class SubMenu:
         """ Inicia a música de fundo do menu.
 
         Args:
-            self: palavra-chave que acessa os atributos e métodos da classe Obstaculo.
+            self: palavra-chave que acessa os atributos e métodos da classe Submenu.
         """
         self.musica = pygame.mixer.Sound('sons/chegada.mp3')
         self.musica.play(-1)
     
 
     def desenhar_elementos(self):
-        """ 
-
+        """ Essa função seleciona qualfunção de renderização deve ser executada.
+        
         Args:
-            self: palavra-chave que acessa os atributos e métodos da classe Obstaculo.
+            self: palavra-chave que acessa os atributos e métodos da classe Submenu.
         """
         if self.jogo == "Inicia a partida":
             self.cadastrar()
@@ -933,22 +940,17 @@ class SubMenu:
         """ Altera o status de jogo para "Partida em curso", ou seja, modo partida.
         
         Args:
-            self: palavra-chave que acessa os atributos e métodos da classe Obstaculo.
+            self: palavra-chave que acessa os atributos e métodos da classe Submenu.
         """
         self.jogo = "Partida em curso"
         
 
     def pausar_jogo(self):
-        """ 
+        """ Essa função renderiza a tela de pausa e cria um loop até o usuário pressionar a barra de espaço ou sair do jogo. Durante o loop é possível alterar o volume da música de fundo da partida corrente.
         
         Args:
-            self: palavra-chave que acessa os atributos e métodos da classe Obstaculo.
+            self: palavra-chave que acessa os atributos e métodos da classe Submenu.
         """
-        
-        
-        
-
-        
         pausa_1, pausa_2, pausa_3 = re.split("\.", self.pausa_textos)
         
         self.pausa = True
@@ -1026,14 +1028,19 @@ class SubMenu:
     
 
     def fim_jogo(self):
-        """ 
+        """ Função responsável por renderizar a tela de fim de jogo, que apresenta os jogadores que melhor pontuaram nesta fase do jogo.
         
         Args:
-            self: palavra-chave que acessa os atributos e métodos da classe Obstaculo.
+            self: palavra-chave que acessa os atributos e métodos da classe Submenu.
         """
         submenu_fim_rect = pygame.Rect(self.cs * 5, self.cs * 4, self.cs * 15, self.cs * 17)
         pygame.draw.rect(self.screen, (200, 200, 50), submenu_fim_rect)
 
+        cabecalho_texto = "OI"
+        cabecalho = self.fontes[1].render(cabecalho_texto, True, "Black")
+        cabecalho_rect = cabecalho.get_rect(center=(400, 200))
+        self.screen.blit(cabecalho, cabecalho_rect)
+        
         self.recorde.ler()
         listas = self.recorde.df.values.tolist()
         for i in range(min(5, len(listas))):
@@ -1048,10 +1055,18 @@ class SubMenu:
 
 
     def registrar_recorde(self, fase):
+        """ Função que cria o objeto da classe Recorde que registrará os dados desta partida.
+
+        Args:
+            self: palavra-chave que acessa os atributos e métodos da classe Submenu.
+            fase (int): número que indica a fase do jogo 
+        """
         self.recorde = Recorde(self.nome, fase)
     
 
     def cadastrar(self):
+        """ Essa função renderiza o campo onde se preenche o nome que o usuário desejar. O nome inicialmente é Jogador.
+        """
         # Cria uma superfície Rect
 
         cadastro_superficie = self.fontes[1].render(self.nome, True, "#e48b39")
@@ -1061,6 +1076,14 @@ class SubMenu:
             pygame.draw.rect(self.screen, (200, 150, 0), self.cadastro_rect, 2)
             
     def traduzir_lingua(self, texto):
+        """ Essa função devolve certas frases traduzidas para o idioma atual do jogo.
+
+        Args:
+            texto (str): essa string identifica quais fases devem ser traduzidas e retornadas.
+
+        Returns:
+            str: string que contém as frases traduzidas.
+        """
         if texto == "pausa_textos":
             try:
                 return self.tradutor.translate("Você paralisou o metrô. Volte quando estiver preparado. Ajustar Volume", dest=self.idioma).text
@@ -1068,6 +1091,8 @@ class SubMenu:
                 self.traduzir_lingua("pausa_textos")
     
     def __del__(self):
+        """ Destrutor da classe
+        """
         pass
 
 
@@ -1078,7 +1103,7 @@ class Recorde:
         
         Args:
             self: palavra-chave que acessa os atributos e métodos da classe Recorde.
-            nome (str): nome cedido pelo usuário para identifucá-lo.
+            nome (str): nome cedido pelo usuário para identificá-lo.
             fase (int): número que indica a fase que foi jogada
         """
         self.arquivo = open("registros.txt", "a+")
