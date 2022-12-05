@@ -3,6 +3,7 @@ from classes import Botao, Partida, SubMenu
 from googletrans import Translator
 import time
 import httpcore
+import re
 
 
 # Inicia o módulo PyGame.
@@ -415,10 +416,15 @@ class Menu:
         """ Responsável por gerar o menu principal do jogo, acionando as funções "jogar" e "opcoes" e a classe Botao para criar os botões. 
         """
         # O loop ocorre enquanto não for clicado no botão "SAIR".
-        j = self.tradutor.translate("JOGAR", dest=self.submenu.idioma).text
-        o = self.tradutor.translate("OPÇÕES", dest=self.submenu.idioma).text
-        c = self.tradutor.translate("CRÉDITOS", dest=self.submenu.idioma).text
-        s = self.tradutor.translate("SAIR", dest=self.submenu.idioma).text
+        feito = False
+        while feito == False:
+            try:
+                inicio_textos = self.tradutor.translate("JOGAR. OPÇÕES. CRÉDITOS. SAIR", dest=self.submenu.idioma).text
+                j, o, c, s = re.split("\.", inicio_textos)
+            except TypeError or AttributeError or httpcore._exceptions.ReadTimeout:
+                pass
+            else:
+                feito = True
         while True:
             # Cria a superfície da imagem de fundo.
             fundo_rect = pygame.Rect(0, 0, self.cs * self.cn, self.cs * self.cn)
