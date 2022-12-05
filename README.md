@@ -58,7 +58,7 @@
 <li>pip install googletrans==4.0.0-rc1</li>
 </ol>
 
-<p>Além disso, outras bibliotecas necessários para rodar o código são:
+<p>Além disso, outras bibliotecas necessárias para rodar o código são:
 </p>
 
 <ol>
