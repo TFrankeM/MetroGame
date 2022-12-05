@@ -139,15 +139,17 @@ class Menu:
                         # Cria os objetos da classe Partida.
                         self.partida = Partida(cn, cs, screen, pygame.font.Font(None, 30), 1, self.submenu.nome, self.submenu.idioma)    # Fase = 1
                         self.submenu.musica.stop()
-                        self.partida.submenu.musica.stop()
                         self.partida.inicia_partida()
+                        self.submenu.musica.play()
 
                     if fase_2.checar_clique(jogar_mouse_pos):
                         # Cria os objetos da classe Partida.
                         self.partida = Partida(cn, cs, screen, pygame.font.Font(None, 30), 2, self.submenu.nome, self.submenu.idioma)    # Fase = 2
                         self.submenu.musica.stop()
-                        self.partida.submenu.musica.stop()
                         self.partida.inicia_partida()
+                        self.submenu.musica.play()
+
+                        
 
                     if fase_3.checar_clique(jogar_mouse_pos):
 
@@ -155,8 +157,10 @@ class Menu:
 
                         self.partida = Partida(cn, cs, screen, pygame.font.Font(None, 30), 3, self.submenu.nome, self.submenu.idioma)    # Fase = 3
                         self.submenu.musica.stop()
-                        self.partida.submenu.musica.stop()
                         self.partida.inicia_partida()
+                        self.submenu.musica.play()
+
+                        
                         
                     if fase_4.checar_clique(jogar_mouse_pos):
 
@@ -164,8 +168,10 @@ class Menu:
 
                         self.partida = Partida(cn, cs, screen, pygame.font.Font(None, 30), 4, self.submenu.nome, self.submenu.idioma)    # Fase = 4
                         self.submenu.musica.stop()
-                        self.partida.submenu.musica.stop()
                         self.partida.inicia_partida()
+                        self.submenu.musica.play()
+
+                        
 
                     if fase_5.checar_clique(jogar_mouse_pos):
 
@@ -173,8 +179,10 @@ class Menu:
 
                         self.partida = Partida(cn, cs, screen, pygame.font.Font(None, 30), 5, self.submenu.nome, self.submenu.idioma)    # Fase = 5
                         self.submenu.musica.stop()
-                        self.partida.submenu.musica.stop()
                         self.partida.inicia_partida()
+                        self.submenu.musica.play()
+
+                        
 
                     if jogar_voltar.checar_clique(jogar_mouse_pos):
                         self.menu_principal()
@@ -362,22 +370,16 @@ class Menu:
                         op_tx = self.tradutor.translate("This is the OPTIONS screen.", dest=self.submenu.idioma).text
                     elif vol_menu_0.checar_clique(opcoes_menu_pos):
                         self.submenu.musica.set_volume(0.0)
-                        self.partida.submenu.musica.set_volume(0.0)
                     elif vol_menu_1.checar_clique(opcoes_menu_pos):
                         self.submenu.musica.set_volume(0.2)
-                        self.partida.submenu.musica.set_volume(0.2)
                     elif vol_menu_2.checar_clique(opcoes_menu_pos):
                         self.submenu.musica.set_volume(0.4)
-                        self.partida.submenu.musica.set_volume(0.4)
                     elif vol_menu_3.checar_clique(opcoes_menu_pos):
                         self.submenu.musica.set_volume(0.6)
-                        self.partida.submenu.musica.set_volume(0.6)
                     elif vol_menu_4.checar_clique(opcoes_menu_pos):
                         self.submenu.musica.set_volume(0.8)
-                        self.partida.submenu.musica.set_volume(0.8)
                     elif vol_menu_5.checar_clique(opcoes_menu_pos):
                         self.submenu.musica.set_volume(1.0)
-                        self.partida.submenu.musica.set_volume(1.0)
 
             # Faz com que a superfície de exibição apareça no monitor do usuário.
             pygame.display.update()

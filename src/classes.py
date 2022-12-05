@@ -658,8 +658,6 @@ class Partida:
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_SPACE:
                             self.gameplay = False
-                            self.submenu.musica.play()
-                            self.submenu.musica.set_volume(0.4)
 
 
                 # Preenche a tela com cor
@@ -763,7 +761,6 @@ class Partida:
             self: palavra-chave que acessa os atributos e métodos da classe Obstaculo.
         """
 
-        pontuacao_pos = pygame.mouse.get_pos()
 
         # Comprimento do metrô, descontados os vagões iniciais.
         self.pontuacao = str(len(self.trem.corpo) - 3)
@@ -898,6 +895,7 @@ class SubMenu:
         self.selecionado = True
         self.idioma = "pt"
 
+ 
     def musica_partida(self, musica):
         self.musica_partida = musica
 
@@ -910,6 +908,7 @@ class SubMenu:
         """
         self.musica = pygame.mixer.Sound('sons/chegada.mp3')
         print('antes do play não toca')
+
         self.musica.play()
         print('depois do play toca')
     
