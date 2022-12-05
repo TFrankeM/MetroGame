@@ -1077,8 +1077,9 @@ class Recorde:
         """ Construtor da classe.
         
         Args:
-            self: palavra-chave que acessa os atributos e métodos da classe Obstaculo.
-            nome: 
+            self: palavra-chave que acessa os atributos e métodos da classe Recorde.
+            nome (str): nome cedido pelo usuário para identifucá-lo.
+            fase (int): número que indica a fase que foi jogada
         """
         self.arquivo = open("registros.txt", "a+")
         self.nome = nome
@@ -1086,19 +1087,19 @@ class Recorde:
     
 
     def escrever(self, pontuacao, tempo):
-        """
-        
+        """ Essa função acessa o arquivo de registros e adiciona o registro correspondente à última partida.
+
         Args:
-            self: palavra-chave que acessa os atributos e métodos da classe Obstaculo.
+            self: palavra-chave que acessa os atributos e métodos da classe Recorde.
+            pontuacao (int): a pontuação alcançada durante a partida
+            tempo (int): o tempo que a partida levou
         """
         self.arquivo.write(f"{self.nome}|{date.today()}|{pontuacao}|{tempo}|{self.fase}\n")
         
 
     def ler(self):
-        """ 
-        
-        Args:
-            self: palavra-chave que acessa os atributos e métodos da classe Obstaculo.
+        """ Essa função coleta as strings do arquivo de registros e as converte num dataframe. Este é então manipulado para filtrar as pontuações por fase; ordenar por dia, 
+        tempo e pontos; e considerar somente o melhor desempenho de um jogador numa dada fase.
         """
         nomes=[]
         datas=[]
@@ -1124,11 +1125,9 @@ class Recorde:
     
 
     def __del__(self):
-        """ 
+        """ Método destrutor da classo
         
         Args:
             self: palavra-chave que acessa os atributos e métodos da classe Obstaculo.
         """
-        #print(f"O recorde cumpriu sua função.")
-        #print(f"O recorde foi registrado.")
         pass
