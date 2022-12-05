@@ -872,11 +872,11 @@ class SubMenu:
         """ Construtor da classe.
 
         Args:
-            self: palavra-chave que acessa os atributos e métodos da classe Obstaculo.
-            cn (int, optional): Número de células da janela do programa. Defaults to 1.
-            cs (int, optional): Tamanho das células. Defaults to 1.
-            screen (pygame.Surface, optional): Janela do programa. Defaults to None.
-            fontes: estilos de letra.
+            self: palavra-chave que acessa os atributos e métodos da classe Submenu.
+            cn (int): Número de células da janela do programa.
+            cs (int): Tamanho das células.
+            screen (pygame.Surface): Janela do programa.
+            fontes (list): estilos de letra.
         """
         # Objetos recebem a quantidade e o tamanho de cada célula e o tamanho da tela do jogo.
         self.cn = cn
