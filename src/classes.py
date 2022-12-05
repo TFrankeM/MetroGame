@@ -322,18 +322,179 @@ class Obstaculo:
         # Dicionário com as imagens carregadas dos obstáculos.
         self.obstaculos = {}
         # Imagens da fase 1.
-        self.obstaculos[1] = [pygame.image.load('imagens/obstaculos/b1.png').convert_alpha(),
-                              pygame.image.load('imagens/obstaculos/b2.png').convert_alpha(),
-                              pygame.image.load('imagens/obstaculos/b3.png').convert_alpha()]
+        # Imagens da fase 1.
+        self.obstaculos[1] = [pygame.image.load('imagens/obstaculos/fase1/guarda.png').convert_alpha(),   
+                              pygame.image.load('imagens/obstaculos/fase1/bus1.png').convert_alpha(),  
+                              pygame.image.load('imagens/obstaculos/fase1/bus2.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase1/bus3.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase1/bus4.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase1/bus5.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase1/bus6.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase1/bus7.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase1/bus8.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase1/bus9.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase1/bus10.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase1/bus11.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase1/bus12.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase1/bus13.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase1/bus14.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase1/bus15.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase1/bus16.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase1/cabine1.png').convert_alpha(),   
+                              pygame.image.load('imagens/obstaculos/fase1/cabine2.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase1/calcada.png').convert_alpha(), 
+                              pygame.image.load('imagens/obstaculos/fase1/palacio1.png').convert_alpha(),    
+                              pygame.image.load('imagens/obstaculos/fase1/palacio2.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase1/palacio3.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase1/palacio4.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase1/palacio5.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase1/palacio6.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase1/palacio7.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase1/palacio8.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase1/palacio9.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase1/palacio10.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase1/palacio11.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase1/palacio12.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase1/ponte1.png').convert_alpha(), 
+                              pygame.image.load('imagens/obstaculos/fase1/ponte2.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase1/ponte3.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase1/ponte4.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase1/ponte5.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase1/ponte6.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase1/ponte7.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase1/ponte8.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase1/ponte9.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase1/ponte10.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase1/ponte11.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase1/ponte12.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase1/ponte13.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase1/ponte14.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase1/ponte15.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase1/ponte16.png').convert_alpha()]
+
         # Imagens da fase 2.
-        self.obstaculos[2] = [pygame.image.load('imagens/obstaculos/b3.png').convert_alpha()]
+        self.obstaculos[2] = [pygame.image.load('imagens/obstaculos/fase2/calcadao.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase2/cristo1.png').convert_alpha(), 
+                              pygame.image.load('imagens/obstaculos/fase2/cristo2.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase2/cristo3.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase2/cristo4.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase2/cristo5.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase2/cristo6.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase2/cristo7.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase2/cristo8.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase2/cristo9.png').convert_alpha()]
+
+
         # Imagens da fase 3.
-        self.obstaculos[3] = [pygame.image.load('imagens/obstaculos/b1.png').convert_alpha(),
-                              pygame.image.load('imagens/obstaculos/b3.png').convert_alpha()]
+        self.obstaculos[3] = [pygame.image.load('imagens/obstaculos/fase3/atm1.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase3/atm2.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase3/atm3.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase3/atm4.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase3/atm5.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase3/avenue1.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase3/avenue2.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase3/avenue3.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase3/avenue4.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase3/avenue5.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase3/chrysler1.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase3/chrysler2.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase3/chrysler3.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase3/chrysler4.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase3/chrysler5.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase3/empire1.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase3/empire2.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase3/empire3.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase3/empire4.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase3/empire5.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase3/gemea11.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase3/gemea12.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase3/gemea13.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase3/gemea14.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase3/gemea15.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase3/gemea21.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase3/gemea22.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase3/gemea23.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase3/gemea24.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase3/gemea25.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase3/liberdade1.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase3/liberdade2.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase3/liberdade3.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase3/liberdade4.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase3/liberdade5.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase3/one1.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase3/one2.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase3/one3.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase3/one4.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase3/one5.png').convert_alpha()]
+        
+        # Imagens da fase 5
+        self.obstaculos[4] = [pygame.image.load('imagens/obstaculos/fase4/portao1.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase4/portao2.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase4/portao3.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase4/portao4.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase4/casa11.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase4/casa12.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase4/casa13.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase4/casa14.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase4/casa21.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase4/casa22.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase4/casa23.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase4/casa24.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase4/casa31.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase4/casa32.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase4/casa33.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase4/casa34.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase4/muro.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase4/murob.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase4/murod.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase4/muroe.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase4/torre1.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase4/torre2.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase4/torre1b.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase4/torre2b.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase4/canto1.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase4/canto2.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase4/canto3.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase4/canto4.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase4/torre1d.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase4/torre2d.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase4/torre1e.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase4/torre2e.png').convert_alpha(),]
+
         # Imagens da fase 4.
-        self.obstaculos[4] = [pygame.image.load('imagens/obstaculos/b1.png').convert_alpha()]
-        # Imagens da fase 5.
-        self.obstaculos[5] = [pygame.image.load('imagens/obstaculos/b2.png').convert_alpha()]
+        self.obstaculos[5] = [pygame.image.load('imagens/obstaculos/fase5/arco1.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase5/arco2.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase5/arco3.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase5/arco4.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase5/bike1.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase5/bike2.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase5/bike3.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase5/bike4.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase5/catedral1.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase5/catedral2.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase5/catedral3.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase5/catedral4.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase5/cesta1.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase5/cesta2.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase5/cesta3.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase5/cesta4.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase5/piramide1.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase5/piramide2.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase5/piramide3.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase5/piramide4.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase5/poodle1.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase5/poodle2.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase5/poodle3.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase5/poodle4.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase5/poste1.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase5/poste2.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase5/poste3.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase5/poste4.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase5/rata1.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase5/rata2.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase5/rata3.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase5/rata4.png').convert_alpha(),
+                              pygame.image.load('imagens/obstaculos/fase5/mona.png').convert_alpha()]
 
 
     def adicionar_obstaculo(self):
@@ -342,46 +503,240 @@ class Obstaculo:
         Args:
             self: palavra-chave que acessa os atributos e métodos da classe Obstaculo.
         """
-        # Obstáculos fase 1.
+        # Obstáculos fase Inglaterra.
         if self.fase == 1:
             # "self.corpo" é um dicionário e cada chave dele (0, 1, 2, 3...) representa um obstáculo diferente da fase. Além disso, 
             # esse número é o índice da imagem na lista de "self.obstaculos" da referida fase.
             # Ex.: Obstáculo na posição 0 da lista que se refere a chave 1 de "self.obstaculos".
-            self.corpo[0] = [Vector2(5, 5), Vector2(5, 6), Vector2(4, 5), 
-                             Vector2(19, 5), Vector2(19, 6), Vector2(20, 5), 
-                             Vector2(19, 5), Vector2(19, 6), Vector2(20, 5),
-                             Vector2(5, 19), Vector2(5, 18), Vector2(4, 19),
-                             Vector2(19, 19), Vector2(19, 18), Vector2(20, 19)]
+
+            self.corpo[0] = [Vector2(16,9),Vector2(17,9),
+                             Vector2(7,9),Vector2(8,9)] 
+
             # Ex.: Obstáculo na posição 1 da lista que se refere a chave 1 de "self.obstaculos".
-            self.corpo[1] = [Vector2(7, 8), Vector2(17, 8), Vector2(7, 16), Vector2(17, 16),
-                             Vector2(9, 10), Vector2(15, 10), Vector2(9, 14), Vector2(15, 14)]
-            self.corpo[2] = [Vector2(11, 3), Vector2(13, 3), Vector2(11, 21), Vector2(13, 21),
-                             Vector2(3, 11), Vector2(3, 13), Vector2(21, 11), Vector2(21, 13)]
-        # Obstáculos fase 2.
+
+            self.corpo[1] = [Vector2(15,15)]
+            self.corpo[2] = [Vector2(16,15)]
+            self.corpo[3] = [Vector2(17,15)]
+            self.corpo[4] = [Vector2(18,15)]
+
+            self.corpo[5] = [Vector2(15,16)]
+            self.corpo[6] = [Vector2(16,16)]
+            self.corpo[7] = [Vector2(17,16)]
+            self.corpo[8] = [Vector2(18,16)]
+            
+            self.corpo[9] = [Vector2(15,17)]
+            self.corpo[10] = [Vector2(16,17)]
+            self.corpo[11] = [Vector2(17,17)]
+            self.corpo[12] = [Vector2(18,17)]
+            
+            self.corpo[13] = [Vector2(15,18)]
+            self.corpo[14] = [Vector2(16,18)]
+            self.corpo[15] = [Vector2(17,18)]
+            self.corpo[16] = [Vector2(18,18)]
+
+            self.corpo[17] = [Vector2(16,7),Vector2(17,7)]
+            self.corpo[18] = [Vector2(16,8),Vector2(17,8)]
+
+            self.corpo[19] = [Vector2(15,9),Vector2(15,8),Vector2(15,7),Vector2(15,6),
+                              Vector2(16,6),Vector2(17,6),Vector2(18,6),Vector2(18,7),
+                              Vector2(18,8),Vector2(18,9),Vector2(6,9),Vector2(9,9)]
+
+            self.corpo[20] = [Vector2(6,6)]
+            self.corpo[21] = [Vector2(7,6)]
+            self.corpo[22] = [Vector2(8,6)]
+            self.corpo[23] = [Vector2(9,6)]
+            self.corpo[24] = [Vector2(6,7)]
+            self.corpo[25] = [Vector2(7,7)]
+            self.corpo[26] = [Vector2(8,7)]
+            self.corpo[27] = [Vector2(9,7)]
+            self.corpo[28] = [Vector2(6,8)]
+            self.corpo[29] = [Vector2(7,8)]
+            self.corpo[30] = [Vector2(8,8)]
+            self.corpo[31] = [Vector2(9,8)]
+
+            self.corpo[32] = [Vector2(6,15)]
+            self.corpo[33] = [Vector2(7,15)]
+            self.corpo[34] = [Vector2(8,15)]
+            self.corpo[35] = [Vector2(9,15)]
+            self.corpo[36] = [Vector2(6,16)]
+            self.corpo[37] = [Vector2(7,16)]
+            self.corpo[38] = [Vector2(8,16)]
+            self.corpo[39] = [Vector2(9,16)]
+            self.corpo[40] = [Vector2(6,17)]
+            self.corpo[41] = [Vector2(7,17)]
+            self.corpo[42] = [Vector2(8,17)]
+            self.corpo[43] = [Vector2(9,17)]
+            self.corpo[44] = [Vector2(6,18)]
+            self.corpo[45] = [Vector2(7,18)]
+            self.corpo[46] = [Vector2(8,18)]
+            self.corpo[47] = [Vector2(9,18)]
+
+        # Obstáculos fase Brasil.
         if self.fase == 2:
             # Ex.: Obstáculo na posição 0 da lista que se refere a chave 2 de "self.obstaculos".
-            self.corpo[0] = [Vector2(5, 5), Vector2(5, 6), Vector2(4, 5), 
-                             Vector2(19, 5), Vector2(19, 6), Vector2(20, 5), 
-                             Vector2(19, 5), Vector2(19, 6), Vector2(20, 5),
-                             Vector2(5, 19), Vector2(5, 18), Vector2(4, 19),
-                             Vector2(19, 19), Vector2(19, 18), Vector2(20, 19)]
-        # Obstáculos fase 3.
+
+            self.corpo[0] = [Vector2(5,5),Vector2(6,5),Vector2(7,5),Vector2(8,5),Vector2(9,5),Vector2(10,5),
+                            Vector2(5,6),Vector2(5,7),Vector2(5,8),Vector2(5,9),Vector2(5,10),
+                            Vector2(14,5),Vector2(15,5),Vector2(16,5),Vector2(17,5),Vector2(18,5),Vector2(19,5),
+                            Vector2(19,6),Vector2(19,7),Vector2(19,8),Vector2(19,9),Vector2(19,10),
+                            Vector2(5,14),Vector2(5,15),Vector2(5,16),Vector2(5,17),Vector2(5,18),Vector2(5,19),
+                            Vector2(6,19),Vector2(7,19),Vector2(8,19),Vector2(9,19),Vector2(10,19),
+                            Vector2(14,19),Vector2(15,19),Vector2(16,19),Vector2(17,19),Vector2(18,19),Vector2(19,19),
+                            Vector2(19,14),Vector2(19,15),Vector2(19,16),Vector2(19,17),Vector2(19,18)]
+             
+            self.corpo[9] = [Vector2(11,11)]
+            self.corpo[8] = [Vector2(12,11)]
+            self.corpo[7] = [Vector2(13,11)]
+            self.corpo[6] = [Vector2(11,12)]
+            self.corpo[5] = [Vector2(12,12)]
+            self.corpo[4] = [Vector2(13,12)]
+            self.corpo[3] = [Vector2(11,13)]
+            self.corpo[2] = [Vector2(12,13)]
+            self.corpo[1] = [Vector2(13,13)]
+
+        # Obstáculos fase Estados Unidos.
         if self.fase == 3:
-            self.corpo[0] = [Vector2(7, 8), Vector2(17, 8), Vector2(7, 16), Vector2(17, 16)]
-            self.corpo[1] = [Vector2(9, 10), Vector2(15, 10), Vector2(9, 14), Vector2(15, 14)]
-        # Obstáculos fase 4.
 
+            self.corpo[0] =  [Vector2(5,5)]
+            self.corpo[1] =  [Vector2(5,6)]
+            self.corpo[2] =  [Vector2(5,7)]
+            self.corpo[3] =  [Vector2(5,8)]
+            self.corpo[4] =  [Vector2(5,9)]
+            self.corpo[5] =  [Vector2(5,15)]
+            self.corpo[6] =  [Vector2(5,16)]
+            self.corpo[7] =  [Vector2(5,17)]
+            self.corpo[8] =  [Vector2(5,18)]
+            self.corpo[9] =  [Vector2(5,19)]
+
+            self.corpo[10] = [Vector2(9,5)]
+            self.corpo[11] = [Vector2(9,6)]
+            self.corpo[12] = [Vector2(9,7)]
+            self.corpo[13] = [Vector2(9,8)]
+            self.corpo[14] = [Vector2(9,9)]
+            self.corpo[15] = [Vector2(9,15)]
+            self.corpo[16] = [Vector2(9,16)]
+            self.corpo[17] = [Vector2(9,17)]
+            self.corpo[18] = [Vector2(9,18)]
+            self.corpo[19] = [Vector2(9,19)]
+
+            self.corpo[20] = [Vector2(15,5)]
+            self.corpo[21] = [Vector2(15,6)]
+            self.corpo[22] = [Vector2(15,7)]
+            self.corpo[23] = [Vector2(15,8)]
+            self.corpo[24] = [Vector2(15,9)]
+            self.corpo[25] = [Vector2(15,15)]
+            self.corpo[26] = [Vector2(15,16)]
+            self.corpo[27] = [Vector2(15,17)]
+            self.corpo[28] = [Vector2(15,18)]
+            self.corpo[29] = [Vector2(15,19)]
+
+            self.corpo[30] = [Vector2(19,5)]
+            self.corpo[31] = [Vector2(19,6)]
+            self.corpo[32] = [Vector2(19,7)]
+            self.corpo[33] = [Vector2(19,8)]
+            self.corpo[34] = [Vector2(19,9)]
+            self.corpo[35] = [Vector2(19,15)]
+            self.corpo[36] = [Vector2(19,16)]
+            self.corpo[37] = [Vector2(19,17)]
+            self.corpo[38] = [Vector2(19,18)]
+            self.corpo[39] = [Vector2(19,19)]
+
+        # Obstáculos fase China.
         if self.fase == 4:
-            self.corpo[0] = [Vector2(5, 5), Vector2(5, 6), Vector2(4, 5), 
-                             Vector2(19, 5), Vector2(19, 6), Vector2(20, 5), 
-                             Vector2(19, 5), Vector2(19, 6), Vector2(20, 5),
-                             Vector2(5, 19), Vector2(5, 18), Vector2(4, 19),
-                             Vector2(19, 19), Vector2(19, 18), Vector2(20, 19)]
 
-        # Obstáculos fase 5.
+            self.corpo[0] = [Vector2(9,9)]
+            self.corpo[1] = [Vector2(10,9)]
+            self.corpo[2] = [Vector2(9,10)]
+            self.corpo[3] = [Vector2(10,10)]  
+
+            self.corpo[4] = [Vector2(9,14)]
+            self.corpo[5] = [Vector2(10,14)]
+            self.corpo[6] = [Vector2(9,15)]
+            self.corpo[7] = [Vector2(10,15)]
+
+            self.corpo[8] = [Vector2(14,9)]
+            self.corpo[9] = [Vector2(15,9)]
+            self.corpo[10] = [Vector2(14,10)]
+            self.corpo[11] = [Vector2(15,10)]
+
+            self.corpo[12] = [Vector2(14,14)]
+            self.corpo[13] = [Vector2(15,14)]
+            self.corpo[14] = [Vector2(14,15)]
+            self.corpo[15] = [Vector2(15,15)]
+            
+            self.corpo[16] = [Vector2(6,5),Vector2(7,5),Vector2(9,5),Vector2(10,5),Vector2(11,5),
+                              Vector2(13,5),Vector2(14,5),Vector2(15,5),Vector2(17,5),Vector2(18,5)]
+            
+            self.corpo[17] = [Vector2(6,19),Vector2(7,19),Vector2(9,19),Vector2(10,19),Vector2(11,19),
+                              Vector2(13,19),Vector2(14,19),Vector2(15,19),Vector2(17,19),Vector2(18,19)]
+
+            self.corpo[18] = [Vector2(19,6),Vector2(19,7),Vector2(19,8),Vector2(19,16),Vector2(19,17),Vector2(19,18)]
+
+            self.corpo[19] = [Vector2(5,6),Vector2(5,7),Vector2(5,8),Vector2(5,16),Vector2(5,17),Vector2(5,18)]
+            
+            self.corpo[20] = [Vector2(8,4),Vector2(12,4),Vector2(16,4)]
+
+            self.corpo[21] = [Vector2(8,5),Vector2(12,5),Vector2(16,5)]
+
+            self.corpo[22] = [Vector2(8,20),Vector2(12,20),Vector2(16,20)]
+
+            self.corpo[23] = [Vector2(8,19),Vector2(12,19),Vector2(16,19)]
+
+            self.corpo[24] = [Vector2(5,5)]
+            self.corpo[25] = [Vector2(19,5)]
+            self.corpo[26] = [Vector2(19,19)]
+            self.corpo[27] = [Vector2(5,19)]
+
+            self.corpo[28] = [Vector2(20,9),Vector2(20,15)]
+            self.corpo[29] = [Vector2(19,9),Vector2(19,15)]
+
+            self.corpo[30] = [Vector2(4,9),Vector2(4,15)]
+            self.corpo[31] = [Vector2(5,9),Vector2(5,15)]
+    
+        # Obstáculos fase França.
         if self.fase == 5:
-            self.corpo[0] = [Vector2(11, 3), Vector2(13, 3), Vector2(11, 21), Vector2(13, 21),
-                             Vector2(3, 11), Vector2(3, 13), Vector2(21, 11), Vector2(21, 13)]
+
+            self.corpo[0] = [Vector2(5,5)]
+            self.corpo[1] = [Vector2(6,5)]
+            self.corpo[2] = [Vector2(5,6)]
+            self.corpo[3] = [Vector2(6,6)]
+ 
+            self.corpo[4] = [Vector2(18,5)]
+            self.corpo[5] = [Vector2(19,5)]
+            self.corpo[6] = [Vector2(18,6)]
+            self.corpo[7] = [Vector2(19,6)]
+ 
+            self.corpo[8] = [Vector2(5,18)]
+            self.corpo[9] = [Vector2(6,18)]
+            self.corpo[10] = [Vector2(5,19)]
+            self.corpo[11] = [Vector2(6,19)]
+ 
+            self.corpo[12] = [Vector2(18,18)]
+            self.corpo[13] = [Vector2(19,18)]
+            self.corpo[14] = [Vector2(18,19)]
+            self.corpo[15] = [Vector2(19,19)]
+ 
+            self.corpo[16] = [Vector2(14,9)]
+            self.corpo[17] = [Vector2(15,9)]
+            self.corpo[18] = [Vector2(14,10)]
+            self.corpo[19] = [Vector2(15,10)]
+            
+            self.corpo[20] = [Vector2(9,9)]
+            self.corpo[21] = [Vector2(10,9)]
+            self.corpo[22] = [Vector2(9,10)]
+            self.corpo[23] = [Vector2(10,10)]
+ 
+            self.corpo[24] = [Vector2(9,14)]
+            self.corpo[25] = [Vector2(10,14)]
+            self.corpo[26] = [Vector2(9,15)]
+            self.corpo[27] = [Vector2(10,15)]
+
+            self.corpo[28] = [Vector2(14,14)]
+            self.corpo[29] = [Vector2(15,14)]
+            self.corpo[30] = [Vector2(14,15)]
+            self.corpo[31] = [Vector2(15,15)]
+ 
+            self.corpo[32] = [Vector2(12,12)]
 
         # Coloca o vetor posição dos obtáculos em uma lista para futura checagem de colisão.
         self.posicoes_objetos = []
